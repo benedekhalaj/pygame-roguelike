@@ -24,5 +24,5 @@ def get_input():
 def display_screen(window, *entities):
     window.fill(BLACK)
     for entity in entities:
-        pygame.draw.rect(window, entity['color'], (entity['x'], entity['y'], entity['width'], entity['height']))
+        pygame.draw.rect(window, entity.color, (entity.x, entity.y, entity.width, entity.height))
     pygame.display.update()
