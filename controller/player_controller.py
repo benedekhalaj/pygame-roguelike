@@ -14,13 +14,13 @@ def get_player():
 def control_player(player):
     keys = view.get_input()
 
-    if keys[pygame.K_LEFT]:
+    if keys[pygame.K_LEFT] and player.x > 0:
         player.move_left()
-    if keys[pygame.K_RIGHT]:
+    if keys[pygame.K_RIGHT] and player.x + player.width < view.SCREEN_WIDTH:
         player.move_right()
-    if keys[pygame.K_UP]:
+    if keys[pygame.K_UP] and player.y > 0:
         player.move_up()
-    if keys[pygame.K_DOWN]:
+    if keys[pygame.K_DOWN] and player.y + player.height < view.SCREEN_HEIGHT:
         player.move_down()
     if keys[pygame.K_LSHIFT]:
         player.sprint()
