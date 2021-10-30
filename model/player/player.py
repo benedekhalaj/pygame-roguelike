@@ -1,4 +1,5 @@
 from model import data_manager, util
+import random
 
 
 class Player():
@@ -9,7 +10,9 @@ class Player():
         self.y = 10
         self.width = 64
         self.height = 64
-        self.velocity = 10
+        self.default_velocity = 2
+        self.sprint_velocity = 5
+        self.velocity = self.default_velocity
         self.hitbox = util.Hitbox([self.x, self.x + self.width, self.y + self.height, self.x + self.width + self.height])
 
     def move_up(self):
@@ -24,8 +27,11 @@ class Player():
     def move_right(self):
         self.x += self.velocity
 
-    def sprint(self):
-        self.velocity = 20
-
     def walk(self):
-        self.velocity = 10
+        self.velocity = self.default_velocity
+
+    def sprint(self):
+        self.velocity = self.sprint_velocity
+
+    def change_color(self, colors):
+        self.color = random.choice(colors)
