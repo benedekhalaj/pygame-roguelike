@@ -11,12 +11,16 @@ def control_player(player):
     keys = view.get_input()
 
     if keys[pygame.K_LEFT]:
-        player.x -= player.velocity
+        player.move_left()
     if keys[pygame.K_RIGHT]:
-        player.x += player.velocity
+        player.move_right()
     if keys[pygame.K_UP]:
-        player.y -= player.velocity
+        player.move_up()
     if keys[pygame.K_DOWN]:
-        player.y += player.velocity
+        player.move_down()
+    if keys[pygame.K_LSHIFT]:
+        player.sprint()
+    else:
+        player.walk()
 
     return player
