@@ -15,6 +15,11 @@ def set_pygame_settings(run):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+
+    keys = view.get_input()
+    if keys[pygame.K_q]:
+        run = False
+
     return run
 
 
