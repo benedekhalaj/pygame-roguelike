@@ -4,7 +4,7 @@ import pygame
 
 
 def get_player():
-    return player.create_player()
+    return player.create_player(view.RED)
 
 
 def control_player(player):

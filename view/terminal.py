@@ -4,6 +4,7 @@ SCREEN_WIDTH = 500
 SCREEN_HEIGHT = 500
 
 BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
 
@@ -20,7 +21,8 @@ def get_input():
     return pygame.key.get_pressed()
 
 
-def display_screen(window, player):
+def display_screen(window, *entities):
     window.fill(BLACK)
-    pygame.draw.rect(window, RED, (player['x'], player['y'], player['width'], player['height']))
+    for entity in entities:
+        pygame.draw.rect(window, entity['color'], (entity['x'], entity['y'], entity['width'], entity['height']))
     pygame.display.update()
