@@ -4,9 +4,11 @@ from view import terminal as view
 
 def get_rectangles():
     obstacles = []
-    obstacles.append(items.Rectangle(view.WHITE, (100, 100, 50, 50)))
-    obstacles.append(items.Rectangle(view.WHITE, (150, 100, 50, 50)))
-    obstacles.append(items.Rectangle(view.WHITE, (200, 100, 50, 50)))
-    obstacles.append(items.Rectangle(view.WHITE, (200, 150, 50, 50)))
-    obstacles.append(items.Rectangle(view.WHITE, (200, 200, 50, 50)))
+    size = 25
+    color = view.WHITE
+    for index in range(0, view.SCREEN_WIDTH, size):
+        obstacles.append(items.Rectangle(color, (index, 0, size, size)))
+        obstacles.append(items.Rectangle(color, (0, index, size, size)))
+        obstacles.append(items.Rectangle(color, (index, view.SCREEN_WIDTH - size, size, size)))
+
     return obstacles

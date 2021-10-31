@@ -26,10 +26,10 @@ def control_player(player, screen, obstacles):
     keys = view.get_input()
 
     if keys[pygame.K_LEFT] and check_screen_boundaries(player, screen, "left"):
-        player.move(obstacles, -2, 0)
+        player.move(obstacles, -player.velocity, 0)
     if keys[pygame.K_RIGHT] and check_screen_boundaries(player, screen, "right"):
-        player.move(obstacles, 2, 0)
+        player.move(obstacles, player.velocity, 0)
     if keys[pygame.K_UP] and check_screen_boundaries(player, screen, "up"):
-        player.move(obstacles, 0, -2)
+        player.move(obstacles, 0, -player.velocity)
     if keys[pygame.K_DOWN] and check_screen_boundaries(player, screen, "down"):
-        player.move(obstacles, 0, 2)
+        player.move(obstacles, 0, player.velocity)

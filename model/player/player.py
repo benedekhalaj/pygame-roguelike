@@ -7,13 +7,12 @@ class Player():
     def __init__(self, color):
         self.name = 'Nick'
         self.color = color
-        self.x = 10
-        self.y = 10
+        self.x = 200
+        self.y = 200
         self.width = 50
         self.height = 50
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.velocity = 2
-        self.hitbox = util.Hitbox([self.x, self.x + self.width, self.y + self.height, self.x + self.width + self.height])
+        self.velocity = 5
 
     def move(self, obstacles, dx, dy):
         if dx != 0:
