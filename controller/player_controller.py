@@ -11,27 +11,16 @@ def get_player():
     return player.Player(view.RED)
 
 
-def check_screen_boundaries(player, screen, direction):
-    if direction == "left":
-        return player.x > screen.x
-    elif direction == "right":
-        return player.x + player.width < screen.x + screen.width
-    elif direction == "up":
-        return player.y > screen.y
-    elif direction == "down":
-        return player.y + player.height < screen.y + screen.height
-
-
-def control_player(player, screen, obstacles):
+def control_player(player, obstacles):
     keys = view.get_input()
 
-    if keys[pygame.K_LEFT] and check_screen_boundaries(player, screen, "left"):
+    if keys[pygame.K_LEFT]:
         player.move(obstacles, -player.velocity, 0)
-    if keys[pygame.K_RIGHT] and check_screen_boundaries(player, screen, "right"):
+    if keys[pygame.K_RIGHT]:
         player.move(obstacles, player.velocity, 0)
-    if keys[pygame.K_UP] and check_screen_boundaries(player, screen, "up"):
+    if keys[pygame.K_UP]:
         player.move(obstacles, 0, -player.velocity)
-    if keys[pygame.K_DOWN] and check_screen_boundaries(player, screen, "down"):
+    if keys[pygame.K_DOWN]:
         player.move(obstacles, 0, player.velocity)
     if keys[pygame.K_LSHIFT]:
         player.sprint()

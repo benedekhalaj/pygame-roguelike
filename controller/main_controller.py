@@ -1,5 +1,5 @@
 from view import terminal as view
-from controller import item_controller, npc_controller, player_controller, screen_controller
+from controller import item_controller, npc_controller, player_controller
 import pygame
 
 
@@ -29,14 +29,13 @@ def set_pygame_settings(run):
 def main():
     window = init_pygame()
     player = player_controller.get_player()
-    screen = screen_controller.get_screen()
     obstacles = item_controller.get_rectangles()
     entities = [player] + obstacles
 
     run = True
     while run:
         run = set_pygame_settings(run)
-        player_controller.control_player(player, screen, obstacles)
+        player_controller.control_player(player, obstacles)
         view.display_screen(window, entities)
 
     pygame.quit()
