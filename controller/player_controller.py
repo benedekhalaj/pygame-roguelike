@@ -22,35 +22,14 @@ def check_screen_boundaries(player, screen, direction):
         return player.y + player.height < screen.y + screen.height
 
 
-def control_player(player, screen):
+def control_player(player, screen, obstacles):
     keys = view.get_input()
 
     if keys[pygame.K_LEFT] and check_screen_boundaries(player, screen, "left"):
-        player.move_left()
+        player.move(obstacles, -2, 0)
     if keys[pygame.K_RIGHT] and check_screen_boundaries(player, screen, "right"):
-        player.move_right()
+        player.move(obstacles, 2, 0)
     if keys[pygame.K_UP] and check_screen_boundaries(player, screen, "up"):
-        player.move_up()
+        player.move(obstacles, 0, -2)
     if keys[pygame.K_DOWN] and check_screen_boundaries(player, screen, "down"):
-        player.move_down()
-    if keys[pygame.K_LSHIFT]:
-        player.sprint()
-    else:
-        player.walk()
-
-
-def change_player_color(player, timer):
-    keys = view.get_input()
-
-    seconds = 0.2
-
-    if timer > seconds * 60:
-        timer = 0
-
-    if timer == 0:
-        if keys[pygame.K_SPACE]:
-            player.change_color(get_colors())
-            timer += 1
-    else:
-        timer += 1
-    return timer
+        player.move(obstacles, 0, 2)

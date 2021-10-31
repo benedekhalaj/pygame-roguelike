@@ -1,5 +1,6 @@
 from model import data_manager, util
 import random
+import pygame
 
 
 class Player():
@@ -8,30 +9,29 @@ class Player():
         self.color = color
         self.x = 10
         self.y = 10
-        self.width = 64
-        self.height = 64
-        self.default_velocity = 2
-        self.sprint_velocity = 5
-        self.velocity = self.default_velocity
+        self.width = 50
+        self.height = 50
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.velocity = 2
         self.hitbox = util.Hitbox([self.x, self.x + self.width, self.y + self.height, self.x + self.width + self.height])
 
-    def move_up(self):
-        self.y -= self.velocity
+    def move(self, obstacles, dx, dy):
+        if dx != 0:
+            self.move_single_axis(obstacles, dx, 0)
+        if dy != 0:
+            self.move_single_axis(obstacles, 0, dy)
 
-    def move_down(self):
-        self.y += self.velocity
+    def move_single_axis(self, obstacles, dx, dy):
+        self.rect.x += dx
+        self.rect.y += dy
 
-    def move_left(self):
-        self.x -= self.velocity
-
-    def move_right(self):
-        self.x += self.velocity
-
-    def walk(self):
-        self.velocity = self.default_velocity
-
-    def sprint(self):
-        self.velocity = self.sprint_velocity
-
-    def change_color(self, colors):
-        self.color = random.choice(colors)
+        for obstacle in obstacles:
+            if self.rect.colliderect(obstacle.rect):
+                if dx > 0:
+                    self.rect.right = obstacle.rect.left
+                if dx < 0:
+                    self.rect.left = obstacle.rect.right
+                if dy > 0:
+                    self.rect.bottom = obstacle.rect.top
+                if dy < 0:
+                    self.rect.top = obstacle.rect.bottom

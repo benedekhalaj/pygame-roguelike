@@ -29,15 +29,14 @@ def set_pygame_settings(run):
 def main():
     window = init_pygame()
     player = player_controller.get_player()
-    white_rectangle = item_controller.get_white_rectangle()
     screen = screen_controller.get_screen()
-    color_timer = 0
+    obstacles = item_controller.get_rectangles()
+    entities = [player] + obstacles
 
     run = True
     while run:
         run = set_pygame_settings(run)
-        player_controller.control_player(player, screen)
-        color_timer = player_controller.change_player_color(player, color_timer)
-        view.display_screen(window, player, white_rectangle)
+        player_controller.control_player(player, screen, obstacles)
+        view.display_screen(window, entities)
 
     pygame.quit()
