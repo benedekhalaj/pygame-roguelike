@@ -33,3 +33,7 @@ def control_player(player, screen, obstacles):
         player.move(obstacles, 0, -player.velocity)
     if keys[pygame.K_DOWN] and check_screen_boundaries(player, screen, "down"):
         player.move(obstacles, 0, player.velocity)
+    if keys[pygame.K_LSHIFT]:
+        player.sprint()
+    else:
+        player.walk()

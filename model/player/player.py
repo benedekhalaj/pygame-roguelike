@@ -12,7 +12,9 @@ class Player():
         self.width = 50
         self.height = 50
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.velocity = 5
+        self.default_velocity = 3
+        self.sprint_velocity = 5
+        self.velocity = self.default_velocity
 
     def move(self, obstacles, dx, dy):
         if dx != 0:
@@ -34,3 +36,9 @@ class Player():
                     self.rect.bottom = obstacle.rect.top
                 if dy < 0:
                     self.rect.top = obstacle.rect.bottom
+
+    def sprint(self):
+        self.velocity = self.sprint_velocity
+
+    def walk(self):
+        self.velocity = self.default_velocity
