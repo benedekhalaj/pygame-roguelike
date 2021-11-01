@@ -15,8 +15,7 @@ class Rectangle():
 
 class Key():
     def __init__(self, color, position):
-        self.type = 'simple key'
-        self.type = 'simple'
+        self.type = 'key'
         self.color = color
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = True

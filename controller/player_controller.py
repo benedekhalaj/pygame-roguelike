@@ -32,5 +32,7 @@ def control_player(player, obstacles):
         player.walk()
 
 
-def add_item_to_inventory(player, item, inventory):
-    player.pick_up_key(inventory, item)
+def add_items_to_inventory(player, items, inventory):
+    for item in items:
+        if item.type == 'key':
+            player.pick_up_key(inventory, item)

@@ -14,7 +14,11 @@ def get_rectangles():
     return obstacles
 
 
-def get_key():
+def get_keys():
     color = view.YELLOW
-    key = items.Key(color, (400, 100, 20, 20))
-    return key
+    keys = []
+    keys.append(items.Key(color, (400, 100, 20, 20)))
+    keys.append(items.Key(color, (400, 200, 20, 20)))
+    keys.append(items.Key(color, (400, 400, 20, 20)))
+    keys.append(items.Key(color, (150, 400, 20, 20)))
+    return keys

@@ -36,16 +36,16 @@ def main():
     window = init_pygame()
     player = player_controller.get_player()
     obstacles = item_controller.get_rectangles()
-    key = item_controller.get_key()
+    keys = item_controller.get_keys()
     inventory = player_controller.get_inventory()
-    rectangles = [player] + obstacles + [key]
+    rectangles = [player] + obstacles + keys
     print(inventory.keys)
 
     run = True
     while run:
         run = set_pygame_settings(run)
         player_controller.control_player(player, obstacles)
-        player_controller.add_item_to_inventory(player, key, inventory)
+        player_controller.add_items_to_inventory(player, keys, inventory)
         view.display_background(window)
         display_rectangles(window, rectangles)
         view.refresh_display()

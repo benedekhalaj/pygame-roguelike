@@ -46,7 +46,7 @@ class Player():
 
     def pick_up_key(self, inventory, key):
         if self.rect.colliderect(key.rect) and key.visible is True:
-            inventory.keys += 1
+            inventory.add_key()
             key.visible = False
             print(inventory.keys)
 
@@ -54,6 +54,8 @@ class Player():
 class Inventory():
     def __init__(self):
         self.keys = 0
+        self.keys_limit = 3
 
     def add_key(self):
-        self.keys += 1
+        if self.keys < self.keys_limit:
+            self.keys += 1
