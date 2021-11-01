@@ -48,14 +48,26 @@ class Player():
         if self.rect.colliderect(key.rect) and key.visible is True:
             inventory.add_key()
             key.visible = False
-            print(inventory.keys)
+            print(f'Keys: {inventory.keys}')
+
+    def pick_up_health_potion(self, inventory, health_potion):
+        if self.rect.colliderect(health_potion.rect) and health_potion.visible is True:
+            inventory.add_health_potion()
+            health_potion.visible = False
+            print(f'Health Potions: {inventory.health_potions}')
 
 
 class Inventory():
     def __init__(self):
         self.keys = 0
         self.keys_limit = 3
+        self.health_potions = 0
+        self.health_potions_limit = 2
 
     def add_key(self):
         if self.keys < self.keys_limit:
             self.keys += 1
+
+    def add_health_potion(self):
+        if self.health_potions < self.health_potions_limit:
+            self.health_potions += 1

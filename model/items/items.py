@@ -21,6 +21,15 @@ class Key():
         self.visible = True
 
 
+class Health_Potion():
+    def __init__(self, color, position):
+        self.type = 'potion'
+        self.sub_type = 'health'
+        self.color = color
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.visible = True
+
+
 def create_rectangles(color, screen_width):
     obstacles = []
     size = 25
@@ -38,3 +47,9 @@ def create_keys(color):
     keys.append(Key(color, (400, 400, 20, 20)))
     keys.append(Key(color, (150, 400, 20, 20)))
     return keys
+
+
+def create_health_potions(color):
+    health_potions = []
+    health_potions.append(Health_Potion(color, (100, 50, 30, 30)))
+    return health_potions

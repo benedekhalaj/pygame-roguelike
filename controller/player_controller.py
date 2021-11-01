@@ -36,3 +36,6 @@ def add_items_to_inventory(player, items, inventory):
     for item in items:
         if item.type == 'key':
             player.pick_up_key(inventory, item)
+        elif item.type == 'potion':
+            if item.sub_type == 'health':
+                player.pick_up_health_potion(inventory, item)

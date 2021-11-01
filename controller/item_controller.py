@@ -6,5 +6,8 @@ def get_rectangles():
     return items.create_rectangles(view.WHITE, view.SCREEN_WIDTH)
 
 
-def get_keys():
-    return items.create_keys(view.YELLOW)
+def get_items():
+    game_items = []
+    game_items.extend(items.create_keys(view.YELLOW))
+    game_items.extend(items.create_health_potions(view.RED))
+    return game_items
