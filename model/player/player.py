@@ -42,3 +42,12 @@ class Player():
 
     def walk(self):
         self.velocity = self.default_velocity
+
+
+class Inventory():
+    def __init__(self):
+        self.keys = 0
+
+    def add_key(self):
+        self.keys += 1
+    

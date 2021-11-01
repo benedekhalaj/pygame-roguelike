@@ -12,3 +12,9 @@ def get_rectangles():
         obstacles.append(items.Rectangle(color, (index, view.SCREEN_WIDTH - size, size, size)))
 
     return obstacles
+
+
+def get_key():
+    color = view.YELLOW
+    key = items.Key(color, (400, 100, 20, 20))
+    return key

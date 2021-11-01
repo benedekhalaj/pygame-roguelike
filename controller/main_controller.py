@@ -30,7 +30,8 @@ def main():
     window = init_pygame()
     player = player_controller.get_player()
     obstacles = item_controller.get_rectangles()
-    entities = [player] + obstacles
+    key = item_controller.get_key()
+    entities = [player] + obstacles + [key]
 
     run = True
     while run:
