@@ -25,8 +25,14 @@ def get_input():
     return pygame.key.get_pressed()
 
 
-def display_screen(window, entities):
+def display_background(window):
     window.fill(BLACK)
-    for entity in entities:
-        pygame.draw.rect(window, entity.color, (entity.rect.x, entity.rect.y, entity.rect.width, entity.rect.height))
+
+
+def refresh_display():
     pygame.display.update()
+
+
+def display_rectangle(window, rectangle):
+    rectangle_coordinates = (rectangle.rect.x, rectangle.rect.y, rectangle.rect.width, rectangle.rect.height)
+    pygame.draw.rect(window, rectangle.color, rectangle_coordinates)
