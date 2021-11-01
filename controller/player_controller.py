@@ -11,6 +11,10 @@ def get_player():
     return player.Player(view.RED)
 
 
+def get_inventory():
+    return player.Inventory()
+
+
 def control_player(player, obstacles):
     keys = view.get_input()
 
@@ -26,3 +30,7 @@ def control_player(player, obstacles):
         player.sprint()
     else:
         player.walk()
+
+
+def add_item_to_inventory(player, item, inventory):
+    player.pick_up_key(inventory, item)

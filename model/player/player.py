@@ -43,6 +43,13 @@ class Player():
     def walk(self):
         self.velocity = self.default_velocity
 
+    def pick_up_key(self, inventory, key):
+        if self.rect.colliderect(key.rect):
+            inventory.keys += 1
+            print('Plus 1 key')
+
+
+
 
 class Inventory():
     def __init__(self):
