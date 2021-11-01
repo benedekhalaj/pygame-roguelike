@@ -28,7 +28,8 @@ def set_pygame_settings(run):
 
 def display_rectangles(window, rectangles):
     for rectangle in rectangles:
-        view.display_rectangle(window, rectangle)
+        if rectangle.visible is True:
+            view.display_rectangle(window, rectangle)
 
 
 def main():
@@ -38,6 +39,7 @@ def main():
     key = item_controller.get_key()
     inventory = player_controller.get_inventory()
     rectangles = [player] + obstacles + [key]
+    print(inventory.keys)
 
     run = True
     while run:

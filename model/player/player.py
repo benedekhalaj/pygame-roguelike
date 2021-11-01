@@ -15,6 +15,7 @@ class Player():
         self.default_velocity = 3
         self.sprint_velocity = 5
         self.velocity = self.default_velocity
+        self.visible = True
 
     def move(self, obstacles, dx, dy):
         if dx != 0:
@@ -44,11 +45,10 @@ class Player():
         self.velocity = self.default_velocity
 
     def pick_up_key(self, inventory, key):
-        if self.rect.colliderect(key.rect):
+        if self.rect.colliderect(key.rect) and key.visible is True:
             inventory.keys += 1
-            print('Plus 1 key')
-
-
+            key.visible = False
+            print(inventory.keys)
 
 
 class Inventory():
@@ -57,4 +57,3 @@ class Inventory():
 
     def add_key(self):
         self.keys += 1
-    

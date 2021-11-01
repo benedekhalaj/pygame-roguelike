@@ -10,10 +10,13 @@ class Rectangle():
         self.width = position[2]
         self.height = position[3]
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.visible = True
 
 
 class Key():
     def __init__(self, color, position):
+        self.type = 'simple key'
         self.type = 'simple'
         self.color = color
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.visible = True
