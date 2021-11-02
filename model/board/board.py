@@ -14,13 +14,14 @@ def create_map():
     return text_map, map_sings_dict
 
 
-def create_board():
+def create_board(screen_size):
     text_map, map_sign_dict = create_map()
     character_height = 32
     character_width = 32
     map_width = character_width * len(text_map)
     map_height = character_height * len(text_map[0])
     player_position = find_player_position(text_map)
+
 
     asterix = []
 
@@ -46,10 +47,9 @@ def create_board():
 
 
 def find_player_position(text_map: list):
+    player_symbol = 'x'
     for line_index, line in enumerate(text_map):
-        try:
-            x = line.index("x")
+        if player_symbol in line:
+            x = line.index(player_symbol)
             y = line_index
             return (x, y)
-        except ValueError:
-            continue
