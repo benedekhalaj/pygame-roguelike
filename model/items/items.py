@@ -30,6 +30,20 @@ class Health_Potion():
         self.visible = True
 
 
+class Chest():
+    def __init__(self, color, position):
+        self.type = 'chest'
+        self.color = color
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.visible = True
+
+
+def create_chests(color):
+    chests = []
+    chests.append(Chest(color, (600, 600, 60, 60)))
+    return chests
+
+
 def create_rectangles(color, screen_width):
     obstacles = []
     size = 25

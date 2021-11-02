@@ -67,6 +67,12 @@ class Player():
             health_potion.visible = False
             print(f'Health Potions: {inventory.health_potions}')
 
+    def interact_with_chest(self, inventory, chest):
+        if self.rect.colliderect(chest.rect) and chest.visible is True:
+            inventory.add_health_potion()
+            chest.visible = False
+            print(f'Health Potions: {inventory.health_potions}')
+
 
 class Inventory():
     def __init__(self):

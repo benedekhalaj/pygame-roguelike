@@ -1,3 +1,4 @@
+from pygame.constants import KEYDOWN
 from model.player import player
 from view import terminal as view
 import pygame
@@ -38,9 +39,14 @@ def control_player(player, entities, current_time):
 
 
 def add_items_to_inventory(player, items, inventory):
+    keys = view.get_input()
+
     for item in items:
         if item.type == 'key':
             player.pick_up_key(inventory, item)
         elif item.type == 'potion':
             if item.sub_type == 'health':
                 player.pick_up_health_potion(inventory, item)
+        elif item.type == 'chest':
+            if keys[pygame.K_e]:
+                player.interact_with_chest(inventory, item)

@@ -10,4 +10,5 @@ def get_items():
     game_items = []
     game_items.extend(items.create_keys(view.YELLOW))
     game_items.extend(items.create_health_potions(view.RED))
+    game_items.extend(items.create_chests(view.GREEN))
     return game_items
