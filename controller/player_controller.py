@@ -15,17 +15,17 @@ def get_inventory():
     return player.Inventory()
 
 
-def control_player(player, obstacles, current_time):
+def control_player(player, entities, current_time):
     keys = view.get_input()
 
     if keys[pygame.K_LEFT]:
-        player.move(obstacles, -player.velocity, 0)
+        player.move(entities, -player.velocity, 0)
     if keys[pygame.K_RIGHT]:
-        player.move(obstacles, player.velocity, 0)
+        player.move(entities, player.velocity, 0)
     if keys[pygame.K_UP]:
-        player.move(obstacles, 0, -player.velocity)
+        player.move(entities, 0, -player.velocity)
     if keys[pygame.K_DOWN]:
-        player.move(obstacles, 0, player.velocity)
+        player.move(entities, 0, player.velocity)
     if keys[pygame.K_LSHIFT]:
         player.sprint()
     else:

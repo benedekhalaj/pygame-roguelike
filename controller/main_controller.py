@@ -39,6 +39,10 @@ def main():
     items = item_controller.get_items()
     inventory = player_controller.get_inventory()
     rectangles = [player] + obstacles + items
+    entities = {
+        "obstacles": obstacles,
+        "items": items
+    }
 
     current_time = 0
     button_press_time = 0
@@ -49,7 +53,7 @@ def main():
     run = True
     while run:
         run = set_pygame_settings(run)
-        player_controller.control_player(player, obstacles, current_time)
+        player_controller.control_player(player, entities, current_time)
         player_controller.add_items_to_inventory(player, items, inventory)
         view.display_background(window)
         display_rectangles(window, rectangles)

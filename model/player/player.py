@@ -17,17 +17,25 @@ class Player():
         self.velocity = self.default_velocity
         self.visible = True
 
-    def move(self, obstacles, dx, dy):
+    def move(self, entities, dx, dy):
         if dx != 0:
-            self.move_single_axis(obstacles, dx, 0)
+            # self.move_single_axis(entities, dx, 0)
+            self.move_others(entities, dx, 0)
         if dy != 0:
-            self.move_single_axis(obstacles, 0, dy)
+            # self.move_single_axis(entities, 0, dy)
+            self.move_others(entities, 0, dy)
 
-    def move_single_axis(self, obstacles, dx, dy):
+    def move_others(self, entities, dx, dy):
+        for key in entities:
+            for item in entities[key]:
+                item.rect.x += -dx
+                item.rect.y += -dy
+
+    def move_single_axis(self, entities, dx, dy):
         self.rect.x += dx
         self.rect.y += dy
 
-        for obstacle in obstacles:
+        for obstacle in entities['obstacles']:
             if self.rect.colliderect(obstacle.rect):
                 if dx > 0:
                     self.rect.right = obstacle.rect.left
