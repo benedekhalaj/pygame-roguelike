@@ -1,6 +1,6 @@
 x:player
  :floor_1
-0:outter_wall_1
+0:outer_wall_1
 1:inner_wall_1
 2:chest
 3:enemy_1

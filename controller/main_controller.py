@@ -1,6 +1,7 @@
 from view import view
-from controller import board_controller, npc_controller, player_controller
+from controller import board_controller, npc_controller, player_controller, item_controller
 import pygame
+
 
 
 CLOCK = pygame.time.Clock()
@@ -32,9 +33,13 @@ def quit_game(run):
 
 def main():
     window = init_pygame()
+    asterix = board_controller.get_board()
 
     run = True
     while run:
         set_fps()
         run = quit_game(run)
+        view.display_background(window)
+        view.display_asterix(window, asterix)
+        view.refresh_display()
     pygame.quit()
