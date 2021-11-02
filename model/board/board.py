@@ -27,8 +27,8 @@ def create_board(screen_size):
 
     for row_place, line in enumerate(text_map):
         for col_place, char in enumerate(line):
-            y = ((row_place - player_position[1]) * character_height) + screen_size[1] / 2
-            x = ((col_place - player_position[0]) * character_width) + screen_size[0] / 2
+            y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
+            x = ((col_place - player_position[0]) * character_width) + (screen_size[0] / 2 - character_width / 2)
             position = (x, y, character_width, character_height)
             picture_name = map_sign_dict[char]
             if char == "x":
