@@ -4,6 +4,7 @@ import pygame
 
 
 def control_player(asterix):
+    screen_size = (view.WINDOW_WIDTH, view.WINDOW_HEIGHT)
     for item in asterix:
         if item.type == 'player':
             player_character = item
@@ -18,4 +19,4 @@ def control_player(asterix):
         player_character.move_up(asterix)
     if keys[pygame.K_DOWN]:
         player_character.move_down(asterix)
-
+    player_character.set_center(screen_size)

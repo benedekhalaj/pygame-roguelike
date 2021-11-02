@@ -31,6 +31,14 @@ class Player():
         for item in asterix:
             item.rect.y -= self.velocity
 
+    def set_center(self, screen_size):
+        screen_width = screen_size[0]
+        screen_height = screen_size[1]
+        x = screen_width / 2 - self.rect.width / 2
+        y = screen_height / 2 - self.rect.height / 2
+        self.rect.x = x
+        self.rect.y = y
+
 
 
 
