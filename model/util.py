@@ -15,21 +15,33 @@ class Player():
         self.velocity = 10
         self.type = 'player'
 
-    def move_left(self, asterix):
+    def check_collision(self, asterix):
         for item in asterix:
-            item.rect.x += self.velocity
+            if item.type != 'floor' and item.type != 'player' and self.rect.colliderect(item.rect):
+                return True
+        return False
 
-    def move_right(self, asterix):
+    def move_everything_left(self, asterix):
+        collide = self.check_collision(asterix)
         for item in asterix:
             item.rect.x -= self.velocity
 
-    def move_up(self, asterix):
-        for item in asterix:
-            item.rect.y += self.velocity
 
-    def move_down(self, asterix):
+    def move_everything_right(self, asterix):
+        collide = self.check_collision(asterix)
+        for item in asterix:
+            item.rect.x += self.velocity
+
+    def move_everything_up(self, asterix):
+        collide = self.check_collision(asterix)
         for item in asterix:
             item.rect.y -= self.velocity
+
+
+    def move_everything_down(self, asterix):
+        collide = self.check_collision(asterix)
+        for item in asterix:
+            item.rect.y += self.velocity
 
     def set_center(self, screen_size):
         screen_width = screen_size[0]
@@ -38,6 +50,17 @@ class Player():
         y = screen_height / 2 - self.rect.height / 2
         self.rect.x = x
         self.rect.y = y
+
+        # for obstacle in entities['obstacles']:
+        #     if self.rect.colliderect(obstacle.rect):
+        #         if dx > 0:
+        #             self.rect.right = obstacle.rect.left
+        #         if dx < 0:
+        #             self.rect.left = obstacle.rect.right
+        #         if dy > 0:
+        #             self.rect.bottom = obstacle.rect.top
+        #         if dy < 0:
+        #             self.rect.top = obstacle.rect.bottom
 
 
 

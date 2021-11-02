@@ -12,11 +12,11 @@ def control_player(asterix):
     keys = view.get_input()
 
     if keys[pygame.K_LEFT]:
-        player_character.move_left(asterix)
+        player_character.move_everything_right(asterix)
     if keys[pygame.K_RIGHT]:
-        player_character.move_right(asterix)
+        player_character.move_everything_left(asterix)
     if keys[pygame.K_UP]:
-        player_character.move_up(asterix)
+        player_character.move_everything_down(asterix)
     if keys[pygame.K_DOWN]:
-        player_character.move_down(asterix)
+        player_character.move_everything_up(asterix)
     player_character.set_center(screen_size)
