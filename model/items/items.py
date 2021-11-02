@@ -35,7 +35,7 @@ def create_rectangles(color, screen_width):
     size = 25
     for index in range(0, screen_width, size):
         obstacles.append(Rectangle(color, (index, 0, size, size)))
-        obstacles.append(Rectangle(color, (0, index, size, size)))
+        # obstacles.append(Rectangle(color, (0, index, size, size)))
         obstacles.append(Rectangle(color, (index, screen_width - size, size, size)))
     return obstacles
 
@@ -44,6 +44,7 @@ def create_keys(color):
     keys = []
     keys.append(Key(color, (400, 100, 20, 20)))
     keys.append(Key(color, (400, 200, 20, 20)))
+    keys.append(Key(color, (800, 200, 20, 20)))
     keys.append(Key(color, (400, 400, 20, 20)))
     keys.append(Key(color, (150, 400, 20, 20)))
     return keys

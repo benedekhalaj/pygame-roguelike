@@ -15,7 +15,7 @@ def get_inventory():
     return player.Inventory()
 
 
-def control_player(player, obstacles):
+def control_player(player, obstacles, current_time):
     keys = view.get_input()
 
     if keys[pygame.K_LEFT]:
@@ -30,6 +30,11 @@ def control_player(player, obstacles):
         player.sprint()
     else:
         player.walk()
+    if keys[pygame.K_SPACE]:
+        key_pressed_time = pygame.time.get_ticks()
+        if key_pressed_time + 2000 < current_time:
+            colors = get_colors()
+            player.change_color(colors)
 
 
 def add_items_to_inventory(player, items, inventory):

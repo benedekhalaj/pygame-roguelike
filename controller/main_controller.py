@@ -39,16 +39,22 @@ def main():
     items = item_controller.get_items()
     inventory = player_controller.get_inventory()
     rectangles = [player] + obstacles + items
+
+    current_time = 0
+    button_press_time = 0
+
     print(f'Keys: {inventory.keys}')
     print(f'Health Potions: {inventory.health_potions}')
 
     run = True
     while run:
         run = set_pygame_settings(run)
-        player_controller.control_player(player, obstacles)
+        player_controller.control_player(player, obstacles, current_time)
         player_controller.add_items_to_inventory(player, items, inventory)
         view.display_background(window)
         display_rectangles(window, rectangles)
         view.refresh_display()
+
+        current_time = pygame.time.get_ticks()
 
     pygame.quit()

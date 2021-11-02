@@ -44,6 +44,9 @@ class Player():
     def walk(self):
         self.velocity = self.default_velocity
 
+    def change_color(self, colors):
+        self.color = random.choice(colors)
+
     def pick_up_key(self, inventory, key):
         if self.rect.colliderect(key.rect) and key.visible is True:
             inventory.add_key()
