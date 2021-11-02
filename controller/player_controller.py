@@ -8,7 +8,7 @@ def get_colors():
 
 
 def get_player():
-    return player.Player(view.RED)
+    return player.Player(view.RED, (view.SCREEN_WIDTH, view.SCREEN_HEIGHT))
 
 
 def get_inventory():

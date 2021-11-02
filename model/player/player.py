@@ -4,13 +4,13 @@ import pygame
 
 
 class Player():
-    def __init__(self, color):
+    def __init__(self, color, screen_size):
         self.name = 'Nick'
         self.color = color
-        self.x = 200
-        self.y = 200
         self.width = 50
         self.height = 50
+        self.x = screen_size[0] / 2 - self.width / 2
+        self.y = screen_size[1] / 2 - self.height / 2
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.default_velocity = 3
         self.sprint_velocity = 5
