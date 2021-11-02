@@ -1,7 +1,7 @@
 import pygame
 
-WINDOW_WIDTH = 500
-WINDOW_HEIGHT = 500
+WINDOW_WIDTH = 1280
+WINDOW_HEIGHT = 720
 
 
 def set_display_caption(caption):
@@ -24,3 +24,7 @@ def refresh_display():
 
 def display_background(window):
     window.fill((0, 0, 0))
+
+
+def get_input():
+    return pygame.key.get_pressed()

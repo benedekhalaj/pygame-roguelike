@@ -39,6 +39,7 @@ def main():
     while run:
         set_fps()
         run = quit_game(run)
+        player_controller.control_player(asterix)
         view.display_background(window)
         view.display_asterix(window, asterix)
         view.refresh_display()
