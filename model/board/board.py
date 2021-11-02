@@ -1,5 +1,8 @@
+from types import coroutine
 from model import data_manager, util
 import pygame
+
+from model.player.player import Player
 
 def create_map():
     text_map = data_manager.file_opener("model/board/map_file/map.txt")
@@ -17,6 +20,8 @@ def create_board():
     character_width = 32
     map_width = character_width * len(text_map)
     map_height = character_height * len(text_map[0])
+    player_position = find_player_position(text_map)
+
     asterix = []
 
     for row_place, line in enumerate(text_map):
@@ -36,6 +41,15 @@ def create_board():
             elif char == " ":
                 asterix.append(util.Floor(position, util.WHITE))
     return asterix
-
                 
 # pygame.image.load(f"model/board/textures/{picture_name}.png")
+
+
+def find_player_position(text_map: list):
+    for line_index, line in enumerate(text_map):
+        try:
+            x = line.index("x")
+            y = line_index
+            return (x, y)
+        except ValueError:
+            continue
