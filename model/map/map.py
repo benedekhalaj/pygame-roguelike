@@ -11,7 +11,7 @@ def generate_map():
     return text_map, map_sings_dict
 
 
-def create_map(screen_size):
+def create_map(screen_size, colors):
     text_map, map_sign_dict = generate_map()
     character_height = 32
     character_width = 32
@@ -22,16 +22,16 @@ def create_map(screen_size):
             y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
             x = ((col_place - player_position[0]) * character_width) + (screen_size[0] / 2 - character_width / 2)
             position = (x, y, character_width, character_height)
-            floor = blueprint.Floor(position, blueprint.WHITE)
+            floor = blueprint.Floor(position, colors.WHITE)
             asterix.append(floor)
             if char == "x":
-                player_on_board = blueprint.Player(position, blueprint.RED)
+                player_on_board = blueprint.Player(position, colors.RED)
             elif char == "0":
-                asterix.append(blueprint.Wall(position, blueprint.BLUE))
+                asterix.append(blueprint.Wall(position, colors.BLUE))
             elif char == "1":
-                asterix.append(blueprint.Wall(position, blueprint.YELLOW))
+                asterix.append(blueprint.Wall(position, colors.YELLOW))
             elif char == "2":
-                asterix.append(blueprint.Chest(position, blueprint.GREEN))
+                asterix.append(blueprint.Chest(position, colors.GREEN))
     asterix.append(player_on_board)
     return asterix
 

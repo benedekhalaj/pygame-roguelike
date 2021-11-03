@@ -4,6 +4,19 @@ WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
 
+class Colors():
+    def __init__(self):
+        self.BLACK = (0, 0, 0)
+        self.WHITE = (255, 255, 255)
+        self.RED = (255, 0, 0)
+        self.YELLOW = (255, 255, 0)
+        self.GREEN = (0, 255, 0)
+        self.BLUE = (0, 0, 255)
+
+
+COLORS = Colors()
+
+
 def set_display_caption(caption):
     pygame.display.set_caption(caption)
 
@@ -23,7 +36,7 @@ def refresh_display():
 
 
 def display_background(window):
-    window.fill((0, 0, 0))
+    window.fill(COLORS.BLACK)
 
 
 def get_input():
