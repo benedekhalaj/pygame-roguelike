@@ -17,6 +17,7 @@ def create_map(screen_size, colors):
     character_width = 32
     player_position = find_player_position(text_map)
     objects = []
+    enemy_on_board = []
     for row_place, line in enumerate(text_map):
         for col_place, char in enumerate(line):
             y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
@@ -35,8 +36,9 @@ def create_map(screen_size, colors):
             elif char == "k":
                 objects.append(blueprint.Key(position, colors.MAGENTA))
             elif char == "e":
-                objects.append(blueprint.Enemy(position, colors.BROWN))
-
+                enemy_on_board.append(blueprint.Enemy(position, colors.BROWN))
+                
+    objects.extend(enemy_on_board)
     objects.append(player_on_board)
     return objects
 
