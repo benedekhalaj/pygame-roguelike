@@ -43,7 +43,6 @@ class Player():
                 item.rect.x -= x_direction
                 item.rect.y -= y_direction
 
-
     def add_item_to_inventory(self, objects):
         for item in objects:
             if self.rect.colliderect(item.rect):
@@ -54,24 +53,37 @@ class Player():
                     self.inventory.add_health_potion()
                     item.visible = False
 
-    def take_damage(self,objects):
-        self.start_damage_timer()
+    def take_damage(self, objects):
+        self.set_attributes()
         for object in objects:
             if object.type == "enemy":
                 if self.rect.colliderect(object.rect):
-                    if self.damage_timer < 1:
-                        print("hello")
+                    if not self.invicible:
                         self.invicible = True
-                    
 
-    def start_damage_timer(self):
-        if self.invicible:
-            self.damage_timer += 1
-            self.color = self.invicible_color
-        if self.damage_timer > self.damage_limit:
-            self.invicible = False
-            self.damage_timer = 0
-            self.color = self.standard_color
+    def set_attributes(self):
+        def set_damage_timer(self):
+            if self.invicible:
+                self.damage_timer += 1
+            else:
+                self.damage_timer = 0
+
+        def set_color(self):
+            if self.invicible:
+                self.color = self.invicible_color
+            else:
+                self.color = self.standard_color
+
+        def set_invicible(self):
+            if self.damage_timer > self.damage_limit:
+                self.invicible = False
+
+        set_damage_timer(self)
+        set_color(self)
+        set_invicible(self)
+
+
+
 
 
 class Inventory():
