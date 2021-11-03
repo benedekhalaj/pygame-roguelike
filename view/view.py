@@ -12,6 +12,7 @@ class Colors():
         self.YELLOW = (255, 255, 0)
         self.GREEN = (0, 255, 0)
         self.BLUE = (0, 0, 255)
+        self.MAGENTA = (255, 0, 255)
 
 
 COLORS = Colors()

@@ -54,6 +54,22 @@ class Inventory():
             self.health_potions += 1
 
 
+class Key():
+    def __init__(self, position, color):
+        self.type = 'key'
+        self.color = color
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.visible = True
+
+
+class Health_Potion():
+    def __init__(self, position, color):
+        self.type = 'health_potion'
+        self.color = color
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.visible = True
+
+
 class Wall():
     def __init__(self, position, color):
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
