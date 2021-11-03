@@ -26,7 +26,7 @@ def create_map(screen_size, colors):
             floor = blueprint.Floor(position, colors.WHITE)
             objects.append(floor)
             if char == "x":
-                player_on_board = blueprint.Player(position, colors.RED)
+                player_on_board = blueprint.Player(position, (colors.RED,colors.ORANGE))
             elif char == "0":
                 objects.append(blueprint.Wall(position, colors.BLUE))
             elif char == "1":
@@ -37,7 +37,7 @@ def create_map(screen_size, colors):
                 objects.append(blueprint.Key(position, colors.MAGENTA))
             elif char == "e":
                 enemy_on_board.append(blueprint.Enemy(position, colors.BROWN))
-                
+
     objects.extend(enemy_on_board)
     objects.append(player_on_board)
     return objects

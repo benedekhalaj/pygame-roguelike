@@ -5,7 +5,9 @@ class Player():
     def __init__(self, position: tuple, color):
         self.type = 'player'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.color = color
+        self.standard_color = color[0]
+        self.invicible_color = color[1]
+        self.color = self.standard_color
         self.velocity = 4
         self.inventory = Inventory()
         self.visible = True
@@ -41,6 +43,7 @@ class Player():
                 item.rect.x -= x_direction
                 item.rect.y -= y_direction
 
+
     def add_item_to_inventory(self, objects):
         for item in objects:
             if self.rect.colliderect(item.rect):
@@ -64,9 +67,11 @@ class Player():
     def start_damage_timer(self):
         if self.invicible:
             self.damage_timer += 1
+            self.color = self.invicible_color
         if self.damage_timer > self.damage_limit:
             self.invicible = False
             self.damage_timer = 0
+            self.color = self.standard_color
 
 
 class Inventory():
