@@ -9,6 +9,9 @@ class Player():
         self.velocity = 4
         self.inventory = Inventory()
         self.visible = True
+        self.damage_timer = 0
+        self.damage_limit = 120
+        self.invicible = False
 
     def move(self, objects, x_direction, y_direction):
         if x_direction != 0:
@@ -49,10 +52,22 @@ class Player():
                     item.visible = False
 
     def take_damage(self,objects):
+        self.start_damage_timer()
         for object in objects:
             if object.type == "enemy":
                 if self.rect.colliderect(object.rect):
-                    print("hello")
+                    if self.damage_timer < 1:
+                        print("hello")
+                        self.invicible = True
+                    
+
+    def start_damage_timer(self):
+        if self.invicible:
+            self.damage_timer += 1
+        if self.damage_timer > self.damage_limit:
+            self.invicible = False
+            self.damage_timer = 0
+
 
 class Inventory():
     def __init__(self):
