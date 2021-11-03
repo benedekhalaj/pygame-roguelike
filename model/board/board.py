@@ -1,4 +1,5 @@
-from model import data_manager, util
+from model import data_manager, classes
+
 
 
 def create_map():
@@ -25,16 +26,16 @@ def create_board(screen_size):
             x = ((col_place - player_position[0]) * character_width) + (screen_size[0] / 2 - character_width / 2)
             position = (x, y, character_width, character_height)
             picture_name = map_sign_dict[char]
-            floor = util.Floor(position, util.WHITE)
+            floor = classes.Floor(position, classes.WHITE)
             asterix.append(floor)
             if char == "x":
-                player_on_board = util.Player(position, util.RED)
+                player_on_board = classes.Player(position, classes.RED)
             elif char == "0":
-                asterix.append(util.Wall(position, util.BLUE))
+                asterix.append(classes.Wall(position, classes.BLUE))
             elif char == "1":
-                asterix.append(util.Wall(position, util.YELLOW))
+                asterix.append(classes.Wall(position, classes.YELLOW))
             elif char == "2":
-                asterix.append(util.Chest(position, util.GREEN))
+                asterix.append(classes.Chest(position, classes.GREEN))
     asterix.append(player_on_board)
     return asterix
 # pygame.image.load(f"model/board/textures/{picture_name}.png")

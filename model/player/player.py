@@ -1,5 +1,5 @@
 from types import coroutine
-from model import data_manager, util
+from model import data_manager, classes
 import pygame
 
 
