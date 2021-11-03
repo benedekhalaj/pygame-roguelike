@@ -28,8 +28,9 @@ def set_display_mode():
 
 def display_objects(window, objects):
     for item in objects:
-        position = (item.rect.x, item.rect.y, item.rect.width, item.rect.height)
-        pygame.draw.rect(window, item.color, position)
+        if item.visible is True:
+            position = (item.rect.x, item.rect.y, item.rect.width, item.rect.height)
+            pygame.draw.rect(window, item.color, position)
 
 
 def refresh_display():

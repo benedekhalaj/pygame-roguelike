@@ -16,24 +16,27 @@ def create_map(screen_size, colors):
     character_height = 32
     character_width = 32
     player_position = find_player_position(text_map)
-    asterix = []
+    objects = []
     for row_place, line in enumerate(text_map):
         for col_place, char in enumerate(line):
             y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
             x = ((col_place - player_position[0]) * character_width) + (screen_size[0] / 2 - character_width / 2)
             position = (x, y, character_width, character_height)
             floor = blueprint.Floor(position, colors.WHITE)
-            asterix.append(floor)
+            objects.append(floor)
             if char == "x":
                 player_on_board = blueprint.Player(position, colors.RED)
             elif char == "0":
-                asterix.append(blueprint.Wall(position, colors.BLUE))
+                objects.append(blueprint.Wall(position, colors.BLUE))
             elif char == "1":
-                asterix.append(blueprint.Wall(position, colors.YELLOW))
+                objects.append(blueprint.Wall(position, colors.YELLOW))
             elif char == "2":
-                asterix.append(blueprint.Chest(position, colors.GREEN))
-    asterix.append(player_on_board)
-    return asterix
+                objects.append(blueprint.Chest(position, colors.GREEN))
+            elif char == "k":
+                objects.append(blueprint.Key(position, colors.MAGENTA))
+
+    objects.append(player_on_board)
+    return objects
 
 
 def find_player_position(text_map: list):

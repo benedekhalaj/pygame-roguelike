@@ -1,5 +1,6 @@
 x:player
  :floor_1
+k: key
 0:outer_wall_1
 1:inner_wall_1
 2:chest

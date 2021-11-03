@@ -39,6 +39,7 @@ def main():
         set_fps()
         run = quit_game(run)
         player_controller.control_player(objects)
+        player_controller.add_item_to_player_inventory(objects)
         view.display_background(window)
         view.display_objects(window, objects)
         view.refresh_display()

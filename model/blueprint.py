@@ -8,19 +8,20 @@ class Player():
         self.velocity = 4
         self.type = 'player'
         self.inventory = Inventory()
+        self.visible = True
 
-    def move(self, asterix, x_direction, y_direction):
+    def move(self, objects, x_direction, y_direction):
         if x_direction != 0:
-            self.move_single_axis(asterix, x_direction, 0)
+            self.move_single_axis(objects, x_direction, 0)
         if y_direction != 0:
-            self.move_single_axis(asterix, 0, y_direction)
+            self.move_single_axis(objects, 0, y_direction)
 
-    def move_single_axis(self, asterix, x_direction, y_direction):
+    def move_single_axis(self, objects, x_direction, y_direction):
         collide = False
         self.rect.x += x_direction
         self.rect.y += y_direction
 
-        for item in asterix:
+        for item in objects:
             if item.type == 'wall':
                 if self.rect.colliderect(item.rect):
                     if x_direction > 0:
@@ -33,9 +34,19 @@ class Player():
                         self.rect.top = item.rect.bottom
                     collide = True
         if not collide:
-            for item in asterix:
+            for item in objects:
                 item.rect.x -= x_direction
                 item.rect.y -= y_direction
+
+    def add_item_to_inventory(self, objects):
+        for item in objects:
+            if self.rect.colliderect(item.rect):
+                if item.type == 'key':
+                    self.inventory.add_key()
+                    item.visible = False
+                elif item.type == 'health_potion':
+                    self.inventory.add_health_potion()
+                    item.visible = False
 
 
 class Inventory():
@@ -75,6 +86,7 @@ class Wall():
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = color
         self.type = 'wall'
+        self.visible = True
 
 
 class Chest():
@@ -82,6 +94,7 @@ class Chest():
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = color
         self.type = 'chest'
+        self.visible = True
 
 
 class Floor():
@@ -89,3 +102,4 @@ class Floor():
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = color
         self.type = 'floor'
+        self.visible = True

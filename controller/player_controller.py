@@ -18,3 +18,11 @@ def control_player(objects):
         player_character.move(objects, 0, -player_character.velocity)
     if keys[pygame.K_DOWN]:
         player_character.move(objects, 0, player_character.velocity)
+
+
+def add_item_to_player_inventory(objects):
+    for object in objects:
+        if object.type == 'player':
+            player_character = object
+
+    player_character.add_item_to_inventory(objects)
