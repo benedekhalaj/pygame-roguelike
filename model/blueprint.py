@@ -14,6 +14,7 @@ class Player():
         self.damage_timer = 0
         self.damage_limit = 120
         self.invicible = False
+        self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), color[2])
 
     def move(self, objects, x_direction, y_direction):
         if x_direction != 0:
@@ -83,9 +84,6 @@ class Player():
         set_invicible(self)
 
 
-
-
-
 class Inventory():
     def __init__(self):
         self.keys = 0
@@ -100,6 +98,13 @@ class Inventory():
     def add_health_potion(self):
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
+
+
+class Sword():
+    def __init__(self, position, color):
+        self.color = color
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.visible = False
 
 
 class Key():
@@ -141,6 +146,7 @@ class Floor():
         self.color = color
         self.visible = True
 
+
 class Enemy():
     def __init__(self, position, color):
         self.type = "enemy"
@@ -162,3 +168,9 @@ class Enemy():
         else:
             self.count += 1
 
+    def take_damage(self, objects):
+        for object in objects:
+            if object.type == 'player':
+                if object.sword.visible:
+                    if self.rect.colliderect(object.sword.rect):
+                        print('hello')

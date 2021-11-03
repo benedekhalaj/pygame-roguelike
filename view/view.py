@@ -14,7 +14,9 @@ class Colors():
         self.BLUE = (0, 0, 255)
         self.MAGENTA = (255, 0, 255)
         self.BROWN = (165, 42, 42)
-        self.ORANGE = (255,165,0)
+        self.ORANGE = (255, 165, 0)
+        self.PURPLE = (128, 0, 128)
+
 
 COLORS = Colors()
 
@@ -29,8 +31,12 @@ def set_display_mode():
 
 def display_objects(window, objects):
     for item in objects:
-        if item.visible is True:
-            position = (item.rect.x, item.rect.y, item.rect.width, item.rect.height)
+        position = (item.rect.x, item.rect.y, item.rect.width, item.rect.height)
+        if item.visible:
+            if item.type == 'player':
+                if item.sword.visible:
+                    sword_position = (item.sword.rect.x, item.sword.rect.y, item.sword.rect.width, item.sword.rect.height)
+                    pygame.draw.rect(window, item.sword.color, sword_position)
             pygame.draw.rect(window, item.color, position)
 
 

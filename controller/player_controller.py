@@ -18,6 +18,10 @@ def control_player(objects):
         player_character.move(objects, 0, -player_character.velocity)
     if keys[pygame.K_DOWN]:
         player_character.move(objects, 0, player_character.velocity)
+    if keys[pygame.K_SPACE]:
+        player_character.sword.visible = True
+    else:
+        player_character.sword.visible = False
 
     player_character.take_damage(objects)
 
@@ -27,3 +31,4 @@ def add_item_to_player_inventory(objects):
             player_character = object
 
     player_character.add_item_to_inventory(objects)
+
