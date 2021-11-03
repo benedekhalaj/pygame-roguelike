@@ -7,6 +7,7 @@ class Player():
         self.color = color
         self.velocity = 4
         self.type = 'player'
+        self.inventory = Inventory()
 
     def move(self, asterix, x_direction, y_direction):
         if x_direction != 0:
@@ -35,6 +36,22 @@ class Player():
             for item in asterix:
                 item.rect.x -= x_direction
                 item.rect.y -= y_direction
+
+
+class Inventory():
+    def __init__(self):
+        self.keys = 0
+        self.keys_limit = 99
+        self.health_potions = 0
+        self.health_potions_limit = 1
+
+    def add_key(self):
+        if self.keys < self.keys_limit:
+            self.keys += 1
+
+    def add_health_potion(self):
+        if self.health_potions < self.health_potions_limit:
+            self.health_potions += 1
 
 
 class Wall():
