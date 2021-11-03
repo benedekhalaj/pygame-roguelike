@@ -1,5 +1,5 @@
 from view import view
-from controller import board_controller, npc_controller, player_controller
+from controller import player_controller, map_controller, item_controller
 import pygame
 
 
