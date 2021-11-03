@@ -48,6 +48,11 @@ class Player():
                     self.inventory.add_health_potion()
                     item.visible = False
 
+    def take_damage(self,objects):
+        for object in objects:
+            if object.type == "enemy":
+                if self.rect.colliderect(object.rect):
+                    print("hello")
 
 class Inventory():
     def __init__(self):

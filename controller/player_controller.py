@@ -19,6 +19,7 @@ def control_player(objects):
     if keys[pygame.K_DOWN]:
         player_character.move(objects, 0, player_character.velocity)
 
+    player_character.take_damage(objects)
 
 def add_item_to_player_inventory(objects):
     for object in objects:
