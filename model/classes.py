@@ -27,7 +27,7 @@ class Player():
         self.rect.y += y_direction
 
         for item in asterix:
-            if item.type not in ['floor', 'player']:
+            if item.type == 'wall':
                 if self.rect.colliderect(item.rect):
                     if x_direction > 0:
                         self.rect.right = item.rect.left
