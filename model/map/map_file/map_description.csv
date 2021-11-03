@@ -4,9 +4,4 @@ k: key
 0:outer_wall_1
 1:inner_wall_1
 2:chest
-3:enemy_1
-4:enemy_2
-5:enemy_3
-6:random_npc_1
-7:money
-8:random_item
+e: enemy
