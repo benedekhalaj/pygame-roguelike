@@ -3,10 +3,10 @@ import pygame
 
 class Player():
     def __init__(self, position: tuple, color):
+        self.type = 'player'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = color
         self.velocity = 4
-        self.type = 'player'
         self.inventory = Inventory()
         self.visible = True
 
@@ -83,23 +83,30 @@ class Health_Potion():
 
 class Wall():
     def __init__(self, position, color):
+        self.type = 'wall'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = color
-        self.type = 'wall'
         self.visible = True
 
 
 class Chest():
     def __init__(self, position, color):
+        self.type = 'chest'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = color
-        self.type = 'chest'
         self.visible = True
 
 
 class Floor():
     def __init__(self, position, color):
+        self.type = 'floor'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = color
-        self.type = 'floor'
+        self.visible = True
+
+class Enemy():
+    def __init__(self, position, color):
+        self.type = "enemy"
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.color = color
         self.visible = True

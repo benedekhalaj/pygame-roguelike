@@ -34,6 +34,8 @@ def create_map(screen_size, colors):
                 objects.append(blueprint.Chest(position, colors.GREEN))
             elif char == "k":
                 objects.append(blueprint.Key(position, colors.MAGENTA))
+            elif char == "e":
+                objects.append(blueprint.Enemy(position, colors.BROWN))
 
     objects.append(player_on_board)
     return objects
