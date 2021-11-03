@@ -32,9 +32,14 @@ def quit_game(run):
 
 def main():
     window = init_pygame()
+    objects = map_controller.get_map()
 
     run = True
     while run:
         set_fps()
         run = quit_game(run)
+        player_controller.control_player(objects)
+        view.display_background(window)
+        view.display_objects(window, objects)
+        view.refresh_display()
     pygame.quit()

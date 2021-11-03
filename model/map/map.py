@@ -2,8 +2,8 @@ from model import data_manager, blueprint
 
 
 def generate_map():
-    text_map = data_manager.open_file("model/board/map_file/map.txt")
-    map_sings = data_manager.open_file("model/board/map_file/map_description.csv")
+    text_map = data_manager.open_file("model/map/map_file/map.txt")
+    map_sings = data_manager.open_file("model/map/map_file/map_description.csv")
     map_sings_dict = {}
     for item in map_sings:
         item = item.split(":")
