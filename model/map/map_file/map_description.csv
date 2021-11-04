@@ -1,7 +1,7 @@
-x:player
- :floor_1
-k: key
-0:outer_wall_1
-1:inner_wall_1
-2:chest
-e: enemy
+x:Player
+ :Floor_1
+k:Key
+0:Outer_Wall_1
+1:Inner_Wall_1
+2:Chest
+e:Enemy

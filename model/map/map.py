@@ -17,29 +17,34 @@ def create_map(screen_size, colors):
     character_width = 32
     player_position = find_player_position(text_map)
     objects = []
-    enemy_on_board = []
+    floor = []
+    enemies = []
+    player = []
+    outer_walls = []
+    inner_walls = []
+    chests = []
+    keys = []
     for row_place, line in enumerate(text_map):
         for col_place, char in enumerate(line):
             y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
             x = ((col_place - player_position[0]) * character_width) + (screen_size[0] / 2 - character_width / 2)
             position = (x, y, character_width, character_height)
-            floor = blueprint.Floor(position, colors.WHITE)
-            objects.append(floor)
-            if char == "x":
-                player_on_board = blueprint.Player(position, (colors.RED, colors.ORANGE, colors.PURPLE))
-            elif char == "0":
-                objects.append(blueprint.Wall(position, colors.BLUE))
-            elif char == "1":
-                objects.append(blueprint.Wall(position, colors.YELLOW))
-            elif char == "2":
-                objects.append(blueprint.Chest(position, colors.GREEN))
-            elif char == "k":
-                objects.append(blueprint.Key(position, colors.MAGENTA))
-            elif char == "e":
-                enemy_on_board.append(blueprint.Enemy(position, colors.BROWN))
+            character_name = map_sign_dict[char]
+            floor.append(blueprint.Floor(position, colors.WHITE))
+            if character_name == "Player":
+                player.append(blueprint.Player(position, (colors.RED, colors.ORANGE, colors.PURPLE)))
+            elif character_name == "Outer_Wall_1":
+                outer_walls.append(blueprint.Wall(position, colors.BLUE))
+            elif character_name == "Inner_Wall_1":
+                inner_walls.append(blueprint.Wall(position, colors.YELLOW))
+            elif character_name == "Chest":
+                chests.append(blueprint.Chest(position, colors.GREEN))
+            elif character_name == "Key":
+                keys.append(blueprint.Key(position, colors.MAGENTA))
+            elif character_name == "Enemy":
+                enemies.append(blueprint.Enemy(position, colors.BROWN))
 
-    objects.extend(enemy_on_board)
-    objects.append(player_on_board)
+    objects = floor + outer_walls + inner_walls + chests + keys + enemies + player
     return objects
 
 
