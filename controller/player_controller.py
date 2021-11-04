@@ -3,11 +3,9 @@ from view import view
 import pygame
 
 
-def control_player(objects):
+def control_player(objects, keys):
     for player_object in objects["player"]:
         player_character = player_object
-
-    keys = view.get_input()
 
     if keys[pygame.K_LEFT]:
         player_character.move(objects, -player_character.velocity, 0)

@@ -1,5 +1,5 @@
 from view import view
-from controller import player_controller, map_controller, item_controller, enemy_controller
+from controller import player_controller, map_controller, item_controller, enemy_controller, display_controller
 import pygame
 
 CLOCK = pygame.time.Clock()
@@ -32,15 +32,18 @@ def quit_game(run):
 def main():
     window = init_pygame()
     objects = map_controller.get_map()
+    stat = display_controller.display_stat(window, objects)
 
     run = True
     while run:
         set_fps()
         run = quit_game(run)
-        player_controller.control_player(objects)
+        keys = view.get_input()
+        player_controller.control_player(objects, keys)
         player_controller.add_item_to_player_inventory(objects)
         enemy_controller.control_enemy(objects)
         view.display_background(window)
-        view.display_objects(window, objects)
+        view.display_objects(window, objects, stat)
+        view.display_texture(window, display_controller.stats(window, objects))
         view.refresh_display()
     pygame.quit()

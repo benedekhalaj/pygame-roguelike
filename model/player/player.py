@@ -11,6 +11,7 @@ class Player():
         self.invicible_color = color[1]
         self.color = self.standard_color
         self.velocity = 4
+        self.health = 100
         self.inventory = Inventory()
         self.visible = True
         self.damage_timer = 0
@@ -61,6 +62,7 @@ class Player():
         for object in objects["enemies"]:
             if self.rect.colliderect(object.rect):
                 if not self.invicible:
+                    self.health -= 1
                     self.invicible = True
 
     def set_attributes(self):
