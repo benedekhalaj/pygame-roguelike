@@ -46,6 +46,8 @@ def display_player_sword(window, objects):
 
 def display_player_stat(window, objects):
     stat = objects['player'][0].stat
+    stat_position = (stat.rect.x, stat.rect.y, stat.rect.width, stat.rect.height)
+    pygame.draw.rect(window, stat.color, stat_position)
     window.blit(stat.text, (stat.x, stat.y))
 
 

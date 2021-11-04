@@ -10,6 +10,7 @@ class Player():
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.standard_color = colors.RED
         self.invicible_color = colors.ORANGE
+        self.colors = colors
         self.color = self.standard_color
         self.velocity = 4
         self.health = 100
@@ -84,9 +85,13 @@ class Player():
             if self.damage_timer > self.damage_limit:
                 self.invicible = False
 
+        def update_stat(self):
+            self.stat.text = self.stat.create_text(self.colors, self.health)
+
         set_damage_timer(self)
         set_color(self)
         set_invicible(self)
+        update_stat(self)
 
 
 class Inventory():
@@ -128,6 +133,6 @@ class Stat():
         font_type = 'couriernew'
         font_size = 30
         font = pygame.font.SysFont(font_type, font_size, bold=True)
-        textsurface = font.render(f"{player_health} hp", False, colors.BLACK)
+        textsurface = font.render(f"{player_health} hp", False, colors.WHITE)
         return textsurface
         # pygame.font.get_fonts()
