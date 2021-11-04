@@ -1,5 +1,4 @@
-
-def file_opener(filename: str):
+def open_file(filename: str):
     """opening a given file. reads it and give it back by splitlines.
 
     Returns: list of list
@@ -16,4 +15,3 @@ def save_csv_file(filename: str, file: list):
         for line in file:
             csv_file.write(",".join(line))
             csv_file.write("\n")
-

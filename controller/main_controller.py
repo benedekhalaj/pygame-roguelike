@@ -1,5 +1,5 @@
 from view import view
-from controller import board_controller, npc_controller, player_controller, item_controller
+from controller import player_controller, map_controller, item_controller, enemy_controller
 import pygame
 
 
@@ -33,14 +33,16 @@ def quit_game(run):
 
 def main():
     window = init_pygame()
-    asterix = board_controller.get_board()
+    objects = map_controller.get_map()
 
     run = True
     while run:
         set_fps()
         run = quit_game(run)
-        player_controller.control_player(asterix)
+        player_controller.control_player(objects)
+        player_controller.add_item_to_player_inventory(objects)
+        enemy_controller.control_enemy(objects)
         view.display_background(window)
-        view.display_asterix(window, asterix)
+        view.display_objects(window, objects)
         view.refresh_display()
     pygame.quit()
