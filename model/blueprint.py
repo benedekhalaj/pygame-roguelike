@@ -22,30 +22,30 @@ class Player():
         if y_direction != 0:
             self.move_single_axis(objects, 0, y_direction)
 
-    def move_single_axis(self, objects, x_direction, y_direction):
+    def move_single_axis(self, objects: dict, x_direction, y_direction):
         collide = False
         self.rect.x += x_direction
         self.rect.y += y_direction
 
-        for item in objects:
-            if item.type == 'wall':
-                if self.rect.colliderect(item.rect):
-                    if x_direction > 0:
-                        self.rect.right = item.rect.left
-                    if x_direction < 0:
-                        self.rect.left = item.rect.right
-                    if y_direction > 0:
-                        self.rect.bottom = item.rect.top
-                    if y_direction < 0:
-                        self.rect.top = item.rect.bottom
-                    collide = True
+        for item in objects["walls"]:
+            if self.rect.colliderect(item.rect):
+                if x_direction > 0:
+                    self.rect.right = item.rect.left
+                if x_direction < 0:
+                    self.rect.left = item.rect.right
+                if y_direction > 0:
+                    self.rect.bottom = item.rect.top
+                if y_direction < 0:
+                    self.rect.top = item.rect.bottom
+                collide = True
         if not collide:
-            for item in objects:
-                item.rect.x -= x_direction
-                item.rect.y -= y_direction
+            for objects_list in objects.values():
+                for item in objects_list:
+                    item.rect.x -= x_direction
+                    item.rect.y -= y_direction
 
-    def add_item_to_inventory(self, objects):
-        for item in objects:
+    def add_item_to_inventory(self, objects: dict):
+        for item in objects["items"]:
             if self.rect.colliderect(item.rect):
                 if item.type == 'key':
                     self.inventory.add_key()
@@ -54,13 +54,12 @@ class Player():
                     self.inventory.add_health_potion()
                     item.visible = False
 
-    def take_damage(self, objects):
+    def take_damage(self, objects: dict):
         self.set_attributes()
-        for object in objects:
-            if object.type == "enemy":
-                if self.rect.colliderect(object.rect):
-                    if not self.invicible:
-                        self.invicible = True
+        for object in objects["enemies"]:
+            if self.rect.colliderect(object.rect):
+                if not self.invicible:
+                    self.invicible = True
 
     def set_attributes(self):
         def set_damage_timer(self):
@@ -169,8 +168,7 @@ class Enemy():
             self.count += 1
 
     def take_damage(self, objects):
-        for object in objects:
-            if object.type == 'player':
-                if object.sword.visible:
-                    if self.rect.colliderect(object.sword.rect):
-                        print('hello')
+        for player in objects["player"]:
+            if player.sword.visible:
+                if self.rect.colliderect(player.sword.rect):
+                    print('hello')

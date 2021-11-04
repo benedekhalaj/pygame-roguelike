@@ -4,9 +4,8 @@ import pygame
 
 
 def control_player(objects):
-    for object in objects:
-        if object.type == 'player':
-            player_character = object
+    for player_object in objects["player"]:
+        player_character = player_object
 
     keys = view.get_input()
 
@@ -25,10 +24,9 @@ def control_player(objects):
 
     player_character.take_damage(objects)
 
-def add_item_to_player_inventory(objects):
-    for object in objects:
-        if object.type == 'player':
-            player_character = object
 
+def add_item_to_player_inventory(objects):
+    for player_object in objects["player"]:
+        player_character = player_object
     player_character.add_item_to_inventory(objects)
 

@@ -29,15 +29,16 @@ def set_display_mode():
     return pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 
-def display_objects(window, objects):
-    for item in objects:
-        position = (item.rect.x, item.rect.y, item.rect.width, item.rect.height)
-        if item.visible:
-            if item.type == 'player':
-                if item.sword.visible:
-                    sword_position = (item.sword.rect.x, item.sword.rect.y, item.sword.rect.width, item.sword.rect.height)
-                    pygame.draw.rect(window, item.sword.color, sword_position)
-            pygame.draw.rect(window, item.color, position)
+def display_objects(window, objects: dict):
+    for objects_list in objects.values():
+        for item in objects_list:
+            position = (item.rect.x, item.rect.y, item.rect.width, item.rect.height)
+            if item.visible:
+                if item.type == 'player':
+                    if item.sword.visible:
+                        sword_position = (item.sword.rect.x, item.sword.rect.y, item.sword.rect.width, item.sword.rect.height)
+                        pygame.draw.rect(window, item.sword.color, sword_position)
+                pygame.draw.rect(window, item.color, position)
 
 
 def refresh_display():

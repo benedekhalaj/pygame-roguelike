@@ -16,7 +16,7 @@ def create_map(screen_size, colors):
     character_height = 32
     character_width = 32
     player_position = find_player_position(text_map)
-    objects = []
+    objects = {}
     floor = []
     enemies = []
     player = []
@@ -44,7 +44,13 @@ def create_map(screen_size, colors):
             elif character_name == "Enemy":
                 enemies.append(blueprint.Enemy(position, colors.BROWN))
 
-    objects = floor + outer_walls + inner_walls + chests + keys + enemies + player
+    objects.update({"floor": floor,
+                    "walls": outer_walls + inner_walls,
+                    "items": chests + keys,
+                    "enemies": enemies,
+                    "player": player
+                    })
+    # objects = floor + outer_walls + inner_walls + chests + keys + enemies + player
     return objects
 
 
