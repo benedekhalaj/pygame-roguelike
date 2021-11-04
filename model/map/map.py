@@ -16,8 +16,8 @@ def generate_map():
 
 def create_map(screen_size, colors):
     text_map, map_sign_dict = generate_map()
-    character_height = 32
-    character_width = 32
+    character_height = 64
+    character_width = 64
     player_position = find_player_position(text_map)
     objects = {}
     floor_list = []
@@ -64,4 +64,3 @@ def find_player_position(text_map: list):
             x = line.index(player_symbol)
             y = line_index
             return (x, y)
-

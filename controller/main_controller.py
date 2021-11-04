@@ -31,19 +31,13 @@ def quit_game(run):
 
 def main():
     window = init_pygame()
-    objects = map_controller.get_map()
+    objects = map_controller.get_objects()
 
     run = True
     while run:
         set_fps()
         run = quit_game(run)
-        keys = view.get_input()
-        player_controller.control_player(objects, keys)
-        player_controller.add_item_to_player_inventory(objects)
+        player_controller.control_player(objects)
         enemy_controller.control_enemy(objects)
-        view.display_background(window)
-        view.display_objects(window, objects)
-        view.display_player_stat(window, objects)
-        view.display_player_sword(window, objects)
-        view.refresh_display()
+        view.display_everything(window, objects)
     pygame.quit()

@@ -21,19 +21,23 @@ class Colors():
 COLORS = Colors()
 
 
-def set_display_caption(caption):
-    pygame.display.set_caption(caption)
+def display_everything(window, objects):
+    display_background(window)
+    display_objects(window, objects)
+    display_player_stat(window, objects)
+    display_player_sword(window, objects)
+    refresh_display()
 
 
-def set_display_mode():
-    return pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+def display_background(window):
+    window.fill(COLORS.BLACK)
 
 
 def display_objects(window, object_types: dict):
     for objects in object_types.values():
         for object in objects:
-            position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
             if object.visible:
+                position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
                 pygame.draw.rect(window, object.color, position)
 
 
@@ -55,8 +59,12 @@ def refresh_display():
     pygame.display.update()
 
 
-def display_background(window):
-    window.fill(COLORS.BLACK)
+def set_display_mode():
+    return pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+
+
+def set_display_caption(caption):
+    pygame.display.set_caption(caption)
 
 
 def get_input():
