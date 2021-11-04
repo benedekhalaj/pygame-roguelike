@@ -35,7 +35,7 @@ def create_map(screen_size, colors):
             character_name = map_sign_dict[char]
             floor_list.append(items.Floor(position, colors.WHITE))
             if character_name == "Player":
-                player_list.append(player.Player(position, (colors.RED, colors.ORANGE, colors.PURPLE)))
+                player_list.append(player.Player(position, colors, screen_size))
             elif character_name == "Outer_Wall_1":
                 outer_walls_list.append(items.Wall(position, colors.BLUE))
             elif character_name == "Inner_Wall_1":
@@ -64,14 +64,4 @@ def find_player_position(text_map: list):
             x = line.index(player_symbol)
             y = line_index
             return (x, y)
-
-
-
-
-
-
-
-
-
-
 

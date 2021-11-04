@@ -1,14 +1,15 @@
 from model import data_manager
-import model.item.item as items
 import pygame
+import pygame.freetype
 
 
 class Player():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors, screen_size):
         self.type = 'player'
+        self.texture = None
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.standard_color = color[0]
-        self.invicible_color = color[1]
+        self.standard_color = colors.RED
+        self.invicible_color = colors.ORANGE
         self.color = self.standard_color
         self.velocity = 4
         self.health = 100
@@ -17,7 +18,8 @@ class Player():
         self.damage_timer = 0
         self.damage_limit = 120
         self.invicible = False
-        self.sword = items.Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), color[2])
+        self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors.PURPLE)
+        self.stat = Stat(colors, screen_size, self.health)
 
     def move(self, objects, x_direction, y_direction):
         if x_direction != 0:
@@ -101,3 +103,31 @@ class Inventory():
     def add_health_potion(self):
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
+
+
+class Sword():
+    def __init__(self, position: tuple, color: tuple):
+        self.color = color
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.visible = False
+
+
+class Stat():
+    def __init__(self, colors, screen_size, player_health):
+        self.type = "stat"
+        self.x = 0
+        self.y = 0
+        self.width = screen_size[0] // 5
+        self.height = screen_size[1] // 10
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.color = colors.BROWN
+        self.visible = True
+        self.text = self.create_text(colors, player_health)
+
+    def create_text(self, colors, player_health):
+        font_type = 'couriernew'
+        font_size = 30
+        font = pygame.font.SysFont(font_type, font_size, bold=True)
+        textsurface = font.render(f"{player_health} hp", False, colors.BLACK)
+        return textsurface
+        # pygame.font.get_fonts()

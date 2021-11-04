@@ -2,13 +2,6 @@ from model import data_manager
 import pygame
 
 
-class Sword():
-    def __init__(self, position: tuple, color: tuple):
-        self.color = color
-        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.visible = False
-
-
 class Key():
     def __init__(self, position: tuple, color: tuple):
         self.type = 'key'

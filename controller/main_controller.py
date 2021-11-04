@@ -1,5 +1,5 @@
 from view import view
-from controller import player_controller, map_controller, item_controller, enemy_controller, display_controller
+from controller import player_controller, map_controller, item_controller, enemy_controller
 import pygame
 
 CLOCK = pygame.time.Clock()
@@ -32,7 +32,6 @@ def quit_game(run):
 def main():
     window = init_pygame()
     objects = map_controller.get_map()
-    stat = display_controller.display_stat(window, objects)
 
     run = True
     while run:
@@ -43,7 +42,8 @@ def main():
         player_controller.add_item_to_player_inventory(objects)
         enemy_controller.control_enemy(objects)
         view.display_background(window)
-        view.display_objects(window, objects, stat)
-        view.display_texture(window, display_controller.stats(window, objects))
+        view.display_objects(window, objects)
+        view.display_player_stat(window, objects)
+        view.display_player_sword(window, objects)
         view.refresh_display()
     pygame.quit()
