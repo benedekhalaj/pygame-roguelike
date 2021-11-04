@@ -7,4 +7,3 @@ def control_enemy(objects):
         enemy_character = object
     enemy_character.move()
     enemy_character.take_damage(objects)
-

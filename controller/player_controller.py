@@ -29,4 +29,3 @@ def add_item_to_player_inventory(objects):
     for player_object in objects["player"]:
         player_character = player_object
     player_character.add_item_to_inventory(objects)
-

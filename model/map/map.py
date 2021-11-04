@@ -1,4 +1,7 @@
-from model import data_manager, blueprint
+import model.data_manager as data_manager
+import model.enemy.enemy as enemy
+import model.item.item as items
+import model.player.player as player
 
 
 def generate_map():
@@ -17,38 +20,38 @@ def create_map(screen_size, colors):
     character_width = 32
     player_position = find_player_position(text_map)
     objects = {}
-    floor = []
-    enemies = []
-    player = []
-    outer_walls = []
-    inner_walls = []
-    chests = []
-    keys = []
+    floor_list = []
+    enemies_list = []
+    player_list = []
+    outer_walls_list = []
+    inner_walls_list = []
+    chests_list = []
+    keys_list = []
     for row_place, line in enumerate(text_map):
         for col_place, char in enumerate(line):
             y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
             x = ((col_place - player_position[0]) * character_width) + (screen_size[0] / 2 - character_width / 2)
             position = (x, y, character_width, character_height)
             character_name = map_sign_dict[char]
-            floor.append(blueprint.Floor(position, colors.WHITE))
+            floor_list.append(items.Floor(position, colors.WHITE))
             if character_name == "Player":
-                player.append(blueprint.Player(position, (colors.RED, colors.ORANGE, colors.PURPLE)))
+                player_list.append(player.Player(position, (colors.RED, colors.ORANGE, colors.PURPLE)))
             elif character_name == "Outer_Wall_1":
-                outer_walls.append(blueprint.Wall(position, colors.BLUE))
+                outer_walls_list.append(items.Wall(position, colors.BLUE))
             elif character_name == "Inner_Wall_1":
-                inner_walls.append(blueprint.Wall(position, colors.YELLOW))
+                inner_walls_list.append(items.Wall(position, colors.YELLOW))
             elif character_name == "Chest":
-                chests.append(blueprint.Chest(position, colors.GREEN))
+                chests_list.append(items.Chest(position, colors.GREEN))
             elif character_name == "Key":
-                keys.append(blueprint.Key(position, colors.MAGENTA))
+                keys_list.append(items.Key(position, colors.MAGENTA))
             elif character_name == "Enemy":
-                enemies.append(blueprint.Enemy(position, colors.BROWN))
+                enemies_list.append(enemy.Enemy(position, colors.BROWN))
 
-    objects.update({"floor": floor,
-                    "walls": outer_walls + inner_walls,
-                    "items": chests + keys,
-                    "enemies": enemies,
-                    "player": player
+    objects.update({"floor": floor_list,
+                    "walls": outer_walls_list + inner_walls_list,
+                    "items": chests_list + keys_list,
+                    "enemies": enemies_list,
+                    "player": player_list
                     })
     # objects = floor + outer_walls + inner_walls + chests + keys + enemies + player
     return objects
@@ -61,3 +64,14 @@ def find_player_position(text_map: list):
             x = line.index(player_symbol)
             y = line_index
             return (x, y)
+
+
+
+
+
+
+
+
+
+
+
