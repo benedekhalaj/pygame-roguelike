@@ -17,6 +17,8 @@ class Colors():
         self.ORANGE = (255, 165, 0)
         self.PURPLE = (128, 0, 128)
         self.CADETBLUE = (95, 158, 160)
+        self.GREY = (192, 192, 192)
+
 
 COLORS = Colors()
 

@@ -16,7 +16,8 @@ def change_player_on_input(player_character, objects):
     if keys[pygame.K_DOWN]:
         player_character.move(objects, 0, player_character.velocity)
     if keys[pygame.K_SPACE]:
-        player_character.sword.visible = True
+        if player_character.sword.exist:
+            player_character.sword.visible = True
     else:
         player_character.sword.visible = False
 
@@ -27,3 +28,4 @@ def control_player(objects):
     change_player_on_input(player_character, objects)
     player_character.add_item_to_inventory(objects)
     player_character.take_damage(objects)
+    player_character.set_sword_position()

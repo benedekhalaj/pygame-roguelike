@@ -13,6 +13,7 @@ class Standard_Enemy():
         self.direction = direction[0]
         self.count_direction = direction[1]
         self.count_limit = self.count_direction * 2
+        self.visible = True
 
     def move(self):
         if self.count <= self.count_direction:
@@ -46,4 +47,4 @@ class Standard_Enemy():
         for player in objects["player"]:
             if player.sword.visible:
                 if self.rect.colliderect(player.sword.rect):
-                    print('hello')
+                    self.visible = False

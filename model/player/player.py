@@ -98,6 +98,9 @@ class Player():
                 elif item.type == 'health_potion':
                     self.inventory.add_health_potion()
                     item.visible = False
+                elif item.type == 'sword':
+                    self.sword.exist = True
+                    item.visible = False
 
     def open_door(self, objects):
         for door in objects["doors"]:
@@ -109,11 +112,12 @@ class Player():
 
     def take_damage(self, objects: dict):
         self.set_attributes()
-        for object in objects["enemies"]:
-            if self.rect.colliderect(object.rect):
-                if not self.invicible:
-                    self.health -= 1
-                    self.invicible = True
+        for enemy in objects["enemies"]:
+            if enemy.visible:
+                if self.rect.colliderect(enemy.rect):
+                    if not self.invicible:
+                        self.health -= 1
+                        self.invicible = True
 
     def set_attributes(self):
         def set_invicible(self):
@@ -140,6 +144,19 @@ class Player():
         set_color(self)
         update_stat(self)
 
+    def set_sword_position(self):
+        if self.direction == 'right':
+            self.sword.rect.x = self.rect.x + self.rect.width
+            self.sword.rect.y = self.rect.y
+        elif self.direction == 'left':
+            self.sword.rect.x = self.rect.x - self.rect.width
+            self.sword.rect.y = self.rect.y
+        elif self.direction == 'down':
+            self.sword.rect.x = self.rect.x
+            self.sword.rect.y = self.rect.y + self.rect.height
+        elif self.direction == 'up':
+            self.sword.rect.x = self.rect.x
+            self.sword.rect.y = self.rect.y - self.rect.height
 
 class Inventory():
     def __init__(self):
@@ -165,6 +182,7 @@ class Inventory():
 
 class Sword():
     def __init__(self, position: tuple, color: tuple):
+        self.exist = False
         self.color = color
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = False
