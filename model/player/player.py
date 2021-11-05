@@ -1,4 +1,3 @@
-from pygame.constants import SCRAP_SELECTION
 from model import data_manager
 import pygame
 import pygame.freetype
@@ -16,11 +15,12 @@ class Player():
         self.color = self.standard_color
 
         self.walk_speed = 8
-        self.sprint_speed = self.walk_speed * 3
+        self.stamina_limit = 60
+        self.sprint_speed = self.walk_speed * 1.5
         self.velocity = self.walk_speed
         self.sprinting = False
         self.can_spirnt = True
-        self.stamina_limit = 60
+        self.stamina = self.stamina_limit
 
         self.direction = 'right'
 
@@ -36,8 +36,7 @@ class Player():
         self.attack_duration = 40
 
         self.health = 1
-        self.stamina = self.stamina_limit
-        self.stat = Stat(colors, screen_size, self.health)
+        self.stat = Stat(colors, screen_size, (self.health, self.stamina))
         self.visible = True
 
     def move(self, objects, x_direction, y_direction):
@@ -171,7 +170,7 @@ class Player():
                 self.color = self.standard_color
 
         def update_stat(self):
-            self.stat.text = self.stat.create_text(self.colors, self.health)
+            self.stat.text = self.stat.create_text(self.colors, (self.health, self.stamina))
 
         set_invicible(self)
         set_damage_timer(self)
@@ -237,7 +236,7 @@ class Sword():
 
 
 class Stat():
-    def __init__(self, colors, screen_size, player_health):
+    def __init__(self, colors, screen_size, player_stats):
         self.type = "stat"
         self.x = 0
         self.y = 0
@@ -246,12 +245,14 @@ class Stat():
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.color = colors.BROWN
         self.visible = True
-        self.text = self.create_text(colors, player_health)
+        self.text = self.create_text(colors, player_stats)
 
-    def create_text(self, colors, player_health):
+    def create_text(self, colors, player_stats):
         font_type = 'couriernew'
         font_size = 30
+        player_health = player_stats[0]
+        player_stamina = player_stats[1]
         font = pygame.font.SysFont(font_type, font_size, bold=True)
-        textsurface = font.render(f"{player_health} hp", False, colors.WHITE)
+        textsurface = font.render(f"{player_health} hp\n {player_stamina} stamina", False, colors.WHITE)
         return textsurface
         # pygame.font.get_fonts()
