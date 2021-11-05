@@ -9,7 +9,7 @@ class Standard_Enemy():
         self.texture = None
         self.color = colors.BROWN
         self.visible = True
-        self.velocity = 14
+        self.velocity = 4
         self.count = 0
         self.direction = direction[0]
         self.count_direction = direction[1]
@@ -49,3 +49,9 @@ class Standard_Enemy():
             if player.sword.visible:
                 if self.rect.colliderect(player.sword.rect):
                     self.visible = False
+
+    def update_texture(self):
+        if self.direction == 'left' or self.direction == 'up':
+            self.texture = pygame.image.load('model/map/textures/enemy/zombie/zombie_left.png')
+        elif self.direction == 'right' or self.direction == 'down':
+            self.texture = pygame.image.load('model/map/textures/enemy/zombie/zombie_right.png')
