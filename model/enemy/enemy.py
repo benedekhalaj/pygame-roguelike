@@ -2,22 +2,41 @@ from model import data_manager
 import pygame
 
 
-class Enemy():
-    def __init__(self, position: tuple, color: tuple):
+class Standard_Enemy():
+    def __init__(self, position: tuple, color: tuple, direction):
         self.type = "enemy"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = color
         self.visible = True
         self.velocity = 14
         self.count = 0
-        self.count_direction = 60
+        self.direction = direction[0]
+        self.count_direction = direction[1]
         self.count_limit = self.count_direction * 2
 
     def move(self):
         if self.count <= self.count_direction:
-            self.rect.x += self.velocity
+            if self.direction == 'right':
+                self.rect.x += self.velocity
+            elif self.direction == 'left':
+                self.rect.x -= self.velocity
+            elif self.direction == 'down':
+                self.rect.y += self.velocity
+            elif self.direction == 'up':
+                self.rect.y -= self.velocity
         elif self.count > self.count_direction:
-            self.rect.x -= self.velocity
+            if self.direction == 'right':
+                self.rect.x -= self.velocity
+            elif self.direction == 'left':
+                self.rect.x += self.velocity
+            elif self.direction == 'down':
+                self.rect.y -= self.velocity
+            elif self.direction == 'up':
+                self.rect.y += self.velocity
+
+        self.set_count()
+
+    def set_count(self):
         if self.count > self.count_limit:
             self.count = 0
         else:

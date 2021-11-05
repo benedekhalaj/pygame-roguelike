@@ -5,4 +5,8 @@ k:Key
 1:Inner_Wall_1
 2:Chest
 e:Enemy
+3:Right_Enemy
+4:Left_Enemy
+5:Down_Enemy
+6:Up_Enemy
 d:Door

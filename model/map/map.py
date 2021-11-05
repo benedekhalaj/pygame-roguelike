@@ -47,8 +47,15 @@ def create_map(screen_size, colors):
                 keys_list.append(items.Key(position, colors.MAGENTA))
             elif character_name == "Door":
                 door_list.append(items.Door(position, colors.CADETBLUE))
-            elif character_name == "Enemy":
-                enemies_list.append(enemy.Enemy(position, colors.BROWN))
+            elif character_name == "Right_Enemy":
+                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("right", 60)))
+            elif character_name == "Left_Enemy":
+                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("left", 60)))
+            elif character_name == "Down_Enemy":
+                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("down", 30)))
+            elif character_name == "Up_Enemy":
+                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("up", 30)))
+
 
     objects.update({"floor": floor_list,
                     "walls": outer_walls_list + inner_walls_list,
