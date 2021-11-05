@@ -8,19 +8,24 @@ class Player():
         self.type = 'player'
         self.texture = None
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+
+        self.colors = colors
         self.standard_color = colors.RED
         self.invicible_color = colors.ORANGE
-        self.colors = colors
         self.color = self.standard_color
+
         self.velocity = 8
-        self.health = 100
-        self.inventory = Inventory()
-        self.visible = True
+        self.direction = 'right'
+
         self.damage_timer = 0
         self.damage_limit = 120
         self.invicible = False
+
+        self.inventory = Inventory()
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors.PURPLE)
+        self.health = 100
         self.stat = Stat(colors, screen_size, self.health)
+        self.visible = True
 
     def move(self, objects, x_direction, y_direction):
         if x_direction != 0:
@@ -28,22 +33,39 @@ class Player():
         if y_direction != 0:
             self.move_single_axis(objects, 0, y_direction)
 
-    def move_single_axis(self, objects: dict, x_direction, y_direction):
+    def set_direction(self, x_direction, y_direction):
+        if x_direction > 0:
+            self.direction = 'right'
+        if x_direction < 0:
+            self.direction = 'left'
+        if y_direction > 0:
+            self.direction = 'down'
+        if y_direction < 0:
+            self.direction = 'up'
+
+    def check_collision(self, objects):
         collide = False
+        for wall in objects["walls"]:
+            if self.rect.colliderect(wall.rect):
+                collide = True
+                if self.direction == 'right':
+                    self.rect.right = wall.rect.left
+                elif self.direction == 'left':
+                    self.rect.left = wall.rect.right
+                elif self.direction == 'down':
+                    self.rect.bottom = wall.rect.top
+                elif self.direction == 'up':
+                    self.rect.top = wall.rect.bottom
+        return collide
+
+    def move_single_axis(self, objects: dict, x_direction, y_direction):
+        self.set_direction(x_direction, y_direction)
+
         self.rect.x += x_direction
         self.rect.y += y_direction
 
-        for item in objects["walls"]:
-            if self.rect.colliderect(item.rect):
-                if x_direction > 0:
-                    self.rect.right = item.rect.left
-                if x_direction < 0:
-                    self.rect.left = item.rect.right
-                if y_direction > 0:
-                    self.rect.bottom = item.rect.top
-                if y_direction < 0:
-                    self.rect.top = item.rect.bottom
-                collide = True
+        collide = self.check_collision(objects)
+
         if not collide:
             for objects_list in objects.values():
                 for item in objects_list:
@@ -69,6 +91,10 @@ class Player():
                     self.invicible = True
 
     def set_attributes(self):
+        def set_invicible(self):
+            if self.damage_timer > self.damage_limit:
+                self.invicible = False
+
         def set_damage_timer(self):
             if self.invicible:
                 self.damage_timer += 1
@@ -80,10 +106,6 @@ class Player():
                 self.color = self.invicible_color
             else:
                 self.color = self.standard_color
-
-        def set_invicible(self):
-            if self.damage_timer > self.damage_limit:
-                self.invicible = False
 
         def update_stat(self):
             self.stat.text = self.stat.create_text(self.colors, self.health)
