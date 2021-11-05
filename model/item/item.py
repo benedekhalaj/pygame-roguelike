@@ -24,7 +24,7 @@ class Health_Potion():
     def __init__(self, position: tuple, colors: dict):
         self.type = 'health_potion'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = None
+        self.texture = pygame.image.load('model/map/textures/items/potion.png')
         self.color = colors.CRIMSON
         self.visible = True
 
