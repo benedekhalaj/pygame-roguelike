@@ -35,7 +35,9 @@ def create_map(screen_size, colors):
             x = ((col_place - player_position[0]) * character_width) + (screen_size[0] / 2 - character_width / 2)
             position = (x, y, character_width, character_height)
             character_name = map_sign_dict[char]
-            floor_list.append(items.Floor(position, colors.WHITE))
+            if character_name != 'Void':
+                floor_list.append(items.Floor(position, colors.WHITE))
+
             if character_name == "Player":
                 player_list.append(player.Player(position, colors, screen_size))
             elif character_name == "Outer_Wall_1":
