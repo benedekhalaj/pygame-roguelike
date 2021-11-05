@@ -23,6 +23,11 @@ class Player():
 
         self.inventory = Inventory()
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors.PURPLE)
+        self.attack_in_progress = False
+        self.attack_timer_count = 0
+        self.attack_timer_limit = 120
+        self.attack_duration = 40
+
         self.health = 1
         self.stat = Stat(colors, screen_size, self.health)
         self.visible = True
@@ -158,6 +163,25 @@ class Player():
         elif self.direction == 'up':
             self.sword.rect.x = self.rect.x
             self.sword.rect.y = self.rect.y - self.rect.height
+
+    def attack(self):
+        if self.attack_in_progress:
+            self.sword.visible = True
+            self.update_attack_timer()
+            self.check_attack_timer()
+
+    def update_attack_timer(self):
+        self.attack_timer_count += 1
+
+    def check_attack_timer(self):
+        if self.attack_timer_count > self.attack_duration:
+            self.sword.visible = False
+        if self.attack_timer_count > self.attack_timer_limit:
+            self.attack_timer_count = 0
+            self.attack_in_progress = False
+
+
+
 
 
 class Inventory():
