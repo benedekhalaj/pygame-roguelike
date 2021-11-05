@@ -5,7 +5,7 @@ import model.player.player as player
 
 
 def generate_map():
-    text_map = data_manager.open_file("model/map/map_file/map.txt")
+    text_map = data_manager.open_file("model/map/map_file/base_level_0.txt")
     map_sings = data_manager.open_file("model/map/map_file/map_description.csv")
     map_sings_dict = {}
     for item in map_sings:

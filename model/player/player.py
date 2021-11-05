@@ -23,7 +23,7 @@ class Player():
 
         self.inventory = Inventory()
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors.PURPLE)
-        self.health = 100
+        self.health = 1
         self.stat = Stat(colors, screen_size, self.health)
         self.visible = True
 

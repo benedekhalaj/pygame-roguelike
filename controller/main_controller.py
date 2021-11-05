@@ -17,7 +17,7 @@ def set_fps():
     CLOCK.tick(FPS)
 
 
-def quit_game(run):
+def quit_game(run, objects):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -25,6 +25,11 @@ def quit_game(run):
         if event.type == pygame.KEYDOWN:
             if event.key == ord('q'):
                 run = False
+
+    player_character = objects['player'][0]
+    if player_character.health < 1:
+        print('You are dead')
+        run = False
 
     return run
 
@@ -36,7 +41,7 @@ def main():
     run = True
     while run:
         set_fps()
-        run = quit_game(run)
+        run = quit_game(run, objects)
         player_controller.control_player(objects)
         enemy_controller.control_enemy(objects)
         view.display_everything(window, objects)
