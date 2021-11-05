@@ -88,9 +88,9 @@ class Player():
         def update_stat(self):
             self.stat.text = self.stat.create_text(self.colors, self.health)
 
+        set_invicible(self)
         set_damage_timer(self)
         set_color(self)
-        set_invicible(self)
         update_stat(self)
 
 
