@@ -6,6 +6,7 @@ class Standard_Enemy():
     def __init__(self, position: tuple, colors: dict, direction):
         self.type = "enemy"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.texture = None
         self.color = colors.BROWN
         self.visible = True
         self.velocity = 14

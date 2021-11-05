@@ -43,6 +43,8 @@ def display_objects(window, object_types: dict):
             if object.visible:
                 position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
                 pygame.draw.rect(window, object.color, position)
+                if object.texture is not None:
+                    window.blit(object.texture, (object.rect.x, object.rect.y))
 
 
 def display_player_sword(window, objects):

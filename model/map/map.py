@@ -73,7 +73,6 @@ def create_map(screen_size, colors):
                     "enemies": enemies_list,
                     "player": player_list
                     })
-    # objects = floor + outer_walls + inner_walls + chests + keys + enemies + player
     return objects
 
 
