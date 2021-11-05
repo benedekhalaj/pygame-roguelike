@@ -54,15 +54,15 @@ def create_map(screen_size, colors):
             elif character_name == "Door":
                 door_list.append(items.Door(position, colors))
             elif character_name == "Right_Enemy":
-                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("right", 60)))
+                enemies_list.append(enemy.Standard_Enemy(position, colors, ("right", 60)))
             elif character_name == "Left_Enemy":
-                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("left", 60)))
+                enemies_list.append(enemy.Standard_Enemy(position, colors, ("left", 60)))
             elif character_name == "Down_Enemy":
-                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("down", 30)))
+                enemies_list.append(enemy.Standard_Enemy(position, colors, ("down", 30)))
             elif character_name == "Up_Enemy":
-                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("up", 30)))
+                enemies_list.append(enemy.Standard_Enemy(position, colors, ("up", 30)))
             elif character_name == "Sword":
-                sword_list.append(items.Sword(position, colors.PURPLE))
+                sword_list.append(items.Sword(position, colors))
 
 
 

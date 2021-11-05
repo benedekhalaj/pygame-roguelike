@@ -3,9 +3,9 @@ import pygame
 
 
 class Sword():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: dict):
         self.type = 'sword'
-        self.color = color
+        self.color = colors.PURPLE
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = True
 
