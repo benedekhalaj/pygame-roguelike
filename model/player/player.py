@@ -7,7 +7,7 @@ class Player():
     def __init__(self, position: tuple, colors, screen_size):
         self.type = 'player'
         self.texture = None
-        self.rect = pygame.Rect(position[0], position[1], 32, 32)
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
 
         self.colors = colors
         self.standard_color = colors.RED
