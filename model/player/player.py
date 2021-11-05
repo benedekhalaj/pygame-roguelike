@@ -44,19 +44,35 @@ class Player():
             self.direction = 'up'
 
     def check_collision(self, objects):
-        collide = False
+        if self.check_wall_collision(objects) or self.check_door_collision(objects):
+            return True
+        else:
+            return False
+
+    def check_wall_collision(self, objects):
         for wall in objects["walls"]:
             if self.rect.colliderect(wall.rect):
-                collide = True
-                if self.direction == 'right':
-                    self.rect.right = wall.rect.left
-                elif self.direction == 'left':
-                    self.rect.left = wall.rect.right
-                elif self.direction == 'down':
-                    self.rect.bottom = wall.rect.top
-                elif self.direction == 'up':
-                    self.rect.top = wall.rect.bottom
-        return collide
+                self.check_collision_direction(wall)
+                return True
+        return False
+
+    def check_door_collision(self, objects):
+        for door in objects["doors"]:
+            if self.rect.colliderect(door.rect):
+                if door.status == "closed":
+                    self.check_collision_direction(door)
+                    return True
+        return False
+
+    def check_collision_direction(self, object):
+        if self.direction == 'right':
+            self.rect.right = object.rect.left
+        elif self.direction == 'left':
+            self.rect.left = object.rect.right
+        elif self.direction == 'down':
+            self.rect.bottom = object.rect.top
+        elif self.direction == 'up':
+            self.rect.top = object.rect.bottom
 
     def move_single_axis(self, objects: dict, x_direction, y_direction):
         self.set_direction(x_direction, y_direction)
@@ -81,6 +97,14 @@ class Player():
                 elif item.type == 'health_potion':
                     self.inventory.add_health_potion()
                     item.visible = False
+
+    def open_door(self, objects):
+        for door in objects["doors"]:
+            if self.rect.colliderect(door.rect):
+                if self.inventory.keys > 0:
+                    if door.status == "closed":
+                        door.status == "opened"
+                        self.inventory.keys -= 1
 
     def take_damage(self, objects: dict):
         self.set_attributes()
@@ -126,6 +150,11 @@ class Inventory():
     def add_key(self):
         if self.keys < self.keys_limit:
             self.keys += 1
+
+
+    def remove_key(self):
+        pass
+
 
     def add_health_potion(self):
         if self.health_potions < self.health_potions_limit:

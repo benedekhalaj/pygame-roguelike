@@ -51,7 +51,8 @@ def create_map(screen_size, colors):
                 enemies_list.append(enemy.Enemy(position, colors.BROWN))
 
     objects.update({"floor": floor_list,
-                    "walls": outer_walls_list + inner_walls_list + door_list,
+                    "walls": outer_walls_list + inner_walls_list,
+                    "doors": door_list,
                     "items": chests_list + keys_list,
                     "enemies": enemies_list,
                     "player": player_list

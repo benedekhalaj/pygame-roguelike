@@ -46,5 +46,6 @@ class Door():
     def __init__(self, position: tuple, color: tuple):
         self.type = "door"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.status = "closed"
         self.color = color
         self.visible = True
