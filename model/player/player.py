@@ -92,15 +92,16 @@ class Player():
     def add_item_to_inventory(self, objects: dict):
         for item in objects["items"]:
             if self.rect.colliderect(item.rect):
-                if item.type == 'key':
-                    self.inventory.add_key()
-                    item.visible = False
-                elif item.type == 'health_potion':
-                    self.inventory.add_health_potion()
-                    item.visible = False
-                elif item.type == 'sword':
-                    self.sword.exist = True
-                    item.visible = False
+                if item.visible:
+                    if item.type == 'key':
+                        self.inventory.add_key()
+                        item.visible = False
+                    elif item.type == 'health_potion':
+                        self.inventory.add_health_potion()
+                        item.visible = False
+                    elif item.type == 'sword':
+                        self.sword.exist = True
+                        item.visible = False
 
     def open_door(self, objects):
         for door in objects["doors"]:
@@ -157,6 +158,7 @@ class Player():
         elif self.direction == 'up':
             self.sword.rect.x = self.rect.x
             self.sword.rect.y = self.rect.y - self.rect.height
+
 
 class Inventory():
     def __init__(self):
