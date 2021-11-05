@@ -27,6 +27,7 @@ def create_map(screen_size, colors):
     inner_walls_list = []
     chests_list = []
     keys_list = []
+    door_list = []
     for row_place, line in enumerate(text_map):
         for col_place, char in enumerate(line):
             y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
@@ -44,11 +45,13 @@ def create_map(screen_size, colors):
                 chests_list.append(items.Chest(position, colors.GREEN))
             elif character_name == "Key":
                 keys_list.append(items.Key(position, colors.MAGENTA))
+            elif character_name == "Door":
+                door_list.append(items.Door(position, colors.CADETBLUE))
             elif character_name == "Enemy":
                 enemies_list.append(enemy.Enemy(position, colors.BROWN))
 
     objects.update({"floor": floor_list,
-                    "walls": outer_walls_list + inner_walls_list,
+                    "walls": outer_walls_list + inner_walls_list + door_list,
                     "items": chests_list + keys_list,
                     "enemies": enemies_list,
                     "player": player_list

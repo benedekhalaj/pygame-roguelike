@@ -12,7 +12,7 @@ class Player():
         self.invicible_color = colors.ORANGE
         self.colors = colors
         self.color = self.standard_color
-        self.velocity = 4
+        self.velocity = 8
         self.health = 100
         self.inventory = Inventory()
         self.visible = True

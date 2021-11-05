@@ -1,7 +1,7 @@
 import pygame
 
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
+WINDOW_WIDTH = 1600
+WINDOW_HEIGHT = 900
 
 
 class Colors():
@@ -16,7 +16,7 @@ class Colors():
         self.BROWN = (165, 42, 42)
         self.ORANGE = (255, 165, 0)
         self.PURPLE = (128, 0, 128)
-
+        self.CADETBLUE = (95, 158, 160)
 
 COLORS = Colors()
 
