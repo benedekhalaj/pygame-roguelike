@@ -49,7 +49,7 @@ def create_map(screen_size, colors):
             elif character_name == "Key":
                 keys_list.append(items.Key(position, colors.MAGENTA))
             elif character_name == "Door":
-                door_list.append(items.Door(position, colors.CADETBLUE))
+                door_list.append(items.Door(position, colors))
             elif character_name == "Right_Enemy":
                 enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("right", 60)))
             elif character_name == "Left_Enemy":
