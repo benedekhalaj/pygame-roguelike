@@ -25,7 +25,7 @@ class Player():
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors.PURPLE)
         self.attack_in_progress = False
         self.attack_timer_count = 0
-        self.attack_timer_limit = 120
+        self.attack_timer_limit = 60
         self.attack_duration = 40
 
         self.health = 1
@@ -180,9 +180,6 @@ class Player():
         if self.attack_timer_count > self.attack_timer_limit:
             self.attack_timer_count = 0
             self.attack_in_progress = False
-
-
-
 
 
 class Inventory():
