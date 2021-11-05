@@ -1,3 +1,4 @@
+from pygame.constants import SCRAP_SELECTION
 from model import data_manager
 import pygame
 import pygame.freetype
@@ -14,7 +15,13 @@ class Player():
         self.invicible_color = colors.ORANGE
         self.color = self.standard_color
 
-        self.velocity = 8
+        self.walk_speed = 8
+        self.sprint_speed = self.walk_speed * 3
+        self.velocity = self.walk_speed
+        self.sprinting = False
+        self.can_spirnt = True
+        self.stamina_limit = 60
+
         self.direction = 'right'
 
         self.damage_timer = 0
@@ -29,6 +36,7 @@ class Player():
         self.attack_duration = 40
 
         self.health = 1
+        self.stamina = self.stamina_limit
         self.stat = Stat(colors, screen_size, self.health)
         self.visible = True
 
@@ -37,6 +45,8 @@ class Player():
             self.move_single_axis(objects, x_direction, 0)
         if y_direction != 0:
             self.move_single_axis(objects, 0, y_direction)
+        if not self.sprinting:
+            self.reload_stamina()
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
@@ -47,6 +57,23 @@ class Player():
             self.direction = 'down'
         if y_direction < 0:
             self.direction = 'up'
+
+    def sprint(self):
+        if self.stamina > 0 and self.can_spirnt:
+            self.sprinting = True
+            self.velocity = self.sprint_speed
+            self.stamina -= 1
+        else:
+            self.can_spirnt = False
+            self.sprinting = False
+            self.velocity = self.walk_speed
+
+    def reload_stamina(self):
+        if self.stamina < self.stamina_limit:
+            self.stamina += 0.5
+            self.velocity = self.walk_speed
+        if self.stamina >= self.stamina_limit:
+            self.can_spirnt = True
 
     def check_collision(self, objects):
         if self.check_wall_collision(objects) or self.check_door_collision(objects):
@@ -115,7 +142,7 @@ class Player():
                     if door.status == "closed":
                         door.status = "opened"
                         door.update_color()
-                        self.inventory.keys -= 1
+                        self.inventory.remove_key()
 
     def take_damage(self, objects: dict):
         self.set_attributes()
@@ -192,12 +219,9 @@ class Inventory():
     def add_key(self):
         if self.keys < self.keys_limit:
             self.keys += 1
-        print(f'Keys: {self.keys}')
-
 
     def remove_key(self):
-        pass
-
+        self.keys -= 1
 
     def add_health_potion(self):
         if self.health_potions < self.health_potions_limit:
