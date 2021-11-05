@@ -35,8 +35,9 @@ class Player():
         self.attack_timer_limit = 60
         self.attack_duration = 40
 
-        self.health = 10000000
-        self.stat = Stat(colors, screen_size, (self.health, self.stamina))
+        self.max_health = 5
+        self.health = 1
+        self.stat = Stat(colors, screen_size, (self.health, self.max_health, self.stamina, self.stamina_limit))
         self.visible = True
 
     def move(self, objects, x_direction, y_direction):
@@ -44,8 +45,6 @@ class Player():
             self.move_single_axis(objects, x_direction, 0)
         if y_direction != 0:
             self.move_single_axis(objects, 0, y_direction)
-        if not self.sprinting:
-            self.reload_stamina()
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
@@ -170,7 +169,7 @@ class Player():
                 self.color = self.standard_color
 
         def update_stat(self):
-            self.stat.text = self.stat.create_text(self.colors, (self.health, self.stamina))
+            self.stat.texts = self.stat.create_text((self.health, self.stamina))
 
         set_invicible(self)
         set_damage_timer(self)
@@ -238,21 +237,46 @@ class Sword():
 class Stat():
     def __init__(self, colors, screen_size, player_stats):
         self.type = "stat"
-        self.x = 0
-        self.y = 0
+        self.x = 1
+        self.y = 1
         self.width = screen_size[0] // 5
-        self.height = screen_size[1] // 10
+        self.height = screen_size[1] // 40
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.color = colors.BROWN
+        self.color = colors
+        self.health = "health"
+        self.player_health = player_stats[0]
+        self.player_max_health = player_stats[1]
+        self.stamina = 'stamina'
+        self.player_stamina = player_stats[2]
+        self.player_max_stamina = player_stats[3]
         self.visible = True
-        self.text = self.create_text(colors, player_stats)
+        self.font_size = 30
+        self.texts = self.create_text((self.player_health, self.player_stamina)) #############
+        self.bars = self.create_bar()
+    
+    def create_bar(self):
+        number = 0
+        bar = []
+        for type, text in self.texts.items():
+            if type == self.health:
+                width = self.width * (self.player_health / self.player_max_health)
+                color = self.color.RED
+            elif type == self.stamina:
+                width = self.width * (self.player_stamina / self.player_max_stamina)
+                color = self.color.BLUE
+            y = self.y + number * self.font_size
+            x = self.x + text.get_width()
+            number += 1
+            bar.append((pygame.Rect(x, y, width, self.height), color))
+        return bar
 
-    def create_text(self, colors, player_stats):
+    def create_text(self, player_stats):
+        texts = {}
         font_type = 'couriernew'
-        font_size = 30
         player_health = player_stats[0]
         player_stamina = player_stats[1]
-        font = pygame.font.SysFont(font_type, font_size, bold=True)
-        textsurface = font.render(f"{player_health} hp\n {player_stamina} stamina", False, colors.WHITE)
-        return textsurface
+        font = pygame.font.SysFont(font_type, self.font_size, bold=True)
+        texts[self.health] = font.render(f"{player_health} hp", False, self.color.WHITE)
+        texts[self.stamina] = font.render(f"{int(player_stamina)} stamina", False, self.color.WHITE)
+        return texts
         # pygame.font.get_fonts()

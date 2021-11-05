@@ -32,5 +32,7 @@ def control_player(objects):
     change_player_on_input(player_character, objects)
     player_character.add_item_to_inventory(objects)
     player_character.take_damage(objects)
+    if not player_character.sprinting:
+        player_character.reload_stamina()
     player_character.set_sword_position()
     player_character.attack()
