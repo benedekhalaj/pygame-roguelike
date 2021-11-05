@@ -35,7 +35,7 @@ class Player():
         self.attack_timer_limit = 60
         self.attack_duration = 40
 
-        self.health = 1
+        self.health = 10000000
         self.stat = Stat(colors, screen_size, (self.health, self.stamina))
         self.visible = True
 

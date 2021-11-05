@@ -23,8 +23,7 @@ def create_map(screen_size, colors):
     floor_list = []
     enemies_list = []
     player_list = []
-    outer_walls_list = []
-    inner_walls_list = []
+    walls_list = []
     chests_list = []
     potion_list = []
     keys_list = []
@@ -41,10 +40,8 @@ def create_map(screen_size, colors):
 
             if character_name == "Player":
                 player_list.append(player.Player(position, colors, screen_size))
-            elif character_name == "Outer_Wall_1":
-                outer_walls_list.append(items.Wall(position, colors.BLUE))
-            elif character_name == "Inner_Wall_1":
-                inner_walls_list.append(items.Wall(position, colors.YELLOW))
+            elif character_name == "Horizontal_Wall" or character_name == "Vertical_Wall":
+                walls_list.append(items.Wall(position, character_name, colors))
             elif character_name == "Chest":
                 chests_list.append(items.Chest(position, colors))
             elif character_name == "Key":
@@ -67,7 +64,7 @@ def create_map(screen_size, colors):
 
 
     objects.update({"floor": floor_list,
-                    "walls": outer_walls_list + inner_walls_list,
+                    "walls": walls_list,
                     "doors": door_list,
                     "items": chests_list + keys_list + sword_list + potion_list,
                     "enemies": enemies_list,

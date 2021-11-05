@@ -1,3 +1,4 @@
+from pygame import color
 from model import data_manager
 import pygame
 
@@ -48,12 +49,23 @@ class Floor():
 
 
 class Wall():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, direction: str, colors: dict):
         self.type = 'wall'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = None
-        self.color = color
+        self.direction = direction
+        self.texture = self.create_texture(colors)
+        self.color = colors.BLUE
         self.visible = True
+
+    def create_texture(self, colors):
+        if self.direction == "Horizontal_Wall":
+            self.color = colors.BLUE
+            return pygame.image.load('model/map/textures/terrain/wall_horizontal.png')
+        elif self.direction == "Vertical_Wall":
+            self.color = colors.YELLOW
+            return pygame.image.load('model/map/textures/terrain/wall_vertical.png')
+        else:
+            return None
 
 
 class Door():
