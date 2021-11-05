@@ -7,7 +7,7 @@ class Player():
     def __init__(self, position: tuple, colors, screen_size):
         self.type = 'player'
         self.texture = None
-        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.rect = pygame.Rect(position[0], position[1], 32, 32)
 
         self.colors = colors
         self.standard_color = colors.RED
@@ -52,19 +52,20 @@ class Player():
     def check_wall_collision(self, objects):
         for wall in objects["walls"]:
             if self.rect.colliderect(wall.rect):
-                self.check_collision_direction(wall)
+                self.set_collision_direction(wall)
                 return True
         return False
 
     def check_door_collision(self, objects):
+        self.open_door(objects)
         for door in objects["doors"]:
             if self.rect.colliderect(door.rect):
                 if door.status == "closed":
-                    self.check_collision_direction(door)
+                    self.set_collision_direction(door)
                     return True
         return False
 
-    def check_collision_direction(self, object):
+    def set_collision_direction(self, object):
         if self.direction == 'right':
             self.rect.right = object.rect.left
         elif self.direction == 'left':
@@ -103,7 +104,7 @@ class Player():
             if self.rect.colliderect(door.rect):
                 if self.inventory.keys > 0:
                     if door.status == "closed":
-                        door.status == "opened"
+                        door.status = "opened"
                         self.inventory.keys -= 1
 
     def take_damage(self, objects: dict):
@@ -150,6 +151,7 @@ class Inventory():
     def add_key(self):
         if self.keys < self.keys_limit:
             self.keys += 1
+        print(f'Keys: {self.keys}')
 
 
     def remove_key(self):

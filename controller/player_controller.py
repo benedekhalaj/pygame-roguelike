@@ -25,5 +25,4 @@ def control_player(objects):
 
     change_player_on_input(player_character, objects)
     player_character.add_item_to_inventory(objects)
-    player_character.open_door(objects)
     player_character.take_damage(objects)
