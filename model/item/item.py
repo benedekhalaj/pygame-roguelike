@@ -11,26 +11,26 @@ class Sword():
 
 
 class Key():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: dict):
         self.type = 'key'
-        self.color = color
+        self.color = colors.MAGENTA
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = True
 
 
 class Health_Potion():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: dict):
         self.type = 'health_potion'
-        self.color = color
+        self.color = colors.CRIMSON
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = True
 
 
 class Chest():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: dict):
         self.type = 'chest'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.color = color
+        self.color = colors.GREEN
         self.visible = True
 
 
