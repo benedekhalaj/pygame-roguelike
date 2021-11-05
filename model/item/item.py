@@ -3,34 +3,34 @@ import pygame
 
 
 class Sword():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: dict):
         self.type = 'sword'
-        self.color = color
+        self.color = colors.PURPLE
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = True
 
 
 class Key():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: dict):
         self.type = 'key'
-        self.color = color
+        self.color = colors.MAGENTA
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = True
 
 
 class Health_Potion():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: dict):
         self.type = 'health_potion'
-        self.color = color
+        self.color = colors.CRIMSON
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = True
 
 
 class Chest():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: dict):
         self.type = 'chest'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.color = color
+        self.color = colors.GREEN
         self.visible = True
 
 
@@ -51,9 +51,17 @@ class Wall():
 
 
 class Door():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: tuple):
         self.type = "door"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3] * 2)
         self.status = "closed"
-        self.color = color
+        self.closed_color = colors.SIENNA
+        self.opened_color = colors.ROSYBROWN
+        self.color = self.closed_color
         self.visible = True
+
+    def update_color(self):
+        if self.status == "opened":
+            self.color = self.opened_color
+        else:
+            self.color = self.closed_color

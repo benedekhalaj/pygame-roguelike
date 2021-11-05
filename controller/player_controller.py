@@ -16,8 +16,9 @@ def change_player_on_input(player_character, objects):
     if keys[pygame.K_DOWN]:
         player_character.move(objects, 0, player_character.velocity)
     if keys[pygame.K_SPACE]:
-        if not player_character.attack_in_progress:
-            player_character.attack_in_progress = True
+        if player_character.sword.exist:
+            if not player_character.attack_in_progress:
+                player_character.attack_in_progress = True
 
 def control_player(objects):
     player_character = objects['player'][0]

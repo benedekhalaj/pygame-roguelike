@@ -26,6 +26,7 @@ def create_map(screen_size, colors):
     outer_walls_list = []
     inner_walls_list = []
     chests_list = []
+    potion_list = []
     keys_list = []
     door_list = []
     sword_list = []
@@ -45,28 +46,30 @@ def create_map(screen_size, colors):
             elif character_name == "Inner_Wall_1":
                 inner_walls_list.append(items.Wall(position, colors.YELLOW))
             elif character_name == "Chest":
-                chests_list.append(items.Chest(position, colors.GREEN))
+                chests_list.append(items.Chest(position, colors))
             elif character_name == "Key":
-                keys_list.append(items.Key(position, colors.MAGENTA))
+                keys_list.append(items.Key(position, colors))
+            elif character_name == "Health_Potion":
+                potion_list.append(items.Health_Potion(position, colors))
             elif character_name == "Door":
-                door_list.append(items.Door(position, colors.CADETBLUE))
+                door_list.append(items.Door(position, colors))
             elif character_name == "Right_Enemy":
-                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("right", 60)))
+                enemies_list.append(enemy.Standard_Enemy(position, colors, ("right", 60)))
             elif character_name == "Left_Enemy":
-                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("left", 60)))
+                enemies_list.append(enemy.Standard_Enemy(position, colors, ("left", 60)))
             elif character_name == "Down_Enemy":
-                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("down", 30)))
+                enemies_list.append(enemy.Standard_Enemy(position, colors, ("down", 30)))
             elif character_name == "Up_Enemy":
-                enemies_list.append(enemy.Standard_Enemy(position, colors.BROWN, ("up", 30)))
+                enemies_list.append(enemy.Standard_Enemy(position, colors, ("up", 30)))
             elif character_name == "Sword":
-                sword_list.append(items.Sword(position, colors.PURPLE))
+                sword_list.append(items.Sword(position, colors))
 
 
 
     objects.update({"floor": floor_list,
                     "walls": outer_walls_list + inner_walls_list,
                     "doors": door_list,
-                    "items": chests_list + keys_list + sword_list,
+                    "items": chests_list + keys_list + sword_list + potion_list,
                     "enemies": enemies_list,
                     "player": player_list
                     })

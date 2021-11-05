@@ -114,6 +114,7 @@ class Player():
                 if self.inventory.keys > 0:
                     if door.status == "closed":
                         door.status = "opened"
+                        door.update_color()
                         self.inventory.keys -= 1
 
     def take_damage(self, objects: dict):

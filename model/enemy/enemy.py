@@ -3,10 +3,10 @@ import pygame
 
 
 class Standard_Enemy():
-    def __init__(self, position: tuple, color: tuple, direction):
+    def __init__(self, position: tuple, colors: dict, direction):
         self.type = "enemy"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.color = color
+        self.color = colors.BROWN
         self.visible = True
         self.velocity = 14
         self.count = 0
