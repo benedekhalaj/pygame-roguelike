@@ -1,90 +1,191 @@
-from model import data_manager, util
-import random
+from model import data_manager
 import pygame
+import pygame.freetype
 
 
 class Player():
-    def __init__(self, color, screen_size):
-        self.name = 'Nick'
-        self.color = color
-        self.width = 50
-        self.height = 50
-        self.x = screen_size[0] / 2 - self.width / 2
-        self.y = screen_size[1] / 2 - self.height / 2
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.default_velocity = 3
-        self.sprint_velocity = 5
-        self.velocity = self.default_velocity
+    def __init__(self, position: tuple, colors, screen_size):
+        self.type = 'player'
+        self.texture = None
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+
+        self.colors = colors
+        self.standard_color = colors.RED
+        self.invicible_color = colors.ORANGE
+        self.color = self.standard_color
+
+        self.velocity = 8
+        self.direction = 'right'
+
+        self.damage_timer = 0
+        self.damage_limit = 120
+        self.invicible = False
+
+        self.inventory = Inventory()
+        self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors.PURPLE)
+        self.health = 100
+        self.stat = Stat(colors, screen_size, self.health)
         self.visible = True
 
-    def move(self, entities, dx, dy):
-        if dx != 0:
-            # self.move_single_axis(entities, dx, 0)
-            self.move_others(entities, dx, 0)
-        if dy != 0:
-            # self.move_single_axis(entities, 0, dy)
-            self.move_others(entities, 0, dy)
+    def move(self, objects, x_direction, y_direction):
+        if x_direction != 0:
+            self.move_single_axis(objects, x_direction, 0)
+        if y_direction != 0:
+            self.move_single_axis(objects, 0, y_direction)
 
-    def move_others(self, entities, dx, dy):
-        for key in entities:
-            for item in entities[key]:
-                item.rect.x += -dx
-                item.rect.y += -dy
+    def set_direction(self, x_direction, y_direction):
+        if x_direction > 0:
+            self.direction = 'right'
+        if x_direction < 0:
+            self.direction = 'left'
+        if y_direction > 0:
+            self.direction = 'down'
+        if y_direction < 0:
+            self.direction = 'up'
 
-    def move_single_axis(self, entities, dx, dy):
-        self.rect.x += dx
-        self.rect.y += dy
+    def check_collision(self, objects):
+        if self.check_wall_collision(objects) or self.check_door_collision(objects):
+            return True
+        else:
+            return False
 
-        for obstacle in entities['obstacles']:
-            if self.rect.colliderect(obstacle.rect):
-                if dx > 0:
-                    self.rect.right = obstacle.rect.left
-                if dx < 0:
-                    self.rect.left = obstacle.rect.right
-                if dy > 0:
-                    self.rect.bottom = obstacle.rect.top
-                if dy < 0:
-                    self.rect.top = obstacle.rect.bottom
+    def check_wall_collision(self, objects):
+        for wall in objects["walls"]:
+            if self.rect.colliderect(wall.rect):
+                self.set_collision_direction(wall)
+                return True
+        return False
 
-    def sprint(self):
-        self.velocity = self.sprint_velocity
+    def check_door_collision(self, objects):
+        self.open_door(objects)
+        for door in objects["doors"]:
+            if self.rect.colliderect(door.rect):
+                if door.status == "closed":
+                    self.set_collision_direction(door)
+                    return True
+        return False
 
-    def walk(self):
-        self.velocity = self.default_velocity
+    def set_collision_direction(self, object):
+        if self.direction == 'right':
+            self.rect.right = object.rect.left
+        elif self.direction == 'left':
+            self.rect.left = object.rect.right
+        elif self.direction == 'down':
+            self.rect.bottom = object.rect.top
+        elif self.direction == 'up':
+            self.rect.top = object.rect.bottom
 
-    def change_color(self, colors):
-        self.color = random.choice(colors)
+    def move_single_axis(self, objects: dict, x_direction, y_direction):
+        self.set_direction(x_direction, y_direction)
 
-    def pick_up_key(self, inventory, key):
-        if self.rect.colliderect(key.rect) and key.visible is True:
-            inventory.add_key()
-            key.visible = False
-            print(f'Keys: {inventory.keys}')
+        self.rect.x += x_direction
+        self.rect.y += y_direction
 
-    def pick_up_health_potion(self, inventory, health_potion):
-        if self.rect.colliderect(health_potion.rect) and health_potion.visible is True:
-            inventory.add_health_potion()
-            health_potion.visible = False
-            print(f'Health Potions: {inventory.health_potions}')
+        collide = self.check_collision(objects)
 
-    def interact_with_chest(self, inventory, chest):
-        if self.rect.colliderect(chest.rect) and chest.visible is True:
-            inventory.add_health_potion()
-            chest.visible = False
-            print(f'Health Potions: {inventory.health_potions}')
+        if not collide:
+            for objects_list in objects.values():
+                for item in objects_list:
+                    item.rect.x -= x_direction
+                    item.rect.y -= y_direction
+
+    def add_item_to_inventory(self, objects: dict):
+        for item in objects["items"]:
+            if self.rect.colliderect(item.rect):
+                if item.type == 'key':
+                    self.inventory.add_key()
+                    item.visible = False
+                elif item.type == 'health_potion':
+                    self.inventory.add_health_potion()
+                    item.visible = False
+
+    def open_door(self, objects):
+        for door in objects["doors"]:
+            if self.rect.colliderect(door.rect):
+                if self.inventory.keys > 0:
+                    if door.status == "closed":
+                        door.status = "opened"
+                        self.inventory.keys -= 1
+
+    def take_damage(self, objects: dict):
+        self.set_attributes()
+        for object in objects["enemies"]:
+            if self.rect.colliderect(object.rect):
+                if not self.invicible:
+                    self.health -= 1
+                    self.invicible = True
+
+    def set_attributes(self):
+        def set_invicible(self):
+            if self.damage_timer > self.damage_limit:
+                self.invicible = False
+
+        def set_damage_timer(self):
+            if self.invicible:
+                self.damage_timer += 1
+            else:
+                self.damage_timer = 0
+
+        def set_color(self):
+            if self.invicible:
+                self.color = self.invicible_color
+            else:
+                self.color = self.standard_color
+
+        def update_stat(self):
+            self.stat.text = self.stat.create_text(self.colors, self.health)
+
+        set_invicible(self)
+        set_damage_timer(self)
+        set_color(self)
+        update_stat(self)
 
 
 class Inventory():
     def __init__(self):
         self.keys = 0
-        self.keys_limit = 3
+        self.keys_limit = 99
         self.health_potions = 0
-        self.health_potions_limit = 2
+        self.health_potions_limit = 1
 
     def add_key(self):
         if self.keys < self.keys_limit:
             self.keys += 1
+        print(f'Keys: {self.keys}')
+
+
+    def remove_key(self):
+        pass
+
 
     def add_health_potion(self):
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
+
+
+class Sword():
+    def __init__(self, position: tuple, color: tuple):
+        self.color = color
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.visible = False
+
+
+class Stat():
+    def __init__(self, colors, screen_size, player_health):
+        self.type = "stat"
+        self.x = 0
+        self.y = 0
+        self.width = screen_size[0] // 5
+        self.height = screen_size[1] // 10
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.color = colors.BROWN
+        self.visible = True
+        self.text = self.create_text(colors, player_health)
+
+    def create_text(self, colors, player_health):
+        font_type = 'couriernew'
+        font_size = 30
+        font = pygame.font.SysFont(font_type, font_size, bold=True)
+        textsurface = font.render(f"{player_health} hp", False, colors.WHITE)
+        return textsurface
+        # pygame.font.get_fonts()

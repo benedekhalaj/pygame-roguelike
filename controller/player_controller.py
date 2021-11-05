@@ -1,52 +1,29 @@
 from pygame.constants import KEYDOWN
 from model.player import player
-from view import terminal as view
+from view import view
 import pygame
 
 
-def get_colors():
-    return [view.RED, view.BLUE, view.GREEN, view.YELLOW]
-
-
-def get_player():
-    return player.Player(view.RED, (view.SCREEN_WIDTH, view.SCREEN_HEIGHT))
-
-
-def get_inventory():
-    return player.Inventory()
-
-
-def control_player(player, entities, current_time):
+def change_player_on_input(player_character, objects):
     keys = view.get_input()
 
     if keys[pygame.K_LEFT]:
-        player.move(entities, -player.velocity, 0)
+        player_character.move(objects, -player_character.velocity, 0)
     if keys[pygame.K_RIGHT]:
-        player.move(entities, player.velocity, 0)
+        player_character.move(objects, player_character.velocity, 0)
     if keys[pygame.K_UP]:
-        player.move(entities, 0, -player.velocity)
+        player_character.move(objects, 0, -player_character.velocity)
     if keys[pygame.K_DOWN]:
-        player.move(entities, 0, player.velocity)
-    if keys[pygame.K_LSHIFT]:
-        player.sprint()
-    else:
-        player.walk()
+        player_character.move(objects, 0, player_character.velocity)
     if keys[pygame.K_SPACE]:
-        key_pressed_time = pygame.time.get_ticks()
-        if key_pressed_time + 2000 < current_time:
-            colors = get_colors()
-            player.change_color(colors)
+        player_character.sword.visible = True
+    else:
+        player_character.sword.visible = False
 
 
-def add_items_to_inventory(player, items, inventory):
-    keys = view.get_input()
+def control_player(objects):
+    player_character = objects['player'][0]
 
-    for item in items:
-        if item.type == 'key':
-            player.pick_up_key(inventory, item)
-        elif item.type == 'potion':
-            if item.sub_type == 'health':
-                player.pick_up_health_potion(inventory, item)
-        elif item.type == 'chest':
-            if keys[pygame.K_e]:
-                player.interact_with_chest(inventory, item)
+    change_player_on_input(player_character, objects)
+    player_character.add_item_to_inventory(objects)
+    player_character.take_damage(objects)

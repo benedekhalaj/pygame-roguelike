@@ -1,0 +1,8 @@
+x:Player
+ :Floor_1
+k:Key
+0:Outer_Wall_1
+1:Inner_Wall_1
+2:Chest
+e:Enemy
+d:Door
