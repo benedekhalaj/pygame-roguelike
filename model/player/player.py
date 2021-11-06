@@ -2,6 +2,8 @@ from model import data_manager
 import pygame
 import pygame.freetype
 
+from model.map.map import create_map_sign_dict
+
 
 pygame.mixer.init()
 SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/pick_up_key.WAV')
@@ -337,34 +339,37 @@ class Stat():
         self.x = 1
         self.y = 1
         self.width = screen_size[0] // 5
-        self.height = screen_size[1] // 40
+        self.height = screen_size[1] // 60
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.color = colors
         self.health = "health"
         self.stamina = 'stamina'
         self.visible = True
-        self.font_size = 30
+        self.font_size = 20
         self.texts = self.create_stat_text(player_stats)
         self.bars = self.create_stat_bar(player_stats)
 
     def create_stat_bar(self, player_stat):
         number = 0
         bar = []
+        
         player_health = player_stat[0]
         player_max_health = player_stat[1]
         player_stamina = player_stat[2]
         player_max_stamina = player_stat[3]
         for type, text in self.texts.items():
+            y = self.y + number * self.font_size
+            x = self.x + (text.get_width()) + 8
             if type == self.health:
                 width = self.width * (player_health / player_max_health)
                 color = self.color.RED
+                stamina_texture = create_stat_bar_texture(self.width, self.height, x, y)
             elif type == self.stamina:
                 width = self.width * (player_stamina / player_max_stamina)
                 color = self.color.BLUE
-            y = self.y + number * self.font_size
-            x = self.x + text.get_width()
+                stamina_texture = create_stat_bar_texture(self.width, self.height, x, y)
             number += 1
-            bar.append((pygame.Rect(x, y, width, self.height), color))
+            bar.append([(pygame.Rect(x, y, width, self.height), color), stamina_texture])
         return bar
 
     def create_stat_text(self, player_stats):
@@ -377,3 +382,26 @@ class Stat():
         texts[self.stamina] = font.render(f"{int(player_stamina)} stamina", False, self.color.WHITE)
         return texts
         # pygame.font.get_fonts()
+
+
+def create_stat_bar_texture(width, height, x, y):
+    x = x
+    self_height = height
+    stat_bar_start = pygame.image.load("model/map/textures/misc/stat_bar_start.png")
+    stat_bar_start = pygame.transform.scale(stat_bar_start, (32, self_height))
+    stat_bar_start_width = stat_bar_start.get_width()
+    stat_bar_middle = pygame.image.load("model/map/textures/misc/stat_bar_middle.png")
+    stat_bar_middle = pygame.transform.scale(stat_bar_middle, (32, self_height))
+    stat_bar_middle_width = stat_bar_middle.get_width()
+    stat_bar_end = pygame.image.load("model/map/textures/misc/stat_bar_end.png")
+    stat_bar_end = pygame.transform.scale(stat_bar_end, (32, self_height))
+    stat_bar_end_width = stat_bar_end.get_width()
+    lenght_of_stat_bar = int((width - stat_bar_start_width - stat_bar_end_width) / stat_bar_middle_width)
+    bar_texture = [(stat_bar_start, x, y)]
+    for _ in range(lenght_of_stat_bar):
+        x += stat_bar_middle_width
+        bar_texture.append((stat_bar_middle, x, y))
+    bar_texture.append((stat_bar_end, x + stat_bar_end_width, y))
+    return bar_texture
+
+

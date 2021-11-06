@@ -36,6 +36,7 @@
 34:	Wall:	model/map/textures/terrain/0033_wall_3corner_left.png
 35:	Wall:	model/map/textures/terrain/0034_wall_3corner_top.png
 36:	Wall:	model/map/textures/terrain/0035_wall_3corner_right.png
+51:	Wall:	model/map/textures/terrain/0506_wall_3corner_right.png
 ------------------------ PLAYER
 0:	Player:	model/map/textures/player/knight_down2.png
 ------------------------ ENEMIES
