@@ -72,15 +72,25 @@ def display_player_sword(window, objects):
 
 def display_player_stat(window, objects):
     stat = objects['player'][0].stat
-    for bar_tuple in stat.bars:
-        bar = bar_tuple[0]
-        color = bar_tuple[1]
-        stat_position = (bar.x, bar.y, bar.width, bar.height)
-        pygame.draw.rect(window, color, stat_position)
+    for bar_list in stat.bars:
+        bar_rect = bar_list[0][0]
+        rect_color = bar_list[0][1]
+
+        stat_position = (bar_rect.x, bar_rect.y, bar_rect.width, bar_rect.height)
+        pygame.draw.rect(window, rect_color, stat_position)
+        display_stat_texture(window, bar_list[1])
 
     for line, text in enumerate(stat.texts.values()):
         y = stat.y + (line * stat.font_size)
         window.blit(text, (stat.x, y))
+
+
+def display_stat_texture(window, bar_texture):
+    for texture_piece_tuple in bar_texture:
+        picture = texture_piece_tuple[0]
+        x = texture_piece_tuple[1]
+        y = texture_piece_tuple[2]
+        window.blit(picture, (x, y))
 
 
 def refresh_display():
