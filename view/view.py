@@ -43,6 +43,7 @@ def display_objects(window, object_types: dict):
         for object in objects:
             if object.visible:
                 position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
+                # pygame.draw.rect(window, object.color, position)
                 if object.texture is not None:
                     if type(object.texture) is list:
                         images = len(object.texture)
@@ -55,23 +56,41 @@ def display_objects(window, object_types: dict):
 
 
 def display_player_sword(window, objects):
-    sword = objects['player'][0].sword
+    player = objects['player'][0]
+    sword = player.sword
     if sword.visible:
         sword_position = (sword.rect.x, sword.rect.y, sword.rect.width, sword.rect.height)
         pygame.draw.rect(window, sword.color, sword_position)
+        if sword.texture is not None:
+            if type(sword.texture) is list:
+                images = len(sword.texture)
+                rate = player.attack_duration//images
+                window.blit(sword.texture[sword.texture_count//rate], (sword.rect.x, sword.rect.y))
+            else:
+                window.blit(sword.texture, (sword.rect.x, sword.rect.y))
 
 
 def display_player_stat(window, objects):
     stat = objects['player'][0].stat
-    for bar_tuple in stat.bars:
-        bar = bar_tuple[0]
-        color = bar_tuple[1]
-        stat_position = (bar.x, bar.y, bar.width, bar.height)
-        pygame.draw.rect(window, color, stat_position)
+    for bar_list in stat.bars:
+        bar_rect = bar_list[0][0]
+        rect_color = bar_list[0][1]
+
+        stat_position = (bar_rect.x, bar_rect.y, bar_rect.width, bar_rect.height)
+        pygame.draw.rect(window, rect_color, stat_position)
+        display_stat_texture(window, bar_list[1])
 
     for line, text in enumerate(stat.texts.values()):
         y = stat.y + (line * stat.font_size)
         window.blit(text, (stat.x, y))
+
+
+def display_stat_texture(window, bar_texture):
+    for texture_piece_tuple in bar_texture:
+        picture = texture_piece_tuple[0]
+        x = texture_piece_tuple[1]
+        y = texture_piece_tuple[2]
+        window.blit(picture, (x, y))
 
 
 def refresh_display():
