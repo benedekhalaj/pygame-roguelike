@@ -15,38 +15,32 @@ class Standard_Enemy():
         self.texture_count_limit = 60
         self.color = colors.BROWN
         self.visible = True
-        self.velocity = 1
-        self.count = 0
+        self.velocity = 4
         self.direction = direction[0]
         self.count_limit = direction[1]
         self.visible = True
 
-    def move(self):
-        if self.count <= self.count_limit:
-            if self.direction == 'right':
-                self.rect.x += self.velocity
-            elif self.direction == 'left':
-                self.rect.x -= self.velocity
-            elif self.direction == 'down':
-                self.rect.y += self.velocity
-            elif self.direction == 'up':
-                self.rect.y -= self.velocity
-        elif self.count > self.count_limit:
-            if self.direction == 'right':
-                self.direction = 'left'
-            elif self.direction == 'left':
-                self.direction = 'right'
-            elif self.direction == 'down':
-                self.direction = 'up'
-            elif self.direction == 'up':
-                self.direction = 'down'
-        self.set_count()
+    def move(self, objects):
+        if self.direction == 'right':
+            self.rect.x += self.velocity
+        elif self.direction == 'left':
+            self.rect.x -= self.velocity
+        elif self.direction == 'down':
+            self.rect.y += self.velocity
+        elif self.direction == 'up':
+            self.rect.y -= self.velocity
 
-    def set_count(self):
-        if self.count > self.count_limit:
-            self.count = 0
-        else:
-            self.count += 1
+        for wall in objects['walls']:
+            if self.rect.colliderect(wall.rect):
+                if self.direction == 'right':
+                    self.direction = 'left'
+                elif self.direction == 'left':
+                   self.direction = 'right'
+                elif self.direction == 'down':
+                    self.direction = 'up'
+                elif self.direction == 'up':
+                    self.direction = 'down'
+
 
     def take_damage(self, objects: dict):
         for player in objects["player"]:

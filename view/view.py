@@ -43,6 +43,7 @@ def display_objects(window, object_types: dict):
         for object in objects:
             if object.visible:
                 position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
+                pygame.draw.rect(window, object.color, position)
                 if object.texture is not None:
                     if type(object.texture) is list:
                         images = len(object.texture)
@@ -50,8 +51,7 @@ def display_objects(window, object_types: dict):
                         window.blit(object.texture[object.texture_count//rate], (object.rect.x, object.rect.y))
                     else:
                         window.blit(object.texture, (object.rect.x, object.rect.y))
-                else:
-                    pygame.draw.rect(window, object.color, position)
+                    
 
 
 def display_player_sword(window, objects):
@@ -59,6 +59,7 @@ def display_player_sword(window, objects):
     sword = player.sword
     if sword.visible:
         sword_position = (sword.rect.x, sword.rect.y, sword.rect.width, sword.rect.height)
+        pygame.draw.rect(window, sword.color, sword_position)
         if sword.texture is not None:
             if type(sword.texture) is list:
                 images = len(sword.texture)
@@ -66,8 +67,6 @@ def display_player_sword(window, objects):
                 window.blit(sword.texture[sword.texture_count//rate], (sword.rect.x, sword.rect.y))
             else:
                 window.blit(sword.texture, (sword.rect.x, sword.rect.y))
-        else:
-            pygame.draw.rect(window, sword.color, sword_position)
 
 
 def display_player_stat(window, objects):

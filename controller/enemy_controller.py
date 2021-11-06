@@ -6,7 +6,7 @@ def control_enemy(objects):
     for enemy_character in objects["enemies"]:
 
         if enemy_character.type == 'standard':
-            enemy_character.move()
+            enemy_character.move(objects)
             enemy_character.take_damage(objects)
             enemy_character.update_texture()
 

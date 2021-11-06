@@ -31,7 +31,7 @@ class Player():
         self.can_spirnt = True
         self.stamina = 1  # self.stamina_limit
 
-        self.standing = True
+        self.moving = False
         self.direction = 'right'
 
         self.damage_timer = 0
@@ -227,32 +227,33 @@ class Player():
             self.attack_in_progress = False
 
     def update_texture(self):
-        path = 'model/map/textures/player/'
-        left = 'knight_left'
-        right = 'knight_right'
-        up = 'knight_up'
-        down = 'knight_down'
-        if self.direction == 'left':
-            self.texture = [data_manager.open_image(path, f'{left}1.png'),
-                            data_manager.open_image(path, f'{left}2.png'),
-                            data_manager.open_image(path, f'{left}3.png'),
-                            data_manager.open_image(path, f'{left}2.png')]
-        elif self.direction == 'right':
-            self.texture = [data_manager.open_image(path, f'{right}1.png'),
-                            data_manager.open_image(path, f'{right}2.png'),
-                            data_manager.open_image(path, f'{right}3.png'),
-                            data_manager.open_image(path, f'{right}2.png')]
-        elif self.direction == 'up':
-            self.texture = [data_manager.open_image(path, f'{up}1.png'),
-                            data_manager.open_image(path, f'{up}2.png'),
-                            data_manager.open_image(path, f'{up}3.png'),
-                            data_manager.open_image(path, f'{up}2.png')]
-        elif self.direction == 'down':
-            self.texture = [data_manager.open_image(path, f'{down}1.png'),
-                            data_manager.open_image(path, f'{down}2.png'),
-                            data_manager.open_image(path, f'{down}3.png'),
-                            data_manager.open_image(path, f'{down}2.png')]
-        self.update_texture_count()
+        if self.moving:
+            path = 'model/map/textures/player/'
+            left = 'knight_left'
+            right = 'knight_right'
+            up = 'knight_up'
+            down = 'knight_down'
+            if self.direction == 'left':
+                self.texture = [data_manager.open_image(path, f'{left}1.png'),
+                                data_manager.open_image(path, f'{left}2.png'),
+                                data_manager.open_image(path, f'{left}3.png'),
+                                data_manager.open_image(path, f'{left}2.png')]
+            elif self.direction == 'right':
+                self.texture = [data_manager.open_image(path, f'{right}1.png'),
+                                data_manager.open_image(path, f'{right}2.png'),
+                                data_manager.open_image(path, f'{right}3.png'),
+                                data_manager.open_image(path, f'{right}2.png')]
+            elif self.direction == 'up':
+                self.texture = [data_manager.open_image(path, f'{up}1.png'),
+                                data_manager.open_image(path, f'{up}2.png'),
+                                data_manager.open_image(path, f'{up}3.png'),
+                                data_manager.open_image(path, f'{up}2.png')]
+            elif self.direction == 'down':
+                self.texture = [data_manager.open_image(path, f'{down}1.png'),
+                                data_manager.open_image(path, f'{down}2.png'),
+                                data_manager.open_image(path, f'{down}3.png'),
+                                data_manager.open_image(path, f'{down}2.png')]
+            self.update_texture_count()
 
     def update_texture_count(self):
         if self.texture_count + 1 >= self.texture_count_limit:
@@ -282,7 +283,7 @@ class Inventory():
 
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
-        self.exist = True
+        self.exist = False
 
         self.texture = None
         self.texture_count = 0
