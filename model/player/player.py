@@ -3,6 +3,10 @@ import pygame
 import pygame.freetype
 
 
+pygame.mixer.init()
+SFX_PICK_UP_KEY = pygame.mixer.Sound('sound/sfx/pick_up_key.WAV')
+
+
 class Player():
     def __init__(self, position: tuple, colors, screen_size):
         self.type = 'player'
@@ -134,6 +138,7 @@ class Player():
                     if item.type == 'key':
                         self.inventory.add_key()
                         item.visible = False
+                        SFX_PICK_UP_KEY.play()
                     elif item.type == 'health_potion':
                         self.inventory.add_health_potion()
                         item.visible = False
