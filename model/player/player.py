@@ -59,16 +59,12 @@ class Player():
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
             self.direction = 'right'
-            self.sword.direction = 'right'
         if x_direction < 0:
             self.direction = 'left'
-            self.sword.direction = 'left'
         if y_direction > 0:
             self.direction = 'down'
-            self.sword.direction = 'down'
         if y_direction < 0:
             self.direction = 'up'
-            self.sword.direction = 'up'
 
     def sprint(self):
         if self.stamina > 0 and self.can_spirnt:

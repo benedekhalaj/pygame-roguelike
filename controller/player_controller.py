@@ -26,6 +26,8 @@ def change_player_on_input(player_character, objects):
             if not player_character.attack_in_progress:
                 player_character.attack_in_progress = True
                 player_character.sword.texture_count = 0
+                player_character.sword.direction = player_character.direction
+                player_character.set_sword_position()
 
 def control_player(objects):
     player_character = objects['player'][0]
@@ -35,6 +37,5 @@ def control_player(objects):
     player_character.take_damage(objects)
     if not player_character.sprinting:
         player_character.reload_stamina()
-    player_character.set_sword_position()
     player_character.attack()
     player_character.update_texture()
