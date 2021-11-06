@@ -1,6 +1,5 @@
 import pygame
 
-
 def open_file(filename: str):
     """opening a given file. reads it and give it back by splitlines.
 
@@ -20,5 +19,5 @@ def save_csv_file(filename: str, file: list):
             csv_file.write("\n")
 
 
-def load_image(filename: str):
-    pygame.image.load(filename)
+def open_image(path, filename=''):
+    return pygame.image.load(f'{path}{filename}')

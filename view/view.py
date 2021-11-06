@@ -22,6 +22,7 @@ class Colors():
         self.ROSYBROWN = (188, 143, 143)
         self.CRIMSON = (220, 20, 60)
 
+
 COLORS = Colors()
 
 
@@ -43,7 +44,12 @@ def display_objects(window, object_types: dict):
             if object.visible:
                 position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
                 if object.texture is not None:
-                    window.blit(object.texture, (object.rect.x, object.rect.y))
+                    if type(object.texture) is list:
+                        images = len(object.texture)
+                        rate = 60//images
+                        window.blit(object.texture[object.texture_count//rate], (object.rect.x, object.rect.y))
+                    else:
+                        window.blit(object.texture, (object.rect.x, object.rect.y))
                 else:
                     pygame.draw.rect(window, object.color, position)
 

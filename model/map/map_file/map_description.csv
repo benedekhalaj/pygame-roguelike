@@ -23,7 +23,7 @@ L:Left
 D:Down
 U:Up
 ------------------------ ENEMIES
-e:Enemy
+e:Eye_Enemy
 z:Zombie_Enemy
 ----------------------- ITEMS
 c:Chest

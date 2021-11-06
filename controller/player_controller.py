@@ -36,3 +36,4 @@ def control_player(objects):
         player_character.reload_stamina()
     player_character.set_sword_position()
     player_character.attack()
+    player_character.update_texture()

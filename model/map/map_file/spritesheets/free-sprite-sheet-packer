@@ -1,0 +1,125 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Sprite Sheet Packer - A free alternative to TexturePacker</title>
+<meta name="description" content="This is a free online sprite sheet packer - an easy to use application to make css sprites and sprite sheets for Phaser 3. No installation required.">
+<meta name="author" content="Andreas Löw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sprite Sheet Packer - A free alternative to TexturePacker">
+<meta property="og:description" content="This is a free online sprite sheet packer - an easy to use application to make css sprites and sprite sheets for Phaser 3. No installation required.">
+<meta property="og:image" content="https://www.codeandweb.com/img/twitter-cards/free-sprite-sheet-maker.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@codeandweb">
+<meta name="twitter:creator" content="@codeandweb">
+<meta name="twitter:title" content="Sprite Sheet Packer - A free alternative to #TexturePacker">
+<meta name="twitter:description" content="This is a free online sprite sheet packer - an easy to use application to make css sprites and sprite sheets for Phaser 3. No installation required.">
+<meta name="twitter:image" content="https://www.codeandweb.com/img/twitter-cards/free-sprite-sheet-maker.png">
+<link rel="shortcut icon" href="https://www.codeandweb.com/img/favicon.ico">
+<link rel="apple-touch-icon" href="https://www.codeandweb.com/img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.codeandweb.com/img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.codeandweb.com/img/apple-touch-icon-114x114.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/caw.css">
+<link rel="stylesheet" href="/tp-online/texturepacker/9da3ea7aac1dd3fc61711f2f1c0185e6/css/texturepacker-1.0.0.css">
+<style type="text/css">
+        body {
+            margin-top: 1rem;
+            padding: 0;
+        }
+
+        #wrap {
+            margin: 0 auto;
+        }
+
+        .texturepacker {
+            min-height: 600px;
+            resize: both;
+            overflow: auto;
+        }
+    </style>
+<script src="/tp-online/libs/jquery/jquery-3.2.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="/tp-online/libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="/tp-online/texturepacker/c6420c380f6f15ce1d1da102230370e7/js/texturepacker-1.0.0.min.js"></script>
+<script src="/js/shariff.js"></script>
+</head>
+<body>
+<div class="container">
+<h1>Free Sprite Sheet Packer</h1>
+<p>
+This tool is a <b>free online alternative</b> for <a href="/texturepacker">TexturePacker</a>. You can use it to pack sprite sheets,
+including data formats for Phaser, CSS and LESS. <br />
+</p>
+<p>
+Simply drag &amp; drop your sprites into the main area and download the created .png files.
+<b>Privacy notice</b>: No data is transferred to our servers &mdash; the sprites are packed in your browser.
+</p>
+<div class="texturepacker mb-4">
+<img src="/tp-online/texturepacker/img/character/RunRight01.png" data-name="RunRight01.png" />
+<img src="/tp-online/texturepacker/img/character/RunRight02.png" data-name="RunRight02.png" />
+<img src="/tp-online/texturepacker/img/character/RunRight03.png" data-name="RunRight03.png" />
+<img src="/tp-online/texturepacker/img/character/RunRight04.png" data-name="RunRight04.png" />
+</div>
+<div class="shariff" data-button-style="icon" data-services="['twitter','facebook','googleplus','linkedin','pinterest','reddit','stumbleupon']" data-lang="en"></div>
+<h2 class="mt-4">What is TexturePacker?</h2>
+<p>
+<a href="/texturepacker">TexturePacker</a> is a professional tool for game developers and
+web designers. Packing sprite sheets is just a small part of what it can do for you.
+</p>
+</div>
+<footer class="caw-footer-lite mb-8">
+<div class="container">
+<nav class="caw-footer-lite__container">
+<div class="caw-footer-lite__copyright">
+Copyright © 2009-2021 CodeAndWeb GmbH. All rights reserved.
+</div>
+<div class="caw-footer-lite__nav">
+<a href="/about">Contact</a> |
+<a href="/privacypolicy">Privacy Policy</a> |
+<a href="/impressum">Impressum</a> |
+<a href="/datenschutz">Datenschutz</a>
+</div>
+</nav>
+</div>
+</footer>
+
+<script type="text/javascript">
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["setCookieDomain", "*.www.codeandweb.com"]);
+        _paq.push(["disableCookies"]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "https://analytics.codeandweb.com/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '2']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+
+<script>
+    var data = {
+        url: window.location.href,
+        referrer: document.referrer
+    };
+
+    var img = new Image();
+    img.src = '/simple-stats/count-page-view?d='+encodeURIComponent(JSON.stringify(data));
+</script>
+</body>
+</html>
