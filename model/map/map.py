@@ -71,6 +71,8 @@ def create_map(screen_size, colors):
                     enemies_list.append(enemy.Standard_Enemy(position, colors, ("down", 30)))
                 elif character_name == "Up_Enemy":
                     enemies_list.append(enemy.Standard_Enemy(position, colors, ("up", 30)))
+            elif character_name == "Eye_Enemy":
+                enemies_list.append(enemy.Eye_Enemy(position, colors))
             elif character_name == "Sword":
                 sword_list.append(items.Sword(position, colors))
 

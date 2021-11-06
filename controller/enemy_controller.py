@@ -4,6 +4,9 @@ from model.enemy import enemy
 
 def control_enemy(objects):
     for enemy_character in objects["enemies"]:
-        enemy_character.move()
-        enemy_character.take_damage(objects)
-        enemy_character.update_texture()
+        if enemy_character.type == 'standard':
+            enemy_character.move()
+            enemy_character.take_damage(objects)
+            enemy_character.update_texture()
+        elif enemy_character.type == 'eye':
+            enemy_character.set_facing(objects)
