@@ -33,7 +33,7 @@ class Player():
         self.can_spirnt = True
         self.stamina = 1  # self.stamina_limit
 
-        self.moving = True
+        self.moving = False
         self.direction = 'right'
 
         self.damage_timer = 0
@@ -53,6 +53,7 @@ class Player():
         self.visible = True
 
     def move(self, objects, x_direction, y_direction):
+        self.moving = True
         if x_direction != 0:
             self.move_single_axis(objects, x_direction, 0)
         if y_direction != 0:
@@ -229,12 +230,13 @@ class Player():
             self.attack_in_progress = False
 
     def update_texture(self):
+        path = 'model/map/textures/player/'
+        left = 'knight_left'
+        right = 'knight_right'
+        up = 'knight_up'
+        down = 'knight_down'
+
         if self.moving:
-            path = 'model/map/textures/player/'
-            left = 'knight_left'
-            right = 'knight_right'
-            up = 'knight_up'
-            down = 'knight_down'
             if self.direction == 'left':
                 self.texture = [data_manager.open_image(path, f'{left}1.png'),
                                 data_manager.open_image(path, f'{left}2.png'),
@@ -256,9 +258,18 @@ class Player():
                                 data_manager.open_image(path, f'{down}3.png'),
                                 data_manager.open_image(path, f'{down}2.png')]
             self.update_texture_count()
+        else:
+            if self.direction == 'left':
+                self.texture = data_manager.open_image(path, f'{left}2.png')
+            elif self.direction == 'right':
+                self.texture = data_manager.open_image(path, f'{right}2.png')
+            elif self.direction == 'up':
+                self.texture = data_manager.open_image(path, f'{up}2.png')
+            elif self.direction == 'down':
+                self.texture = data_manager.open_image(path, f'{down}2.png')
 
     def update_texture_count(self):
-        if self.texture_count + 1 >= self.texture_count_limit:
+        if self.texture_count + 1 >= self.texture_count_limit or not self.moving:
             self.texture_count = 0
 
         self.texture_count += 1
@@ -352,7 +363,7 @@ class Stat():
     def create_stat_bar(self, player_stat):
         number = 0
         bar = []
-        
+
         player_health = player_stat[0]
         player_max_health = player_stat[1]
         player_stamina = player_stat[2]
@@ -403,5 +414,3 @@ def create_stat_bar_texture(width, height, x, y):
         bar_texture.append((stat_bar_middle, x, y))
     bar_texture.append((stat_bar_end, x + stat_bar_end_width, y))
     return bar_texture
-
-

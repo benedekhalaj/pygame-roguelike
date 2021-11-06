@@ -7,6 +7,7 @@ import pygame
 
 def change_player_on_input(player_character, objects):
     keys = view.get_input()
+    player_character.moving = False
 
     if keys[pygame.K_LEFT]:
         player_character.move(objects, -player_character.velocity, 0)
