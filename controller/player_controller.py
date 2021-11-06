@@ -1,5 +1,3 @@
-from pygame import key
-from pygame.constants import KEYDOWN
 from model.player import player
 from view import view
 import pygame
@@ -29,6 +27,13 @@ def change_player_on_input(player_character, objects):
                 player_character.sword.direction = player_character.direction
                 player_character.set_sword_position()
 
+
+def control_inventory(objects, pause, key):
+    player_character = objects['player'][0]
+    pause = player_character.use_inventory(objects, pause, key)
+    return pause
+
+
 def control_player(objects):
     player_character = objects['player'][0]
 
@@ -39,3 +44,4 @@ def control_player(objects):
         player_character.reload_stamina()
     player_character.attack()
     player_character.update_texture()
+

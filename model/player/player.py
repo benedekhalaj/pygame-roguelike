@@ -147,6 +147,18 @@ class Player():
                         item.visible = False
                         SFX_PICK_UP_SWORD.play()
 
+    def use_inventory(self, objects, pause, key):
+        self.show_inventory()
+        if key[pygame.K_ESCAPE]:
+            pause = False
+        else:
+            pause = True
+        return pause
+
+    def show_inventory(self):
+        print("Hello")
+        pass
+
     def open_door(self, objects):
         for door in objects["doors"]:
             if self.rect.colliderect(door.rect):
@@ -282,6 +294,8 @@ class Inventory():
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
 
+    def use_inventory(self):
+        pass
 
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
