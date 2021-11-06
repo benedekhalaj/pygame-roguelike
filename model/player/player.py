@@ -4,7 +4,9 @@ import pygame.freetype
 
 
 pygame.mixer.init()
-SFX_PICK_UP_KEY = pygame.mixer.Sound('sound/sfx/pick_up_key.WAV')
+SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/pick_up_key.WAV')
+SFX_OPEN_DOOR = data_manager.open_sfx('sound/sfx/open_door.WAV')
+SFX_PICK_UP_SWORD = data_manager.open_sfx('sound/sfx/pick_up_sword.WAV')
 
 
 class Player():
@@ -57,16 +59,12 @@ class Player():
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
             self.direction = 'right'
-            self.sword.direction = 'right'
         if x_direction < 0:
             self.direction = 'left'
-            self.sword.direction = 'left'
         if y_direction > 0:
             self.direction = 'down'
-            self.sword.direction = 'down'
         if y_direction < 0:
             self.direction = 'up'
-            self.sword.direction = 'up'
 
     def sprint(self):
         if self.stamina > 0 and self.can_spirnt:
@@ -145,6 +143,7 @@ class Player():
                     elif item.type == 'sword':
                         self.sword.exist = True
                         item.visible = False
+                        SFX_PICK_UP_SWORD.play()
 
     def open_door(self, objects):
         for door in objects["doors"]:
@@ -154,6 +153,7 @@ class Player():
                         door.status = "opened"
                         door.update_color()
                         self.inventory.remove_key()
+                        SFX_OPEN_DOOR.play()
 
     def take_damage(self, objects: dict):
         self.set_attributes()
