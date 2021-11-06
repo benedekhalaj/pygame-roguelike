@@ -1,4 +1,4 @@
------------------------MAP
+------------------------ MAP
 -1:Void
 1:model/map/textures/terrain/0000_tiles.png
 2:model/map/textures/terrain/0001_wall_top.png
@@ -36,21 +36,16 @@
 34:model/map/textures/terrain/0033_wall_3corner_left.png
 35:model/map/textures/terrain/0034_wall_3corner_top.png
 36:model/map/textures/terrain/0035_wall_3corner_right.png
----------------PLAYER
+------------------------ PLAYER
 0:Player
----------------DIRECTIONS
-R:Right
-L:Left
-D:Down
-U:Up
 ------------------------ ENEMIES
 37:model/map/textures/enemy/eyeball/eyeball_left_middle.png
 38:model/map/textures/enemy/eyeball/eyeball_left_middle.png
 39:model/map/textures/enemy/eyeball/eyeball_right_middle.png
 40:model/map/textures/enemy/eyeball/eyeball_right_middle.png
------------------------ ITEMS
-41:
-k:Key
-d:Door
-s:Sword
-h:Health_Potion
+------------------------ ITEMS
+41:model/map/textures/items/key.png
+42:Door
+43:model/map/textures/items/chest_closed.png
+44:model/map/textures/items/shortsword.png
+45:model/map/textures/items/health_potion.png
