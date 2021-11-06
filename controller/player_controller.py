@@ -25,6 +25,7 @@ def change_player_on_input(player_character, objects):
         if player_character.sword.exist:
             if not player_character.attack_in_progress:
                 player_character.attack_in_progress = True
+                player_character.sword.texture_count = 0
 
 def control_player(objects):
     player_character = objects['player'][0]
