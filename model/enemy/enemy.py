@@ -9,7 +9,7 @@ SFX_HIT_ENEMY = pygame.mixer.Sound('sound/sfx/hit_enemy.WAV')
 class Zombie_Enemy():
     def __init__(self, position: tuple, file_path, colors: dict, direction):
         self.type = "standard"
-        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.rect = pygame.Rect(position[0], position[1], position[2] - 10, position[3] - 5)
         self.texture = None
         self.texture_count = 0
         self.texture_count_limit = 60

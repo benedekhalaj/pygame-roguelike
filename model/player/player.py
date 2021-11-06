@@ -33,7 +33,7 @@ class Player():
         self.can_spirnt = True
         self.stamina = 1  # self.stamina_limit
 
-        self.moving = True
+        self.moving = False
         self.direction = 'right'
 
         self.damage_timer = 0
@@ -53,10 +53,25 @@ class Player():
         self.visible = True
 
     def move(self, objects, x_direction, y_direction):
+        self.moving = True
         if x_direction != 0:
             self.move_single_axis(objects, x_direction, 0)
         if y_direction != 0:
             self.move_single_axis(objects, 0, y_direction)
+
+    def move_single_axis(self, objects: dict, x_direction, y_direction):
+        self.set_direction(x_direction, y_direction)
+
+        self.rect.x += x_direction
+        self.rect.y += y_direction
+
+        collide = self.check_collision(objects)
+
+        if not collide:
+            for objects_list in objects.values():
+                for item in objects_list:
+                    item.rect.x -= x_direction
+                    item.rect.y -= y_direction
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
@@ -67,23 +82,6 @@ class Player():
             self.direction = 'down'
         if y_direction < 0:
             self.direction = 'up'
-
-    def sprint(self):
-        if self.stamina > 0 and self.can_spirnt:
-            self.sprinting = True
-            self.velocity = self.sprint_speed
-            self.stamina -= 1
-        else:
-            self.can_spirnt = False
-            self.sprinting = False
-            self.velocity = self.walk_speed
-
-    def reload_stamina(self):
-        if self.stamina < self.stamina_limit:
-            self.stamina += 0.5
-            self.velocity = self.walk_speed
-        if self.stamina >= self.stamina_limit:
-            self.can_spirnt = True
 
     def check_collision(self, objects):
         if self.check_wall_collision(objects) or self.check_door_collision(objects):
@@ -117,19 +115,99 @@ class Player():
         elif self.direction == 'up':
             self.rect.top = object.rect.bottom
 
-    def move_single_axis(self, objects: dict, x_direction, y_direction):
-        self.set_direction(x_direction, y_direction)
+    def attack(self):
+        if self.attack_in_progress:
+            self.sword.visible = True
+            self.update_attack_timer()
+            self.check_attack_timer()
+            self.sword.update_texture()
 
-        self.rect.x += x_direction
-        self.rect.y += y_direction
+    def update_attack_timer(self):
+        self.attack_timer_count += 1
 
-        collide = self.check_collision(objects)
+    def check_attack_timer(self):
+        if self.attack_timer_count > self.attack_duration:
+            self.sword.visible = False
+        if self.attack_timer_count > self.attack_timer_limit:
+            self.attack_timer_count = 0
+            self.attack_in_progress = False
 
-        if not collide:
-            for objects_list in objects.values():
-                for item in objects_list:
-                    item.rect.x -= x_direction
-                    item.rect.y -= y_direction
+    def start_attack(self):
+        self.attack_in_progress = True
+        self.sword.texture_count = 0
+        self.sword.direction = self.direction
+        self.set_sword_position()
+
+    def set_sword_position(self):
+        player = self.rect
+        sword = self.sword.rect
+        if self.direction == 'right':
+            sword.x = player.x + player.width
+            sword.y = player.y
+
+        elif self.direction == 'left':
+            sword.x = player.x - player.width
+            sword.y = player.y
+
+        elif self.direction == 'down':
+            sword.x = player.x
+            sword.y = player.y + player.height
+
+        elif self.direction == 'up':
+            sword.x = player.x
+            sword.y = player.y - player.height
+
+    def take_damage(self, objects: dict):
+        self.set_damage_attributes()
+        for enemy in objects["enemies"]:
+            if enemy.visible:
+                if self.rect.colliderect(enemy.rect):
+                    if not self.invicible:
+                        self.health -= 1
+                        self.invicible = True
+
+    def set_damage_attributes(self):
+        def set_invicible(self):
+            if self.damage_timer > self.damage_limit:
+                self.invicible = False
+
+        def set_damage_timer(self):
+            if self.invicible:
+                self.damage_timer += 1
+            else:
+                self.damage_timer = 0
+
+        def set_color(self):
+            if self.invicible:
+                self.color = self.invicible_color
+            else:
+                self.color = self.standard_color
+
+        def update_stat(self):
+            self.stat.texts = self.stat.create_stat_text((self.health, self.max_health, self.stamina, self.stamina_limit))
+            self.stat.bars = self.stat.create_stat_bar((self.health, self.max_health, self.stamina, self.stamina_limit))
+
+        set_invicible(self)
+        set_damage_timer(self)
+        set_color(self)
+        update_stat(self)
+
+    def sprint(self):
+        if self.stamina > 0 and self.can_spirnt:
+            self.sprinting = True
+            self.velocity = self.sprint_speed
+            self.stamina -= 1
+        else:
+            self.can_spirnt = False
+            self.sprinting = False
+            self.velocity = self.walk_speed
+
+    def reload_stamina(self):
+        if self.stamina < self.stamina_limit:
+            self.stamina += 0.5
+            self.velocity = self.walk_speed
+        if self.stamina >= self.stamina_limit:
+            self.can_spirnt = True
 
     def add_item_to_inventory(self, objects: dict):
         for item in objects["items"]:
@@ -169,84 +247,14 @@ class Player():
                         self.inventory.remove_key()
                         SFX_OPEN_DOOR.play()
 
-    def take_damage(self, objects: dict):
-        self.set_attributes()
-        for enemy in objects["enemies"]:
-            if enemy.visible:
-                if self.rect.colliderect(enemy.rect):
-                    if not self.invicible:
-                        self.health -= 1
-                        self.invicible = True
-
-    def set_attributes(self):
-        def set_invicible(self):
-            if self.damage_timer > self.damage_limit:
-                self.invicible = False
-
-        def set_damage_timer(self):
-            if self.invicible:
-                self.damage_timer += 1
-            else:
-                self.damage_timer = 0
-
-        def set_color(self):
-            if self.invicible:
-                self.color = self.invicible_color
-            else:
-                self.color = self.standard_color
-
-        def update_stat(self):
-            self.stat.texts = self.stat.create_stat_text((self.health, self.max_health, self.stamina, self.stamina_limit))
-            self.stat.bars = self.stat.create_stat_bar((self.health, self.max_health, self.stamina, self.stamina_limit))
-
-        set_invicible(self)
-        set_damage_timer(self)
-        set_color(self)
-        update_stat(self)
-
-    def set_sword_position(self):
-        player = self.rect
-        sword = self.sword.rect
-        if self.direction == 'right':
-            sword.x = player.x + player.width
-            sword.y = player.y
-
-        elif self.direction == 'left':
-            sword.x = player.x - player.width
-            sword.y = player.y
-
-        elif self.direction == 'down':
-            sword.x = player.x
-            sword.y = player.y + player.height
-
-        elif self.direction == 'up':
-            sword.x = player.x
-            sword.y = player.y - player.height
-
-    def attack(self):
-        if self.attack_in_progress:
-            self.sword.visible = True
-            self.update_attack_timer()
-            self.check_attack_timer()
-            self.sword.update_texture()
-
-    def update_attack_timer(self):
-        self.attack_timer_count += 1
-
-    def check_attack_timer(self):
-        if self.attack_timer_count > self.attack_duration:
-            self.sword.visible = False
-        if self.attack_timer_count > self.attack_timer_limit:
-            self.attack_timer_count = 0
-            self.attack_in_progress = False
-
     def update_texture(self):
+        path = 'model/map/textures/player/'
+        left = 'knight_left'
+        right = 'knight_right'
+        up = 'knight_up'
+        down = 'knight_down'
+
         if self.moving:
-            path = 'model/map/textures/player/'
-            left = 'knight_left'
-            right = 'knight_right'
-            up = 'knight_up'
-            down = 'knight_down'
             if self.direction == 'left':
                 self.texture = [data_manager.open_image(path, f'{left}1.png'),
                                 data_manager.open_image(path, f'{left}2.png'),
@@ -268,9 +276,18 @@ class Player():
                                 data_manager.open_image(path, f'{down}3.png'),
                                 data_manager.open_image(path, f'{down}2.png')]
             self.update_texture_count()
+        else:
+            if self.direction == 'left':
+                self.texture = data_manager.open_image(path, f'{left}2.png')
+            elif self.direction == 'right':
+                self.texture = data_manager.open_image(path, f'{right}2.png')
+            elif self.direction == 'up':
+                self.texture = data_manager.open_image(path, f'{up}2.png')
+            elif self.direction == 'down':
+                self.texture = data_manager.open_image(path, f'{down}2.png')
 
     def update_texture_count(self):
-        if self.texture_count + 1 >= self.texture_count_limit:
+        if self.texture_count + 1 >= self.texture_count_limit or not self.moving:
             self.texture_count = 0
 
         self.texture_count += 1
@@ -346,7 +363,6 @@ class Sword():
         self.texture_count += 1
 
 
-
 class Stat():
     def __init__(self, colors, screen_size, player_stats):
         self.type = "stat"
@@ -366,7 +382,7 @@ class Stat():
     def create_stat_bar(self, player_stat):
         number = 0
         bar = []
-        
+
         player_health = player_stat[0]
         player_max_health = player_stat[1]
         player_stamina = player_stat[2]
@@ -417,5 +433,3 @@ def create_stat_bar_texture(width, height, x, y):
         bar_texture.append((stat_bar_middle, x, y))
     bar_texture.append((stat_bar_end, x + stat_bar_end_width, y))
     return bar_texture
-
-
