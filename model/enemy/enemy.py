@@ -15,7 +15,7 @@ class Zombie_Enemy():
         self.texture_count_limit = 60
         self.color = colors.BROWN
         self.visible = True
-        self.velocity = 4
+        self.velocity = 2
         self.direction = direction[0]
         self.count_limit = direction[1]
         self.visible = True

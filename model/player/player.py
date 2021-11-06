@@ -31,7 +31,7 @@ class Player():
         self.can_spirnt = True
         self.stamina = 1  # self.stamina_limit
 
-        self.moving = False
+        self.moving = True
         self.direction = 'right'
 
         self.damage_timer = 0
