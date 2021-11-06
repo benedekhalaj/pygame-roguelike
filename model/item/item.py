@@ -40,10 +40,10 @@ class Chest():
 
 
 class Floor():
-    def __init__(self, position: tuple, colors: object):
+    def __init__(self, position: tuple, direction: str, colors: object):
         self.type = 'floor'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = create_texture()
+        self.texture = create_texture(direction)
         self.color = colors.WHITE
         self.visible = True
 

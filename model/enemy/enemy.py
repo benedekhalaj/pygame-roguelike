@@ -2,6 +2,10 @@ from model import data_manager
 import pygame
 
 
+pygame.mixer.init()
+SFX_HIT_ENEMY = pygame.mixer.Sound('sound/sfx/hit_enemy.WAV')
+
+
 class Standard_Enemy():
     def __init__(self, position: tuple, colors: dict, direction):
         self.type = "standard"
@@ -47,12 +51,10 @@ class Standard_Enemy():
     def take_damage(self, objects: dict):
         for player in objects["player"]:
             if player.sword.visible:
-                if self.rect.colliderect(player.sword.rect):
-                    self.visible = False
-    
-    def animate_enemy(self):
-        pass
-
+                if self.visible:
+                    if self.rect.colliderect(player.sword.rect):
+                        self.visible = False
+                        SFX_HIT_ENEMY.play()
 
     def update_texture(self):
         path = 'model/map/textures/enemy/'

@@ -44,9 +44,9 @@ def create_map(screen_size, colors):
             position = (x, y, character_width, character_height)
             character_name = map_sign_dict[char]
             if character_name != 'Void':
-                floor_list.append(items.Floor(position, colors))
+                floor_list.append(items.Floor(position, character_name, colors))
             if character_name in character_direction_name:
-                floor_list.append(items.Floor(position, colors))
+                floor_list.append(items.Floor(position, character_name, colors))
                 continue
             if character_name == "Player":
                 player_list.append(player.Player(position, colors, screen_size))
