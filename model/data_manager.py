@@ -21,3 +21,7 @@ def save_csv_file(filename: str, file: list):
 
 def open_image(path, filename=''):
     return pygame.image.load(f'{path}{filename}')
+
+
+def open_sfx(path, filename=''):
+    return pygame.mixer.Sound(f'{path}{filename}')
