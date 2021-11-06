@@ -44,37 +44,37 @@ def create_map(screen_size, colors):
             position = (x, y, character_width, character_height)
             character_name = map_sign_dict[char]
             if character_name != 'Void':
-                floor_list.append(items.Floor(position, colors))
+                floor_list.append(items.Floor(position, character_name, colors))
             if character_name in character_direction_name:
-                floor_list.append(items.Floor(position, colors))
+                floor_list.append(items.Floor(position, character_name, colors))
                 continue
             if character_name == "Player":
                 player_list.append(player.Player(position, colors, screen_size))
-            elif character_name == "Horizontal_Wall" or character_name == "Vertical_Wall":
+            elif "wall" in character_name:
                 walls_list.append(items.Wall(position, character_name, colors))
             elif character_name == "Chest":
                 chests_list.append(items.Chest(position, colors))
             elif character_name == "Key":
-                keys_list.append(items.Key(position, colors))
-            elif character_name == "Health_Potion":
-                potion_list.append(items.Health_Potion(position, colors))
+                keys_list.append(items.Key(position, character_name, colors))
+            elif character_name == "health_potion":
+                potion_list.append(items.Health_Potion(position, character_name, colors))
             elif character_name == "Door":
-                door_list.append(items.Door(position, colors))
+                door_list.append(items.Door(position, character_name, colors))
             elif character_name == "Zombie_Enemy":
                 char = text_map[row_place][col_place + 1]
                 character_name = map_sign_dict[char]
-                if character_name == "Right_Enemy":
+                if character_name == "Right":
                     enemies_list.append(enemy.Standard_Enemy(position, colors, ("right", 60)))
-                elif character_name == "Left_Enemy":
+                elif character_name == "Left":
                     enemies_list.append(enemy.Standard_Enemy(position, colors, ("left", 60)))
-                elif character_name == "Down_Enemy":
+                elif character_name == "Down":
                     enemies_list.append(enemy.Standard_Enemy(position, colors, ("down", 30)))
-                elif character_name == "Up_Enemy":
+                elif character_name == "Up":
                     enemies_list.append(enemy.Standard_Enemy(position, colors, ("up", 30)))
             elif character_name == "Eye_Enemy":
                 enemies_list.append(enemy.Eye_Enemy(position, colors))
             elif character_name == "Sword":
-                sword_list.append(items.Sword(position, colors))
+                sword_list.append(items.Sword(position,character_name, colors))
 
 
 
