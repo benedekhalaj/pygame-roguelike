@@ -76,8 +76,6 @@ class Door():
 
 
 def create_texture(file_path):
-    if file_path == "Door":
-        print("")
     if file_path is not None:
         return pygame.image.load(file_path)
     else:

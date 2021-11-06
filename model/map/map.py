@@ -26,12 +26,6 @@ def create_map(screen_size, colors):
     keys_list = []
     door_list = []
     sword_list = []
-    # character_direction_name = [
-    #                             map_sign_dict["L"],
-    #                             map_sign_dict["R"],
-    #                             map_sign_dict["U"],
-    #                             map_sign_dict["D"]
-    #                             ]
     for row_place, line in enumerate(text_map):
         for col_place, char in enumerate(line):
             y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
@@ -41,10 +35,7 @@ def create_map(screen_size, colors):
             file_path = map_sign_dict[char][1]
 
             if character_name != 'Void':
-                floor_list.append(items.Floor(position, "model/map/textures/terrain/0000_tiles.png", colors))
-            # if character_name in character_direction_name:
-            #     floor_list.append(items.Floor(position, character_name, colors))
-            #     continue
+                floor_list.append(items.Floor(position, map_sign_dict["Floor"][1], colors))
             if character_name == "Player":
                 player_list.append(player.Player(position, file_path, colors, screen_size))
             elif "Wall" in character_name:
