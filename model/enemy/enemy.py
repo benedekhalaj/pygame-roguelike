@@ -7,7 +7,7 @@ SFX_HIT_ENEMY = pygame.mixer.Sound('sound/sfx/hit_enemy.WAV')
 
 
 class Standard_Enemy():
-    def __init__(self, position: tuple, colors: dict, direction):
+    def __init__(self, position: tuple, file_path, colors: dict, direction):
         self.type = "standard"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = None
@@ -75,10 +75,10 @@ class Standard_Enemy():
 
 
 class Eye_Enemy():
-    def __init__(self, position, colors):
+    def __init__(self, position, file_path, colors):
         self.type = 'eye'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = None
+        self.texture = create_texture(file_path)
         self.texture_count = 0
         self.texture_count_limit = 60
         self.color = colors.BROWN
@@ -104,3 +104,9 @@ class Eye_Enemy():
                 self.texture = data_manager.open_image(path, f'{left}middle.png')
             else:
                 self.texture = data_manager.open_image(path, f'{left}up.png')
+
+def create_texture(file_path):
+    if file_path is not None:
+        return pygame.image.load(file_path)
+    else:
+        return None

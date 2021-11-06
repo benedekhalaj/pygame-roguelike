@@ -1,5 +1,6 @@
 import pygame
 
+
 def open_file(filename: str):
     """opening a given file. reads it and give it back by splitlines.
 
@@ -8,6 +9,12 @@ def open_file(filename: str):
 
     with open(filename, "r") as file:
         return file.read().splitlines()
+
+
+def open_csv_file(filename: str):
+    with open(filename, "r") as file:
+        file = file.read().splitlines()
+        return [char.split(',') for char in file]
 
 
 def save_csv_file(filename: str, file: list):

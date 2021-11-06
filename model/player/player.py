@@ -8,10 +8,10 @@ SFX_PICK_UP_KEY = pygame.mixer.Sound('sound/sfx/pick_up_key.WAV')
 
 
 class Player():
-    def __init__(self, position: tuple, colors, screen_size):
+    def __init__(self, position: tuple, file_path, colors, screen_size):
         self.type = 'player'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = data_manager.open_image('model/map/textures/player/knight_down2.png')
+        self.texture = data_manager.open_image(file_path)
         self.texture_count = 0
         self.texture_count_limit = 60
 
