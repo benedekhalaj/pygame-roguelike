@@ -1,3 +1,4 @@
+from typing import Text
 from model.player import player
 from view import view
 import pygame
@@ -24,8 +25,6 @@ def change_player_on_input(player_character, objects):
         if player_character.sword.exist:
             if not player_character.attack_in_progress:
                 player_character.start_attack()
-      
-
 
 
 def control_inventory(objects, pause, key):

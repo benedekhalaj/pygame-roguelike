@@ -40,7 +40,8 @@ class Player():
         self.damage_limit = 120
         self.invicible = False
 
-        self.inventory = Inventory()
+        self.inventory = Inventory(colors)
+        self.screen_size = screen_size
         self.attack_in_progress = False
         self.attack_timer_count = 0
         self.attack_timer_limit = 30
@@ -226,16 +227,20 @@ class Player():
                         SFX_PICK_UP_SWORD.play()
 
     def use_inventory(self, objects, pause, key):
-        self.show_inventory()
         if key[pygame.K_ESCAPE]:
             pause = False
         else:
+            self.show_inventory()
             pause = True
         return pause
 
     def show_inventory(self):
-        print("Hello")
-        pass
+        width = self.screen_size[0] / 2
+        height = self.screen_size[1] / 2
+        x = width / 2
+        y = height / 2
+        self.inventory.position = (x, y, width, height)# EZT REFAKTORÁLNI KELL
+        self.inventory.text = self.inventory.create_inventory_text()
 
     def open_door(self, objects):
         for door in objects["doors"]:
@@ -294,11 +299,15 @@ class Player():
 
 
 class Inventory():
-    def __init__(self):
+    def __init__(self, colors):
         self.keys = 0
         self.keys_limit = 99
         self.health_potions = 0
         self.health_potions_limit = 1
+        self.position = None
+        self.font_size = 30
+        self.color = colors
+        self.text = self.create_inventory_text()
 
     def add_key(self):
         if self.keys < self.keys_limit:
@@ -311,8 +320,15 @@ class Inventory():
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
 
-    def use_inventory(self):
-        pass
+    def create_inventory_text(self):
+        texts = []
+        font_type = 'couriernew'
+        health_potions = self.health_potions
+        keys = self.keys
+        font = pygame.font.SysFont(font_type, self.font_size, bold=True)
+        texts.append(font.render(f"{health_potions} health_potions", False, self.color.RED))
+        texts.append(font.render(f"{int(keys)} Keys", False, self.color.RED))
+        return texts
 
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
@@ -382,11 +398,11 @@ class Stat():
     def create_stat_bar(self, player_stat):
         number = 0
         bar = []
-
         player_health = player_stat[0]
         player_max_health = player_stat[1]
         player_stamina = player_stat[2]
         player_max_stamina = player_stat[3]
+
         for type, text in self.texts.items():
             y = self.y + number * self.font_size
             x = self.x + (text.get_width()) + 8
@@ -417,15 +433,19 @@ class Stat():
 def create_stat_bar_texture(width, height, x, y):
     x = x
     self_height = height
+
     stat_bar_start = pygame.image.load("model/map/textures/misc/stat_bar_start.png")
     stat_bar_start = pygame.transform.scale(stat_bar_start, (32, self_height))
     stat_bar_start_width = stat_bar_start.get_width()
+
     stat_bar_middle = pygame.image.load("model/map/textures/misc/stat_bar_middle.png")
     stat_bar_middle = pygame.transform.scale(stat_bar_middle, (32, self_height))
     stat_bar_middle_width = stat_bar_middle.get_width()
+
     stat_bar_end = pygame.image.load("model/map/textures/misc/stat_bar_end.png")
     stat_bar_end = pygame.transform.scale(stat_bar_end, (32, self_height))
     stat_bar_end_width = stat_bar_end.get_width()
+
     lenght_of_stat_bar = int((width - stat_bar_start_width - stat_bar_end_width) / stat_bar_middle_width)
     bar_texture = [(stat_bar_start, x, y)]
     for _ in range(lenght_of_stat_bar):

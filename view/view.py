@@ -1,5 +1,7 @@
 import pygame
 
+from model.player.player import Player
+
 WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 900
 
@@ -26,11 +28,14 @@ class Colors():
 COLORS = Colors()
 
 
-def display_everything(window, objects):
-    display_background(window)
-    display_objects(window, objects)
-    display_player_stat(window, objects)
-    display_player_sword(window, objects)
+def display_everything(window, objects, pause):
+    if pause:
+        display_inventory(window, objects)
+    else:
+        display_background(window)
+        display_objects(window, objects)
+        display_player_stat(window, objects)
+        display_player_sword(window, objects)
     refresh_display()
 
 
@@ -93,6 +98,16 @@ def display_stat_texture(window, bar_texture):
         x = texture_piece_tuple[1]
         y = texture_piece_tuple[2]
         window.blit(picture, (x, y))
+
+
+def display_inventory(window, objects):
+    inventory = objects["player"][0].inventory
+    pygame.draw.rect(window, inventory.color.WHITE, inventory.position)
+    # EZ CSAK ÖSSZE LETT CSAPVA
+    for number, text in enumerate(inventory.text):
+        x = inventory.position[0] + number * inventory.font_size
+        y = inventory.position[1] + number * inventory.font_size
+        window.blit(text, (x, y))
 
 
 def refresh_display():
