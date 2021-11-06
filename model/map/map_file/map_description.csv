@@ -1,15 +1,20 @@
+-----------------------MAP
 .:Void
-x:Player
  :Floor_1
-k:Key
-0:Outer_Wall_1
-1:Inner_Wall_1
-2:Chest
+0:Horizontal_Wall
+1:Vertical_Wall
+x:Player
+------------------------ ENEMIES
 e:Enemy
-3:Right_Enemy
-4:Left_Enemy
-5:Down_Enemy
-6:Up_Enemy
+z:Zombie_Enemy
+--------------- ENEMY DIRECTION
+R:Right_Enemy
+L:Left_Enemy
+D:Down_Enemy
+U:Up_Enemy
+----------------------- ITEMS
+c:Chest
+k:Key
 d:Door
 s:Sword
 h:Health_Potion

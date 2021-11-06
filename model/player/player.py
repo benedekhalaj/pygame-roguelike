@@ -14,7 +14,15 @@ class Player():
         self.invicible_color = colors.ORANGE
         self.color = self.standard_color
 
-        self.velocity = 8
+        self.walk_speed = 8
+        self.stamina_limit = 60
+        self.spirnt_multiplier = 2
+        self.sprint_speed = self.walk_speed * self.spirnt_multiplier
+        self.velocity = self.walk_speed
+        self.sprinting = False
+        self.can_spirnt = True
+        self.stamina = 1  # self.stamina_limit
+
         self.direction = 'right'
 
         self.damage_timer = 0
@@ -22,14 +30,15 @@ class Player():
         self.invicible = False
 
         self.inventory = Inventory()
-        self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors.PURPLE)
+        self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors)
         self.attack_in_progress = False
         self.attack_timer_count = 0
         self.attack_timer_limit = 60
         self.attack_duration = 40
 
+        self.max_health = 5
         self.health = 1
-        self.stat = Stat(colors, screen_size, self.health)
+        self.stat = Stat(colors, screen_size, (self.health, self.max_health, self.stamina, self.stamina_limit))
         self.visible = True
 
     def move(self, objects, x_direction, y_direction):
@@ -47,6 +56,23 @@ class Player():
             self.direction = 'down'
         if y_direction < 0:
             self.direction = 'up'
+
+    def sprint(self):
+        if self.stamina > 0 and self.can_spirnt:
+            self.sprinting = True
+            self.velocity = self.sprint_speed
+            self.stamina -= 1
+        else:
+            self.can_spirnt = False
+            self.sprinting = False
+            self.velocity = self.walk_speed
+
+    def reload_stamina(self):
+        if self.stamina < self.stamina_limit:
+            self.stamina += 0.5
+            self.velocity = self.walk_speed
+        if self.stamina >= self.stamina_limit:
+            self.can_spirnt = True
 
     def check_collision(self, objects):
         if self.check_wall_collision(objects) or self.check_door_collision(objects):
@@ -115,7 +141,7 @@ class Player():
                     if door.status == "closed":
                         door.status = "opened"
                         door.update_color()
-                        self.inventory.keys -= 1
+                        self.inventory.remove_key()
 
     def take_damage(self, objects: dict):
         self.set_attributes()
@@ -144,7 +170,8 @@ class Player():
                 self.color = self.standard_color
 
         def update_stat(self):
-            self.stat.text = self.stat.create_text(self.colors, self.health)
+            self.stat.texts = self.stat.create_stat_text((self.health, self.max_health, self.stamina, self.stamina_limit))
+            self.stat.bars = self.stat.create_stat_bar((self.health, self.max_health, self.stamina, self.stamina_limit))
 
         set_invicible(self)
         set_damage_timer(self)
@@ -192,12 +219,9 @@ class Inventory():
     def add_key(self):
         if self.keys < self.keys_limit:
             self.keys += 1
-        print(f'Keys: {self.keys}')
-
 
     def remove_key(self):
-        pass
-
+        self.keys -= 1
 
     def add_health_potion(self):
         if self.health_potions < self.health_potions_limit:
@@ -205,29 +229,56 @@ class Inventory():
 
 
 class Sword():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: object):
         self.exist = False
-        self.color = color
+        self.color = colors.PURPLE
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = False
 
 
 class Stat():
-    def __init__(self, colors, screen_size, player_health):
+    def __init__(self, colors, screen_size, player_stats):
         self.type = "stat"
-        self.x = 0
-        self.y = 0
+        self.x = 1
+        self.y = 1
         self.width = screen_size[0] // 5
-        self.height = screen_size[1] // 10
+        self.height = screen_size[1] // 40
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.color = colors.BROWN
+        self.color = colors
+        self.health = "health"
+        self.stamina = 'stamina'
         self.visible = True
-        self.text = self.create_text(colors, player_health)
+        self.font_size = 30
+        self.texts = self.create_stat_text(player_stats)
+        self.bars = self.create_stat_bar(player_stats)
+    
+    def create_stat_bar(self, player_stat):
+        number = 0
+        bar = []
+        player_health = player_stat[0]
+        player_max_health = player_stat[1]
+        player_stamina = player_stat[2]
+        player_max_stamina = player_stat[3]
+        for type, text in self.texts.items():
+            if type == self.health:
+                width = self.width * (player_health / player_max_health)
+                color = self.color.RED
+            elif type == self.stamina:
+                width = self.width * (player_stamina / player_max_stamina)
+                color = self.color.BLUE
+            y = self.y + number * self.font_size
+            x = self.x + text.get_width()
+            number += 1
+            bar.append((pygame.Rect(x, y, width, self.height), color))
+        return bar
 
-    def create_text(self, colors, player_health):
+    def create_stat_text(self, player_stats):
+        texts = {}
         font_type = 'couriernew'
-        font_size = 30
-        font = pygame.font.SysFont(font_type, font_size, bold=True)
-        textsurface = font.render(f"{player_health} hp", False, colors.WHITE)
-        return textsurface
+        player_health = player_stats[0]
+        player_stamina = player_stats[2]
+        font = pygame.font.SysFont(font_type, self.font_size, bold=True)
+        texts[self.health] = font.render(f"{player_health} hp", False, self.color.WHITE)
+        texts[self.stamina] = font.render(f"{int(player_stamina)} stamina", False, self.color.WHITE)
+        return texts
         # pygame.font.get_fonts()
