@@ -1,17 +1,30 @@
 -----------------------MAP
 .:Void
  :Floor_1
-0:Horizontal_Wall
-1:Vertical_Wall
+0:wall_horizontal
+1:wall_vertical
+2:wall_bottom
+3:wall_corner_lb
+4:wall_corner_lt
+5:wall_corner_rb
+6:wall_corner_rt
+7:wall_end_bottom
+8:wall_end_left
+9:wall_end_right
+a:wall_end_top
+b:wall_top
+l:wall_left
+r:wall_right
+
 x:Player
+---------------DIRECTIONS
+R:Right
+L:Left
+D:Down
+U:Up
 ------------------------ ENEMIES
 e:Enemy
 z:Zombie_Enemy
---------------- ENEMY DIRECTION
-R:Right_Enemy
-L:Left_Enemy
-D:Down_Enemy
-U:Up_Enemy
 ----------------------- ITEMS
 c:Chest
 k:Key

@@ -47,6 +47,10 @@ class Standard_Enemy():
             if player.sword.visible:
                 if self.rect.colliderect(player.sword.rect):
                     self.visible = False
+    
+    def animate_enemy(self):
+        pass
+
 
     def update_texture(self):
         if self.direction == 'left' or self.direction == 'up':
