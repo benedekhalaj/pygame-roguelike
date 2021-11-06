@@ -4,7 +4,7 @@ import pygame
 
 
 class Sword():
-    def __init__(self, position: tuple, colors: dict):
+    def __init__(self, position: tuple, colors: object):
         self.type = 'sword'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = None
@@ -13,7 +13,7 @@ class Sword():
 
 
 class Key():
-    def __init__(self, position: tuple, colors: dict):
+    def __init__(self, position: tuple, colors: object):
         self.type = 'key'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = None
@@ -22,7 +22,7 @@ class Key():
 
 
 class Health_Potion():
-    def __init__(self, position: tuple, colors: dict):
+    def __init__(self, position: tuple, colors: object):
         self.type = 'health_potion'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = pygame.image.load('model/map/textures/items/potion.png')
@@ -31,7 +31,7 @@ class Health_Potion():
 
 
 class Chest():
-    def __init__(self, position: tuple, colors: dict):
+    def __init__(self, position: tuple, colors: object):
         self.type = 'chest'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = None
@@ -40,16 +40,16 @@ class Chest():
 
 
 class Floor():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: object):
         self.type = 'floor'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = pygame.image.load("model/map/textures/terrain/tiles.png")
-        self.color = color
+        self.color = colors.WHITE
         self.visible = True
 
 
 class Wall():
-    def __init__(self, position: tuple, direction: str, colors: dict):
+    def __init__(self, position: tuple, direction: str, colors: object):
         self.type = 'wall'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.direction = direction
@@ -69,7 +69,7 @@ class Wall():
 
 
 class Door():
-    def __init__(self, position: tuple, colors: tuple):
+    def __init__(self, position: tuple, colors: object):
         self.type = "door"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3] * 2)
         self.texture = None
