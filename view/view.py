@@ -55,10 +55,19 @@ def display_objects(window, object_types: dict):
 
 
 def display_player_sword(window, objects):
-    sword = objects['player'][0].sword
+    player = objects['player'][0]
+    sword = player.sword
     if sword.visible:
         sword_position = (sword.rect.x, sword.rect.y, sword.rect.width, sword.rect.height)
-        pygame.draw.rect(window, sword.color, sword_position)
+        if sword.texture is not None:
+            if type(sword.texture) is list:
+                images = len(sword.texture)
+                rate = player.attack_duration//images
+                window.blit(sword.texture[sword.texture_count//rate], (sword.rect.x, sword.rect.y))
+            else:
+                window.blit(sword.texture, (sword.rect.x, sword.rect.y))
+        else:
+            pygame.draw.rect(window, sword.color, sword_position)
 
 
 def display_player_stat(window, objects):
