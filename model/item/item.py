@@ -7,7 +7,7 @@ class Sword():
     def __init__(self, position: tuple, colors: object):
         self.type = 'sword'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = None
+        self.texture = data_manager.open_image('model/map/textures/items/shortsword.png')
         self.color = colors.PURPLE
         self.visible = True
 
@@ -16,7 +16,7 @@ class Key():
     def __init__(self, position: tuple, colors: object):
         self.type = 'key'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = None
+        self.texture = data_manager.open_image('model/map/textures/items/key.png')
         self.color = colors.MAGENTA
         self.visible = True
 
@@ -34,7 +34,7 @@ class Chest():
     def __init__(self, position: tuple, colors: object):
         self.type = 'chest'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = None
+        self.texture = data_manager.open_image('model/map/textures/items/chest_closed.png')
         self.color = colors.GREEN
         self.visible = True
 
