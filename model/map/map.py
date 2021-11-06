@@ -35,7 +35,7 @@ def create_map(screen_size, colors):
             file_path = map_sign_dict[char][1]
 
             if character_name != 'Void':
-                floor_list.append(items.Floor(position, map_sign_dict["Floor"][1], colors))
+                floor_list.append(items.Floor(position, map_sign_dict["1"][1], colors))
             if character_name == "Player":
                 player_list.append(player.Player(position, file_path, colors, screen_size))
             elif "Wall" in character_name:
