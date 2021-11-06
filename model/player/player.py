@@ -16,11 +16,12 @@ class Player():
 
         self.walk_speed = 8
         self.stamina_limit = 60
-        self.sprint_speed = self.walk_speed * 1.5
+        self.spirnt_multiplier = 2
+        self.sprint_speed = self.walk_speed * self.spirnt_multiplier
         self.velocity = self.walk_speed
         self.sprinting = False
         self.can_spirnt = True
-        self.stamina = self.stamina_limit
+        self.stamina = 1  # self.stamina_limit
 
         self.direction = 'right'
 
@@ -29,7 +30,7 @@ class Player():
         self.invicible = False
 
         self.inventory = Inventory()
-        self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors.PURPLE)
+        self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors)
         self.attack_in_progress = False
         self.attack_timer_count = 0
         self.attack_timer_limit = 60
@@ -169,7 +170,8 @@ class Player():
                 self.color = self.standard_color
 
         def update_stat(self):
-            self.stat.texts = self.stat.create_text((self.health, self.stamina))
+            self.stat.texts = self.stat.create_stat_text((self.health, self.max_health, self.stamina, self.stamina_limit))
+            self.stat.bars = self.stat.create_stat_bar((self.health, self.max_health, self.stamina, self.stamina_limit))
 
         set_invicible(self)
         set_damage_timer(self)
@@ -227,9 +229,9 @@ class Inventory():
 
 
 class Sword():
-    def __init__(self, position: tuple, color: tuple):
+    def __init__(self, position: tuple, colors: object):
         self.exist = False
-        self.color = color
+        self.color = colors.PURPLE
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.visible = False
 
@@ -244,25 +246,25 @@ class Stat():
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.color = colors
         self.health = "health"
-        self.player_health = player_stats[0]
-        self.player_max_health = player_stats[1]
         self.stamina = 'stamina'
-        self.player_stamina = player_stats[2]
-        self.player_max_stamina = player_stats[3]
         self.visible = True
         self.font_size = 30
-        self.texts = self.create_text((self.player_health, self.player_stamina)) #############
-        self.bars = self.create_bar()
+        self.texts = self.create_stat_text(player_stats)
+        self.bars = self.create_stat_bar(player_stats)
     
-    def create_bar(self):
+    def create_stat_bar(self, player_stat):
         number = 0
         bar = []
+        player_health = player_stat[0]
+        player_max_health = player_stat[1]
+        player_stamina = player_stat[2]
+        player_max_stamina = player_stat[3]
         for type, text in self.texts.items():
             if type == self.health:
-                width = self.width * (self.player_health / self.player_max_health)
+                width = self.width * (player_health / player_max_health)
                 color = self.color.RED
             elif type == self.stamina:
-                width = self.width * (self.player_stamina / self.player_max_stamina)
+                width = self.width * (player_stamina / player_max_stamina)
                 color = self.color.BLUE
             y = self.y + number * self.font_size
             x = self.x + text.get_width()
@@ -270,11 +272,11 @@ class Stat():
             bar.append((pygame.Rect(x, y, width, self.height), color))
         return bar
 
-    def create_text(self, player_stats):
+    def create_stat_text(self, player_stats):
         texts = {}
         font_type = 'couriernew'
         player_health = player_stats[0]
-        player_stamina = player_stats[1]
+        player_stamina = player_stats[2]
         font = pygame.font.SysFont(font_type, self.font_size, bold=True)
         texts[self.health] = font.render(f"{player_health} hp", False, self.color.WHITE)
         texts[self.stamina] = font.render(f"{int(player_stamina)} stamina", False, self.color.WHITE)

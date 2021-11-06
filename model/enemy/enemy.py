@@ -7,17 +7,18 @@ class Standard_Enemy():
         self.type = "enemy"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = None
+        self.texture_count = 0
+        self.texture_count_limit = 60
         self.color = colors.BROWN
         self.visible = True
-        self.velocity = 4
+        self.velocity = 1
         self.count = 0
         self.direction = direction[0]
-        self.count_direction = direction[1]
-        self.count_limit = self.count_direction * 2
+        self.count_limit = direction[1]
         self.visible = True
 
     def move(self):
-        if self.count <= self.count_direction:
+        if self.count <= self.count_limit:
             if self.direction == 'right':
                 self.rect.x += self.velocity
             elif self.direction == 'left':
@@ -26,16 +27,15 @@ class Standard_Enemy():
                 self.rect.y += self.velocity
             elif self.direction == 'up':
                 self.rect.y -= self.velocity
-        elif self.count > self.count_direction:
+        elif self.count > self.count_limit:
             if self.direction == 'right':
-                self.rect.x -= self.velocity
+                self.direction = 'left'
             elif self.direction == 'left':
-                self.rect.x += self.velocity
+                self.direction = 'right'
             elif self.direction == 'down':
-                self.rect.y -= self.velocity
+                self.direction = 'up'
             elif self.direction == 'up':
-                self.rect.y += self.velocity
-
+                self.direction = 'down'
         self.set_count()
 
     def set_count(self):
@@ -51,7 +51,18 @@ class Standard_Enemy():
                     self.visible = False
 
     def update_texture(self):
+        path = 'model/map/textures/enemy/'
         if self.direction == 'left' or self.direction == 'up':
-            self.texture = pygame.image.load('model/map/textures/enemy/zombie/zombie_left.png')
+            self.texture = [data_manager.open_image(path, 'zombie/zombie_left.png'),
+                            data_manager.open_image(path, 'zombie/zombie_left2.png')]
         elif self.direction == 'right' or self.direction == 'down':
-            self.texture = pygame.image.load('model/map/textures/enemy/zombie/zombie_right.png')
+            self.texture = [data_manager.open_image(path, 'zombie/zombie_right.png'),
+                            data_manager.open_image(path, 'zombie/zombie_right2.png')]
+        self.update_texture_count()
+
+    def update_texture_count(self):
+        if type(self.texture) is list:
+            if self.texture_count + 1 >= self.texture_count_limit:
+                self.texture_count = 0
+
+            self.texture_count += 1
