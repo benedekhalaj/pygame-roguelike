@@ -6,15 +6,17 @@ import pygame.freetype
 class Player():
     def __init__(self, position: tuple, colors, screen_size):
         self.type = 'player'
-        self.texture = None
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.texture = None
+        self.texture_count = 0
+        self.texture_count_limit = 60
 
         self.colors = colors
         self.standard_color = colors.RED
         self.invicible_color = colors.ORANGE
         self.color = self.standard_color
 
-        self.walk_speed = 8
+        self.walk_speed = 4
         self.stamina_limit = 60
         self.spirnt_multiplier = 2
         self.sprint_speed = self.walk_speed * self.spirnt_multiplier
@@ -208,6 +210,42 @@ class Player():
             self.attack_timer_count = 0
             self.attack_in_progress = False
 
+    def update_texture(self):
+        path = 'model/map/textures/player/'
+        left = 'knight_left'
+        right = 'knight_right'
+        up = 'knight_up'
+        down = 'knight_down'
+        if self.direction == 'left':
+            self.texture = [data_manager.open_image(path, f'{left}1.png'),
+                            data_manager.open_image(path, f'{left}2.png'),
+                            data_manager.open_image(path, f'{left}3.png'),
+                            data_manager.open_image(path, f'{left}2.png')]
+        elif self.direction == 'right':
+            self.texture = [data_manager.open_image(path, f'{right}1.png'),
+                            data_manager.open_image(path, f'{right}2.png'),
+                            data_manager.open_image(path, f'{right}3.png'),
+                            data_manager.open_image(path, f'{right}2.png')]
+        elif self.direction == 'up':
+            self.texture = [data_manager.open_image(path, f'{up}1.png'),
+                            data_manager.open_image(path, f'{up}2.png'),
+                            data_manager.open_image(path, f'{up}3.png'),
+                            data_manager.open_image(path, f'{up}2.png')]
+        elif self.direction == 'down':
+            self.texture = [data_manager.open_image(path, f'{down}1.png'),
+                            data_manager.open_image(path, f'{down}2.png'),
+                            data_manager.open_image(path, f'{down}3.png'),
+                            data_manager.open_image(path, f'{down}2.png')]
+        self.update_texture_count()
+
+
+
+    def update_texture_count(self):
+        if self.texture_count + 1 >= self.texture_count_limit:
+            self.texture_count = 0
+        
+        self.texture_count += 1
+
 
 class Inventory():
     def __init__(self):
@@ -251,7 +289,7 @@ class Stat():
         self.font_size = 30
         self.texts = self.create_stat_text(player_stats)
         self.bars = self.create_stat_bar(player_stats)
-    
+
     def create_stat_bar(self, player_stat):
         number = 0
         bar = []
