@@ -12,12 +12,11 @@ class Standard_Enemy():
         self.velocity = 4
         self.count = 0
         self.direction = direction[0]
-        self.count_direction = direction[1]
-        self.count_limit = self.count_direction * 2
+        self.count_limit = direction[1]
         self.visible = True
 
     def move(self):
-        if self.count <= self.count_direction:
+        if self.count <= self.count_limit:
             if self.direction == 'right':
                 self.rect.x += self.velocity
             elif self.direction == 'left':
@@ -26,16 +25,15 @@ class Standard_Enemy():
                 self.rect.y += self.velocity
             elif self.direction == 'up':
                 self.rect.y -= self.velocity
-        elif self.count > self.count_direction:
+        elif self.count > self.count_limit:
             if self.direction == 'right':
-                self.rect.x -= self.velocity
+                self.direction = 'left'
             elif self.direction == 'left':
-                self.rect.x += self.velocity
+                self.direction = 'right'
             elif self.direction == 'down':
-                self.rect.y -= self.velocity
+                self.direction = 'up'
             elif self.direction == 'up':
-                self.rect.y += self.velocity
-
+                self.direction = 'down'
         self.set_count()
 
     def set_count(self):
