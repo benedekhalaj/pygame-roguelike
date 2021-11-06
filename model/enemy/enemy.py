@@ -4,7 +4,7 @@ import pygame
 
 class Standard_Enemy():
     def __init__(self, position: tuple, colors: dict, direction):
-        self.type = "enemy"
+        self.type = "standard"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = None
         self.texture_count = 0
@@ -66,3 +66,35 @@ class Standard_Enemy():
                 self.texture_count = 0
 
             self.texture_count += 1
+
+
+class Eye_Enemy():
+    def __init__(self, position, colors):
+        self.type = 'eye'
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.texture = None
+        self.texture_count = 0
+        self.texture_count_limit = 60
+        self.color = colors.BROWN
+        self.visible = True
+
+    def set_facing(self, objects):
+        player = objects['player'][0]
+        path = 'model/map/textures/enemy/eyeball/'
+        left = 'eyeball_left_'
+        right = 'eyeball_right_'
+
+        if player.rect.x > self.rect.x:
+            if player.rect.y > self.rect.y + self.rect.height:
+                self.texture = data_manager.open_image(path, f'{right}down.png')
+            elif player.rect.y > self.rect.y:
+                self.texture = data_manager.open_image(path, f'{right}middle.png')
+            else:
+                self.texture = data_manager.open_image(path, f'{right}up.png')
+        else:
+            if player.rect.y > self.rect.y + self.rect.height:
+                self.texture = data_manager.open_image(path, f'{left}down.png')
+            elif player.rect.y > self.rect.y:
+                self.texture = data_manager.open_image(path, f'{left}middle.png')
+            else:
+                self.texture = data_manager.open_image(path, f'{left}up.png')

@@ -5,7 +5,7 @@
 1:Vertical_Wall
 x:Player
 ------------------------ ENEMIES
-e:Enemy
+e:Eye_Enemy
 z:Zombie_Enemy
 --------------- ENEMY DIRECTION
 R:Right_Enemy
