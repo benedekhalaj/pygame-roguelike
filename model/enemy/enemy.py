@@ -105,6 +105,7 @@ class Eye_Enemy():
             else:
                 self.texture = data_manager.open_image(path, f'{left}up.png')
 
+
 def create_texture(file_path):
     if file_path is not None:
         return pygame.image.load(file_path)

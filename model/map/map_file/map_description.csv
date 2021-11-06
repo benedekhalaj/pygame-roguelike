@@ -43,9 +43,14 @@
 38:	Eyeball_Up:	model/map/textures/enemy/eyeball/eyeball_left_middle.png
 39:	Eyeball_Right:	model/map/textures/enemy/eyeball/eyeball_right_middle.png
 40:	Eyeball_Down:	model/map/textures/enemy/eyeball/eyeball_right_middle.png
+41:	Zombie_Left:	model/map/textures/enemy/zombie/zombie_left.png
+42:	Zombie_Up:	model/map/textures/enemy/zombie/zombie_left.png
+43:	Zombie_Down:	model/map/textures/enemy/zombie/zombie_right.png
+44:	Zombie_Right:	model/map/textures/enemy/zombie/zombie_right.png
 ------------------------ ITEMS
-41:	Key:	model/map/textures/items/key.png
-42:	Door:	Door
-43:	Chest:	model/map/textures/items/chest_closed.png
-44:	Sword:	model/map/textures/items/shortsword.png
-45:	Health_Potion:	model/map/textures/items/health_potion.png
+45:	Key:	model/map/textures/items/key.png
+46:	Door:	Door
+47:	Chest:	model/map/textures/items/chest_closed.png
+48:	Sword:	model/map/textures/items/shortsword.png
+49:	Health_Potion:	model/map/textures/items/health_potion.png
+50 :	Special_Key:	model/map/textures/items/key2.png

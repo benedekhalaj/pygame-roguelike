@@ -60,8 +60,7 @@ def create_map(screen_size, colors):
             #     enemies_list.append(enemy.Eye_Enemy(position, file_path, colors))
             elif character_name == "Sword":
                 sword_list.append(items.Sword(position, file_path, character_name, colors))
-
-
+    create_floor(floor_list)
 
     objects.update({"floor": floor_list,
                     "walls": walls_list,
@@ -90,3 +89,7 @@ def find_player_position(text_map: list):
             x = line.index(player_symbol)
             y = line_index
             return (x, y)
+
+
+def create_floor(floor_list):
+    pass
