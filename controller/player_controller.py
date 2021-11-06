@@ -1,5 +1,4 @@
-from pygame import key
-from pygame.constants import KEYDOWN
+from typing import Text
 from model.player import player
 from view import view
 import pygame
@@ -16,6 +15,7 @@ def change_player_on_input(player_character, objects):
         player_character.move(objects, 0, -player_character.velocity)
     if keys[pygame.K_DOWN]:
         player_character.move(objects, 0, player_character.velocity)
+
     if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
         player_character.sprint()
     else:
@@ -24,18 +24,25 @@ def change_player_on_input(player_character, objects):
     if keys[pygame.K_SPACE]:
         if player_character.sword.exist:
             if not player_character.attack_in_progress:
-                player_character.attack_in_progress = True
-                player_character.sword.texture_count = 0
-                player_character.sword.direction = player_character.direction
-                player_character.set_sword_position()
+                player_character.start_attack()
+
+
+def control_inventory(objects, pause, key):
+    player_character = objects['player'][0]
+    pause = player_character.use_inventory(objects, pause, key)
+    return pause
+
 
 def control_player(objects):
     player_character = objects['player'][0]
 
+    player_character.moving = False
     change_player_on_input(player_character, objects)
+
     player_character.add_item_to_inventory(objects)
     player_character.take_damage(objects)
     if not player_character.sprinting:
         player_character.reload_stamina()
     player_character.attack()
     player_character.update_texture()
+

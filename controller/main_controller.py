@@ -34,15 +34,25 @@ def quit_game(run, objects):
     return run
 
 
+def pause_game(pause, objects):
+    key = view.get_input()
+    if key[pygame.K_i] or pause:
+        pause = player_controller.control_inventory(objects, pause, key)
+    return pause
+
+
 def main():
     window = init_pygame()
     objects = map_controller.get_objects()
 
     run = True
+    pause = False
     while run:
         set_fps()
         run = quit_game(run, objects)
-        player_controller.control_player(objects)
-        enemy_controller.control_enemy(objects)
-        view.display_everything(window, objects)
+        pause = pause_game(pause, objects)
+        if not pause:
+            player_controller.control_player(objects)
+            enemy_controller.control_enemy(objects)
+        view.display_everything(window, objects, pause)
     pygame.quit()
