@@ -49,13 +49,13 @@ def create_map(screen_size, colors):
             elif character_name == "Door":
                 door_list.append(items.Door(position, file_path, character_name, colors))
             elif character_name == "Zombie_Right":
-                enemies_list.append(enemy.Standard_Enemy(position, file_path, colors, ("right", 60)))
+                enemies_list.append(enemy.Zombie_Enemy(position, file_path, colors, ("right", 60)))
             elif character_name == "Zombie_Left":
-                enemies_list.append(enemy.Standard_Enemy(position, file_path, colors, ("left", 60)))
+                enemies_list.append(enemy.Zombie_Enemy(position, file_path, colors, ("left", 60)))
             elif character_name == "Zombie_Down":
-                enemies_list.append(enemy.Standard_Enemy(position, file_path, colors, ("down", 30)))
+                enemies_list.append(enemy.Zombie_Enemy(position, file_path, colors, ("down", 30)))
             elif character_name == "Zombie_Up":
-                enemies_list.append(enemy.Standard_Enemy(position, file_path, colors, ("up", 30)))
+                enemies_list.append(enemy.Zombie_Enemy(position, file_path, colors, ("up", 30)))
             # elif character_name == "Eye_Enemy":
             #     enemies_list.append(enemy.Eye_Enemy(position, file_path, colors))
             elif character_name == "Sword":

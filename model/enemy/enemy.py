@@ -6,7 +6,7 @@ pygame.mixer.init()
 SFX_HIT_ENEMY = pygame.mixer.Sound('sound/sfx/hit_enemy.WAV')
 
 
-class Standard_Enemy():
+class Zombie_Enemy():
     def __init__(self, position: tuple, file_path, colors: dict, direction):
         self.type = "standard"
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
