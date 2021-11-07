@@ -16,4 +16,5 @@ def control_enemy(objects):
         elif enemy_character.type == 'shooter':
             enemy_character.move(objects)
             enemy_character.shoot(objects)
+            enemy_character.take_damage(objects)
             enemy_character.delete_projectile()

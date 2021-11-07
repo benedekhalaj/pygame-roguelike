@@ -358,8 +358,6 @@ class Inventory():
         if self.invisible_timer > self.invisible_timer_limit:
             self.can_show = True
 
-
-
     def create_inventory_text(self):
         texts = []
         font_type = 'couriernew'
@@ -378,7 +376,7 @@ class Inventory():
     def inventory_background(self):
         self.position = (self.x, self.y, self.width, self.height)# EZT REFAKTORÁLNI KELL
         self.text = self.create_inventory_text()
-    
+
     def create_background_image(self):
         image = pygame.image.load("model/map/textures/roli.jpg")
         image = pygame.transform.scale(image, (self.width, self.height))
@@ -388,6 +386,7 @@ class Inventory():
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
         self.exist = True
+        self.projectile_knockback = False
 
         self.texture = None
         self.texture_count = 0

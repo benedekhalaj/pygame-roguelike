@@ -19,7 +19,7 @@ class Zombie_Enemy():
         self.direction = direction[0]
         self.count_limit = direction[1]
 
-        self.health = 2
+        self.health = 3
         self.damage_timer = 0
         self.damage_limit = 30
         self.invicible = False
@@ -75,8 +75,6 @@ class Zombie_Enemy():
     def vanish(self):
         if self.health < 1:
             self.visible = False
-
-
 
     def update_texture(self):
         path = 'model/map/textures/enemy/'
@@ -136,6 +134,11 @@ class Shooter_Enemy():
         self.texture_count = 0
         self.texture_count_limit = 60
         self.color = colors.BROWN
+
+        self.health = 3
+        self.damage_timer = 0
+        self.damage_limit = 30
+        self.invicible = False
 
         self.velocity = 5
         self.direction = 'down'
@@ -197,7 +200,7 @@ class Shooter_Enemy():
                     projectile.visible = False
             sword = objects['player'][0].sword
             if projectile.hitable:
-                if sword.visible:
+                if sword.visible and sword.projectile_knockback:
                     if projectile.rect.colliderect(sword.rect):
                         projectile.direction = sword.direction
                         projectile.hitable = False
@@ -212,6 +215,35 @@ class Shooter_Enemy():
                 self.projectiles.pop(self.projectiles.index(projectile))
                 print('delete projectile')
                 break
+
+    def take_damage(self, objects: dict):
+        self.set_damage_attributes()
+        for player in objects["player"]:
+            if self.visible and player.sword.visible:
+                if self.rect.colliderect(player.sword.rect):
+                    if not self.invicible:
+                        self.health -= 1
+                        self.invicible = True
+                        SFX_HIT_ENEMY.play()
+        self.vanish()
+
+    def set_damage_attributes(self):
+        def set_invicible(self):
+            if self.damage_timer > self.damage_limit:
+                self.invicible = False
+
+        def set_damage_timer(self):
+            if self.invicible:
+                self.damage_timer += 1
+            else:
+                self.damage_timer = 0
+
+        set_invicible(self)
+        set_damage_timer(self)
+
+    def vanish(self):
+        if self.health < 1:
+            self.visible = False
 
 
 def create_texture(file_path):
