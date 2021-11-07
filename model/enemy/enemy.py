@@ -14,10 +14,16 @@ class Zombie_Enemy():
         self.texture_count = 0
         self.texture_count_limit = 60
         self.color = colors.BROWN
-        self.visible = True
+
         self.velocity = 2
         self.direction = direction[0]
         self.count_limit = direction[1]
+
+        self.health = 2
+        self.damage_timer = 0
+        self.damage_limit = 30
+        self.invicible = False
+
         self.visible = True
 
     def move(self, objects):
@@ -41,14 +47,36 @@ class Zombie_Enemy():
                 elif self.direction == 'up':
                     self.direction = 'down'
 
-
     def take_damage(self, objects: dict):
+        self.set_damage_attributes()
         for player in objects["player"]:
-            if player.sword.visible:
-                if self.visible:
-                    if self.rect.colliderect(player.sword.rect):
-                        self.visible = False
+            if self.visible and player.sword.visible:
+                if self.rect.colliderect(player.sword.rect):
+                    if not self.invicible:
+                        self.health -= 1
+                        self.invicible = True
                         SFX_HIT_ENEMY.play()
+        self.vanish()
+
+    def set_damage_attributes(self):
+        def set_invicible(self):
+            if self.damage_timer > self.damage_limit:
+                self.invicible = False
+
+        def set_damage_timer(self):
+            if self.invicible:
+                self.damage_timer += 1
+            else:
+                self.damage_timer = 0
+
+        set_invicible(self)
+        set_damage_timer(self)
+
+    def vanish(self):
+        if self.health < 1:
+            self.visible = False
+
+
 
     def update_texture(self):
         path = 'model/map/textures/enemy/'
@@ -98,6 +126,17 @@ class Eye_Enemy():
                 self.texture = data_manager.open_image(path, f'{left}middle.png')
             else:
                 self.texture = data_manager.open_image(path, f'{left}up.png')
+
+
+class Shooter_Enemy():
+    def __init__(self, position, file_path, colors):
+        self.type = 'shooter'
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.texture = create_texture(None)
+        self.texture_count = 0
+        self.texture_count_limit = 60
+        self.color = colors.BROWN
+        self.visible = True
 
 
 def create_texture(file_path):
