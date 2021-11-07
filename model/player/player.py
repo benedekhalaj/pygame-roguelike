@@ -237,12 +237,6 @@ class Player():
                         item.visible = False
                         SFX_PICK_UP_SWORD.play()
 
-    def use_inventory(self, objects, pause, key):
-        if key[pygame.K_ESCAPE]:
-            pause = False
-        else:
-            pause = True
-        return pause
 
     def open_door(self, objects):
         for door in objects["doors"]:
@@ -327,6 +321,13 @@ class Inventory():
     def add_health_potion(self):
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
+
+    def use_inventory(self, pause, key):
+        if key[pygame.K_ESCAPE]:
+            pause = False
+        else:
+            pause = True
+        return pause
 
     def create_inventory_text(self):
         texts = []

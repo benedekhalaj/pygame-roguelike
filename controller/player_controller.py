@@ -28,8 +28,8 @@ def change_player_on_input(player_character, objects):
 
 
 def control_inventory(objects, pause, key):
-    player_character = objects['player'][0]
-    pause = player_character.use_inventory(objects, pause, key)
+    inventory = objects['player'][0].inventory
+    pause = inventory.use_inventory(pause, key)
     return pause
 
 
