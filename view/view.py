@@ -29,13 +29,13 @@ COLORS = Colors()
 
 
 def display_everything(window, objects, pause):
+
+    display_background(window)
+    display_objects(window, objects)
+    display_player_stat(window, objects)
+    display_player_sword(window, objects)
     if pause:
         display_inventory(window, objects)
-    else:
-        display_background(window)
-        display_objects(window, objects)
-        display_player_stat(window, objects)
-        display_player_sword(window, objects)
     refresh_display()
 
 
@@ -102,11 +102,14 @@ def display_stat_texture(window, bar_texture):
 
 def display_inventory(window, objects):
     inventory = objects["player"][0].inventory
-    pygame.draw.rect(window, inventory.color.WHITE, inventory.position)
+    position_x = inventory.position[0]
+    position_y = inventory.position[1]
+    # pygame.draw.rect(window, inventory.color.WHITE, inventory.position)
+    window.blit(inventory.rect_image, (position_x, position_y))
     # EZ CSAK ÖSSZE LETT CSAPVA
     for number, text in enumerate(inventory.text):
-        x = inventory.position[0] + number * inventory.font_size
-        y = inventory.position[1] + number * inventory.font_size
+        x = position_x + number * inventory.font_size
+        y = position_y + number * inventory.font_size
         window.blit(text, (x, y))
 
 

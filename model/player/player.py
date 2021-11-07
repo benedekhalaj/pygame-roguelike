@@ -2,8 +2,6 @@ from model import data_manager
 import pygame
 import pygame.freetype
 
-from model.map.map import create_map_sign_dict
-
 
 pygame.mixer.init()
 SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/pick_up_key.WAV')
@@ -40,7 +38,7 @@ class Player():
         self.damage_limit = 120
         self.invicible = False
 
-        self.inventory = Inventory(colors)
+        self.inventory = Inventory(colors, screen_size)
         self.screen_size = screen_size
         self.attack_in_progress = False
         self.attack_timer_count = 0
@@ -230,17 +228,8 @@ class Player():
         if key[pygame.K_ESCAPE]:
             pause = False
         else:
-            self.show_inventory()
             pause = True
         return pause
-
-    def show_inventory(self):
-        width = self.screen_size[0] / 2
-        height = self.screen_size[1] / 2
-        x = width / 2
-        y = height / 2
-        self.inventory.position = (x, y, width, height)# EZT REFAKTORÁLNI KELL
-        self.inventory.text = self.inventory.create_inventory_text()
 
     def open_door(self, objects):
         for door in objects["doors"]:
@@ -299,15 +288,21 @@ class Player():
 
 
 class Inventory():
-    def __init__(self, colors):
+    def __init__(self, colors, screen_size):
         self.keys = 0
         self.keys_limit = 99
         self.health_potions = 0
         self.health_potions_limit = 1
+        self.width = int(screen_size[0] / 2)
+        self.height = int(screen_size[1] / 2)
+        self.x = self.width / 2
+        self.y = self.height / 2
         self.position = None
         self.font_size = 30
         self.color = colors
         self.text = self.create_inventory_text()
+        self.background = self.inventory_background()
+        self.rect_image = self.create_background_image()
 
     def add_key(self):
         if self.keys < self.keys_limit:
@@ -329,6 +324,16 @@ class Inventory():
         texts.append(font.render(f"{health_potions} health_potions", False, self.color.RED))
         texts.append(font.render(f"{int(keys)} Keys", False, self.color.RED))
         return texts
+
+    def create_background_image(self):
+        background_image = pygame.Surface((self.width, self.height))
+        background_image.set_alpha(100)
+        return background_image
+
+    def inventory_background(self):
+        self.position = (self.x, self.y, self.width, self.height)# EZT REFAKTORÁLNI KELL
+        self.text = self.create_inventory_text()
+
 
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
@@ -384,8 +389,8 @@ class Stat():
         self.type = "stat"
         self.x = 1
         self.y = 1
-        self.width = screen_size[0] // 5
-        self.height = screen_size[1] // 60
+        self.width = int(screen_size[0] // 5)
+        self.height = int(screen_size[1] // 60)
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.color = colors
         self.health = "health"
