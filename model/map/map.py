@@ -58,6 +58,8 @@ def create_map(screen_size, colors):
                 enemies_list.append(enemy.Zombie_Enemy(position, file_path, colors, ("up", 30)))
             # elif character_name == "Eye_Enemy":
             #     enemies_list.append(enemy.Eye_Enemy(position, file_path, colors))
+            elif character_name == 'Shooter_Enemy':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors))
             elif character_name == "Sword":
                 sword_list.append(items.Sword(position, file_path, character_name, colors))
     create_floor(floor_list)
