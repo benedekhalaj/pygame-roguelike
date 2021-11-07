@@ -1,8 +1,7 @@
+from pygame.transform import scale
 from model import data_manager
 import pygame
 import pygame.freetype
-
-from model.map.map import create_map_sign_dict
 
 
 pygame.mixer.init()
@@ -14,7 +13,7 @@ SFX_PICK_UP_SWORD = data_manager.open_sfx('sound/sfx/pick_up_sword.WAV')
 class Player():
     def __init__(self, position: tuple, file_path, colors, screen_size):
         self.type = 'player'
-        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.rect = pygame.Rect(position[0], position[1], position[2] - 15, position[3] - 4)
         self.texture = data_manager.open_image(file_path)
         self.texture_count = 0
         self.texture_count_limit = 60
@@ -40,7 +39,7 @@ class Player():
         self.damage_limit = 120
         self.invicible = False
 
-        self.inventory = Inventory(colors)
+        self.inventory = Inventory(colors, screen_size)
         self.screen_size = screen_size
         self.attack_in_progress = False
         self.attack_timer_count = 0
@@ -73,6 +72,10 @@ class Player():
                 for item in objects_list:
                     item.rect.x -= x_direction
                     item.rect.y -= y_direction
+                    if item.type == 'shooter':
+                        for projectile in item.projectiles:
+                            projectile.rect.x -= x_direction
+                            projectile.rect.y -= y_direction
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
@@ -147,16 +150,18 @@ class Player():
             sword.y = player.y
 
         elif self.direction == 'left':
-            sword.x = player.x - player.width
+            sword.x = player.x - player.width - 10
             sword.y = player.y
 
         elif self.direction == 'down':
-            sword.x = player.x
+            sword.x = player.x - 5
             sword.y = player.y + player.height
+            sword.width = player.width + 10
 
         elif self.direction == 'up':
-            sword.x = player.x
+            sword.x = player.x - 5
             sword.y = player.y - player.height
+            sword.width = player.width + 10
 
     def take_damage(self, objects: dict):
         self.set_damage_attributes()
@@ -166,6 +171,13 @@ class Player():
                     if not self.invicible:
                         self.health -= 1
                         self.invicible = True
+            if enemy.type == 'shooter':
+                for projectile in enemy.projectiles:
+                    if projectile.visible:
+                        if self.rect.colliderect(projectile.rect):
+                            if not self.invicible:
+                                self.health -= 1
+                                self.invicible = True
 
     def set_damage_attributes(self):
         def set_invicible(self):
@@ -226,22 +238,6 @@ class Player():
                         item.visible = False
                         SFX_PICK_UP_SWORD.play()
 
-    def use_inventory(self, objects, pause, key):
-        if key[pygame.K_ESCAPE]:
-            pause = False
-        else:
-            self.show_inventory()
-            pause = True
-        return pause
-
-    def show_inventory(self):
-        width = self.screen_size[0] / 2
-        height = self.screen_size[1] / 2
-        x = width / 2
-        y = height / 2
-        self.inventory.position = (x, y, width, height)# EZT REFAKTORÁLNI KELL
-        self.inventory.text = self.inventory.create_inventory_text()
-
     def open_door(self, objects):
         for door in objects["doors"]:
             if self.rect.colliderect(door.rect):
@@ -299,15 +295,33 @@ class Player():
 
 
 class Inventory():
-    def __init__(self, colors):
+    def __init__(self, colors, screen_size):
         self.keys = 0
         self.keys_limit = 99
         self.health_potions = 0
         self.health_potions_limit = 1
+
+        self.width = int(screen_size[0] / 2)
+        self.height = int(screen_size[1] / 2)
+        self.x = self.width / 2
+        self.y = self.height / 2
         self.position = None
         self.font_size = 30
         self.color = colors
         self.text = self.create_inventory_text()
+        self.background = self.inventory_background()
+        self.rect_image = self.create_icon_background_image()
+        self.background = self.create_background_image()
+
+        self.can_hide = False
+        self.visible_timer = 0
+        self.visible_timer_limit = 30
+
+        self.can_show = True
+        self.invisible_timer = 0
+        self.invisible_timer_limit = 30
+
+        self.visible = False
 
     def add_key(self):
         if self.keys < self.keys_limit:
@@ -320,6 +334,32 @@ class Inventory():
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
 
+    def show_inventory(self):
+        self.visible = True
+        self.can_hide = False
+        self.visible_timer = 0
+
+    def hide_inventory(self):
+        self.visible = False
+        self.can_show = False
+        self.invisible_timer = 0
+
+    def update_visible_timer(self):
+        if self.visible:
+            self.visible_timer += 1
+
+        if self.visible_timer > self.visible_timer_limit:
+            self.can_hide = True
+
+    def update_invisible_timer(self):
+        if not self.visible:
+            self.invisible_timer += 1
+
+        if self.invisible_timer > self.invisible_timer_limit:
+            self.can_show = True
+
+
+
     def create_inventory_text(self):
         texts = []
         font_type = 'couriernew'
@@ -330,9 +370,24 @@ class Inventory():
         texts.append(font.render(f"{int(keys)} Keys", False, self.color.RED))
         return texts
 
+    def create_icon_background_image(self):
+        background_image = pygame.Surface((self.width, self.height))
+        background_image.set_alpha(100)
+        return background_image
+
+    def inventory_background(self):
+        self.position = (self.x, self.y, self.width, self.height)# EZT REFAKTORÁLNI KELL
+        self.text = self.create_inventory_text()
+    
+    def create_background_image(self):
+        image = pygame.image.load("model/map/textures/roli.jpg")
+        image = pygame.transform.scale(image, (self.width, self.height))
+        return image
+
+
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
-        self.exist = False
+        self.exist = True
 
         self.texture = None
         self.texture_count = 0
@@ -384,8 +439,8 @@ class Stat():
         self.type = "stat"
         self.x = 1
         self.y = 1
-        self.width = screen_size[0] // 5
-        self.height = screen_size[1] // 60
+        self.width = int(screen_size[0] // 5)
+        self.height = int(screen_size[1] // 60)
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.color = colors
         self.health = "health"

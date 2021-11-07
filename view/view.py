@@ -29,13 +29,14 @@ COLORS = Colors()
 
 
 def display_everything(window, objects, pause):
+
+    display_background(window)
+    display_objects(window, objects)
+    display_player_stat(window, objects)
+    display_player_sword(window, objects)
+    display_enemy_projectile(window, objects)
     if pause:
         display_inventory(window, objects)
-    else:
-        display_background(window)
-        display_objects(window, objects)
-        display_player_stat(window, objects)
-        display_player_sword(window, objects)
     refresh_display()
 
 
@@ -77,6 +78,15 @@ def display_player_sword(window, objects):
             pygame.draw.rect(window, sword.color, sword_position)
 
 
+def display_enemy_projectile(window, objects):
+    for enemy in objects['enemies']:
+        if enemy.type == 'shooter':
+            for projectile in enemy.projectiles:
+                if projectile.visible:
+                    projectile_position = (projectile.rect.x, projectile.rect.y, projectile.rect.width, projectile.rect.height)
+                    pygame.draw.rect(window, projectile.color, projectile_position)
+
+
 def display_player_stat(window, objects):
     stat = objects['player'][0].stat
     for bar_list in stat.bars:
@@ -102,11 +112,15 @@ def display_stat_texture(window, bar_texture):
 
 def display_inventory(window, objects):
     inventory = objects["player"][0].inventory
-    pygame.draw.rect(window, inventory.color.WHITE, inventory.position)
+    position_x = inventory.position[0]
+    position_y = inventory.position[1]
+    # pygame.draw.rect(window, inventory.color.WHITE, inventory.position)
+    window.blit(inventory.background, (position_x, position_y))
+    window.blit(inventory.rect_image, (position_x, position_y))
     # EZ CSAK ÖSSZE LETT CSAPVA
     for number, text in enumerate(inventory.text):
-        x = inventory.position[0] + number * inventory.font_size
-        y = inventory.position[1] + number * inventory.font_size
+        x = position_x + number * inventory.font_size
+        y = position_y + number * inventory.font_size
         window.blit(text, (x, y))
 
 

@@ -35,9 +35,7 @@ def quit_game(run, objects):
 
 
 def pause_game(pause, objects):
-    key = view.get_input()
-    if key[pygame.K_i] or pause:
-        pause = player_controller.control_inventory(objects, pause, key)
+    pause = player_controller.control_inventory(objects, pause)
     return pause
 
 
