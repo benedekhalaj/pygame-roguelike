@@ -137,11 +137,35 @@ class Shooter_Enemy():
         self.texture_count_limit = 60
         self.color = colors.BROWN
 
+        self.velocity = 5
+        self.direction = 'down'
+
         self.projectiles = []
         self.projectile_timer = 0
         self.projectile_timer_limit = 60
 
         self.visible = True
+
+    def move(self, objects):
+        if self.direction == 'right':
+            self.rect.x += self.velocity
+        elif self.direction == 'left':
+            self.rect.x -= self.velocity
+        elif self.direction == 'down':
+            self.rect.y += self.velocity
+        elif self.direction == 'up':
+            self.rect.y -= self.velocity
+
+        for wall in objects['walls']:
+                if self.rect.colliderect(wall.rect):
+                    if self.direction == 'right':
+                        self.direction = 'left'
+                    elif self.direction == 'left':
+                        self.direction = 'right'
+                    elif self.direction == 'down':
+                        self.direction = 'up'
+                    elif self.direction == 'up':
+                        self.direction = 'down'
 
     def shoot(self, objects):
         if self.visible:

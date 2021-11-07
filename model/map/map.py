@@ -4,6 +4,10 @@ import model.item.item as items
 import model.player.player as player
 
 
+LEVEL_1 = 'map.csv'
+LEVEL_2 = 'level_2.csv'
+
+
 def generate_map():
     text_map = data_manager.open_csv_file("model/map/map_file/map.csv")
     map_sings = data_manager.open_file("model/map/map_file/map_description.csv")
