@@ -101,18 +101,30 @@ class Zombie_Enemy():
 
             self.texture_count += 1
 
+    def update_brain_texture(self, objects):
+        for item in objects['items']:
+            if item.type == 'brain':
+                item.update_texture_count()
+
 
 class Brain():
     def __init__(self, position):
         self.type = 'brain'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = None
+        self.texture = [data_manager.open_image('model/map/textures/items/brain/brain1.png'),
+                        data_manager.open_image('model/map/textures/items/brain/brain2.png')]
         self.texture_count = 0
         self.texture_count_limit = 60
         self.color = (166, 32, 100)
 
         self.visible = True
 
+    def update_texture_count(self):
+        if type(self.texture) is list:
+            if self.texture_count + 1 >= self.texture_count_limit:
+                self.texture_count = 0
+
+            self.texture_count += 1
 
 
 class Eye_Enemy():
