@@ -396,7 +396,7 @@ class Inventory():
 
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
-        self.exist = True
+        self.exist = False
         self.projectile_knockback = False
 
         self.texture = None
