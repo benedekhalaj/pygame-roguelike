@@ -136,7 +136,12 @@ class Shooter_Enemy():
         self.texture_count = 0
         self.texture_count_limit = 60
         self.color = colors.BROWN
+        self.projectile = Projectile((self.rect.x - self.rect.width, self.rect.y - self.rect.height // 2, 32, 32), colors)
+
         self.visible = True
+
+    def shoot(self):
+        self.projectile.rect.x -= 5
 
 
 def create_texture(file_path):
@@ -144,3 +149,12 @@ def create_texture(file_path):
         return pygame.image.load(file_path)
     else:
         return None
+
+
+class Projectile():
+    def __init__(self, position, colors):
+        self.type = 'projectile'
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.color = colors.BLUE
+
+        self.visible = True

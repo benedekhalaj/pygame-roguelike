@@ -34,6 +34,7 @@ def display_everything(window, objects, pause):
     display_objects(window, objects)
     display_player_stat(window, objects)
     display_player_sword(window, objects)
+    display_enemy_projectile(window, objects)
     if pause:
         display_inventory(window, objects)
     refresh_display()
@@ -75,6 +76,14 @@ def display_player_sword(window, objects):
                 window.blit(sword.texture, (sword.rect.x, sword.rect.y))
         else:
             pygame.draw.rect(window, sword.color, sword_position)
+
+
+def display_enemy_projectile(window, objects):
+    for enemy in objects['enemies']:
+        if enemy.type == 'shooter':
+            projectile = enemy.projectile.rect
+            projectile_position = (projectile.x, projectile.y, projectile.width, projectile.height)
+            pygame.draw.rect(window, enemy.projectile.color, projectile_position)
 
 
 def display_player_stat(window, objects):

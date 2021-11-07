@@ -71,6 +71,9 @@ class Player():
                 for item in objects_list:
                     item.rect.x -= x_direction
                     item.rect.y -= y_direction
+                    if item.type == 'shooter':
+                        item.projectile.rect.x -= x_direction
+                        item.projectile.rect.y -= y_direction
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
