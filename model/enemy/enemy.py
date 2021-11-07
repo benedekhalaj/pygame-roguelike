@@ -136,21 +136,37 @@ class Shooter_Enemy():
         self.texture_count = 0
         self.texture_count_limit = 60
         self.color = colors.BROWN
-        self.projectile = Projectile((self.rect.x - self.rect.width, self.rect.y - self.rect.height // 2, 32, 32), colors)
+
+        self.projectiles = []
+        self.projectile_timer = 0
+        self.projectile_timer_limit = 120
 
         self.visible = True
 
-    def shoot(self):
-        self.projectile.rect.x -= self.projectile.velocity
+    def shoot(self, objects):
+        self.update_projectile_timer()
+        if self.projectile_timer > self.projectile_timer_limit:
+            self.projectiles.append(Projectile((self.rect.x - self.rect.width, self.rect.y - self.rect.height // 2, 32, 32)))
+            self.projectile_timer = 0
+        self.move_projectile(objects)
+
+    def update_projectile_timer(self):
+        self.projectile_timer += 1
+
+    def move_projectile(self, objects):
+        for projectile in self.projectiles:
+            projectile.rect.x -= projectile.velocity
+        self.collide_projectile(objects)
 
     def collide_projectile(self, objects):
-        for wall in objects['walls']:
-            if self.projectile.rect.colliderect(wall.rect):
-                self.projectile.visible = False
-        sword = objects['player'][0].sword
-        if sword.visible:
-            if self.projectile.rect.colliderect(sword.rect):
-                self.projectile.velocity *= (-1)
+        for projectile in self.projectiles:
+            for wall in objects['walls']:
+                if projectile.rect.colliderect(wall.rect):
+                    projectile.visible = False
+            sword = objects['player'][0].sword
+            if sword.visible:
+                if projectile.rect.colliderect(sword.rect):
+                    projectile.velocity *= (-1)
 
 
 def create_texture(file_path):
@@ -161,10 +177,10 @@ def create_texture(file_path):
 
 
 class Projectile():
-    def __init__(self, position, colors):
+    def __init__(self, position):
         self.type = 'projectile'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.color = colors.BLUE
+        self.color = (244, 140, 86)
         self.velocity = 5
 
         self.visible = True

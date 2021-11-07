@@ -72,8 +72,9 @@ class Player():
                     item.rect.x -= x_direction
                     item.rect.y -= y_direction
                     if item.type == 'shooter':
-                        item.projectile.rect.x -= x_direction
-                        item.projectile.rect.y -= y_direction
+                        for projectile in item.projectiles:
+                            projectile.rect.x -= x_direction
+                            projectile.rect.y -= y_direction
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
@@ -170,11 +171,12 @@ class Player():
                         self.health -= 1
                         self.invicible = True
             if enemy.type == 'shooter':
-                if enemy.projectile.visible:
-                    if self.rect.colliderect(enemy.projectile.rect):
-                        if not self.invicible:
-                            self.health -= 1
-                            self.invicible = True
+                for projectile in enemy.projectiles:
+                    if projectile.visible:
+                        if self.rect.colliderect(projectile.rect):
+                            if not self.invicible:
+                                self.health -= 1
+                                self.invicible = True
 
     def set_damage_attributes(self):
         def set_invicible(self):

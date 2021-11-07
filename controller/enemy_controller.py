@@ -14,5 +14,4 @@ def control_enemy(objects):
             enemy_character.set_facing(objects)
 
         elif enemy_character.type == 'shooter':
-            enemy_character.shoot()
-            enemy_character.collide_projectile(objects)
+            enemy_character.shoot(objects)
