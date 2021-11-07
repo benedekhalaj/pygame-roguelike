@@ -164,9 +164,12 @@ class Shooter_Enemy():
                 if projectile.rect.colliderect(wall.rect):
                     projectile.visible = False
             sword = objects['player'][0].sword
-            if sword.visible:
-                if projectile.rect.colliderect(sword.rect):
-                    projectile.velocity *= (-1)
+            if projectile.hitable:
+                if sword.visible:
+                    if projectile.rect.colliderect(sword.rect):
+                        projectile.velocity *= (-1)
+                        projectile.hitable = False
+            projectile.check_if_hitable()
 
     def delete_projectile(self):
         for projectile in self.projectiles:
@@ -174,7 +177,6 @@ class Shooter_Enemy():
                 self.projectiles.pop(self.projectiles.index(projectile))
                 print('delete projectile')
                 break
-
 
 
 def create_texture(file_path):
@@ -191,4 +193,19 @@ class Projectile():
         self.color = (244, 140, 86)
         self.velocity = 5
 
+        self.hitable = True
+        self.hit_timer = 0
+        self.hit_timer_limit = 30
+
         self.visible = True
+
+    def check_if_hitable(self):
+        if not self.hitable:
+            self.update_hit_timer()
+
+    def update_hit_timer(self):
+        self.hit_timer += 1
+
+        if self.hit_timer > self.hit_timer_limit:
+            self.hit_timer = 0
+            self.hitable = True
