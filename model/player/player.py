@@ -1,3 +1,4 @@
+from pygame.transform import scale
 from model import data_manager
 import pygame
 import pygame.freetype
@@ -309,7 +310,8 @@ class Inventory():
         self.color = colors
         self.text = self.create_inventory_text()
         self.background = self.inventory_background()
-        self.rect_image = self.create_background_image()
+        self.rect_image = self.create_icon_background_image()
+        self.background = self.create_background_image()
 
     def add_key(self):
         if self.keys < self.keys_limit:
@@ -339,7 +341,7 @@ class Inventory():
         texts.append(font.render(f"{int(keys)} Keys", False, self.color.RED))
         return texts
 
-    def create_background_image(self):
+    def create_icon_background_image(self):
         background_image = pygame.Surface((self.width, self.height))
         background_image.set_alpha(100)
         return background_image
@@ -347,6 +349,11 @@ class Inventory():
     def inventory_background(self):
         self.position = (self.x, self.y, self.width, self.height)# EZT REFAKTORÁLNI KELL
         self.text = self.create_inventory_text()
+    
+    def create_background_image(self):
+        image = pygame.image.load("model/map/textures/roli.jpg")
+        image = pygame.transform.scale(image, (self.width, self.height))
+        return image
 
 
 class Sword():

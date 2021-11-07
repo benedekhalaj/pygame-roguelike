@@ -115,6 +115,7 @@ def display_inventory(window, objects):
     position_x = inventory.position[0]
     position_y = inventory.position[1]
     # pygame.draw.rect(window, inventory.color.WHITE, inventory.position)
+    window.blit(inventory.background, (position_x, position_y))
     window.blit(inventory.rect_image, (position_x, position_y))
     # EZ CSAK ÖSSZE LETT CSAPVA
     for number, text in enumerate(inventory.text):
