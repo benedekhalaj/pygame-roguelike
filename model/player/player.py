@@ -300,6 +300,7 @@ class Inventory():
         self.keys_limit = 99
         self.health_potions = 0
         self.health_potions_limit = 1
+
         self.width = int(screen_size[0] / 2)
         self.height = int(screen_size[1] / 2)
         self.x = self.width / 2
@@ -310,6 +311,16 @@ class Inventory():
         self.text = self.create_inventory_text()
         self.background = self.inventory_background()
         self.rect_image = self.create_background_image()
+
+        self.can_hide = False
+        self.visible_timer = 0
+        self.visible_timer_limit = 30
+
+        self.can_show = True
+        self.invisible_timer = 0
+        self.invisible_timer_limit = 30
+
+        self.visible = False
 
     def add_key(self):
         if self.keys < self.keys_limit:
@@ -322,12 +333,31 @@ class Inventory():
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
 
-    def use_inventory(self, pause, key):
-        if key[pygame.K_ESCAPE]:
-            pause = False
-        else:
-            pause = True
-        return pause
+    def show_inventory(self):
+        self.visible = True
+        self.can_hide = False
+        self.visible_timer = 0
+
+    def hide_inventory(self):
+        self.visible = False
+        self.can_show = False
+        self.invisible_timer = 0
+
+    def update_visible_timer(self):
+        if self.visible:
+            self.visible_timer += 1
+
+        if self.visible_timer > self.visible_timer_limit:
+            self.can_hide = True
+
+    def update_invisible_timer(self):
+        if not self.visible:
+            self.invisible_timer += 1
+
+        if self.invisible_timer > self.invisible_timer_limit:
+            self.can_show = True
+
+
 
     def create_inventory_text(self):
         texts = []
