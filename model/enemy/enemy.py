@@ -155,7 +155,14 @@ class Shooter_Enemy():
 
     def move_projectile(self, objects):
         for projectile in self.projectiles:
-            projectile.rect.x -= projectile.velocity
+            if projectile.direction == 'left':
+                projectile.rect.x -= projectile.velocity
+            elif projectile.direction == 'right':
+                projectile.rect.x += projectile.velocity
+            elif projectile.direction == 'up':
+                projectile.rect.y -= projectile.velocity
+            elif projectile.direction == 'down':
+                projectile.rect.y += projectile.velocity
         self.collide_projectile(objects)
 
     def collide_projectile(self, objects):
@@ -167,7 +174,7 @@ class Shooter_Enemy():
             if projectile.hitable:
                 if sword.visible:
                     if projectile.rect.colliderect(sword.rect):
-                        projectile.velocity *= (-1)
+                        projectile.direction = sword.direction
                         projectile.hitable = False
             projectile.check_if_hitable()
 
@@ -191,7 +198,9 @@ class Projectile():
         self.type = 'projectile'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = (244, 140, 86)
+
         self.velocity = 5
+        self.direction = 'left'
 
         self.hitable = True
         self.hit_timer = 0
