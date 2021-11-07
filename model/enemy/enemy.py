@@ -141,7 +141,16 @@ class Shooter_Enemy():
         self.visible = True
 
     def shoot(self):
-        self.projectile.rect.x -= 5
+        self.projectile.rect.x -= self.projectile.velocity
+
+    def collide_projectile(self, objects):
+        for wall in objects['walls']:
+            if self.projectile.rect.colliderect(wall.rect):
+                self.projectile.visible = False
+        sword = objects['player'][0].sword
+        if sword.visible:
+            if self.projectile.rect.colliderect(sword.rect):
+                self.projectile.velocity *= (-1)
 
 
 def create_texture(file_path):
@@ -156,5 +165,6 @@ class Projectile():
         self.type = 'projectile'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = colors.BLUE
+        self.velocity = 5
 
         self.visible = True

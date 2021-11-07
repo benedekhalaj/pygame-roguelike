@@ -169,6 +169,12 @@ class Player():
                     if not self.invicible:
                         self.health -= 1
                         self.invicible = True
+            if enemy.type == 'shooter':
+                if enemy.projectile.visible:
+                    if self.rect.colliderect(enemy.projectile.rect):
+                        if not self.invicible:
+                            self.health -= 1
+                            self.invicible = True
 
     def set_damage_attributes(self):
         def set_invicible(self):

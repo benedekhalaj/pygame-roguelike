@@ -81,9 +81,10 @@ def display_player_sword(window, objects):
 def display_enemy_projectile(window, objects):
     for enemy in objects['enemies']:
         if enemy.type == 'shooter':
-            projectile = enemy.projectile.rect
-            projectile_position = (projectile.x, projectile.y, projectile.width, projectile.height)
-            pygame.draw.rect(window, enemy.projectile.color, projectile_position)
+            if enemy.projectile.visible:
+                projectile = enemy.projectile.rect
+                projectile_position = (projectile.x, projectile.y, projectile.width, projectile.height)
+                pygame.draw.rect(window, enemy.projectile.color, projectile_position)
 
 
 def display_player_stat(window, objects):
