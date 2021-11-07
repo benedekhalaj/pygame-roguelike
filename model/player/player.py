@@ -14,7 +14,7 @@ SFX_PICK_UP_SWORD = data_manager.open_sfx('sound/sfx/pick_up_sword.WAV')
 class Player():
     def __init__(self, position: tuple, file_path, colors, screen_size):
         self.type = 'player'
-        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.rect = pygame.Rect(position[0], position[1], position[2] - 15, position[3] - 4)
         self.texture = data_manager.open_image(file_path)
         self.texture_count = 0
         self.texture_count_limit = 60
@@ -147,16 +147,18 @@ class Player():
             sword.y = player.y
 
         elif self.direction == 'left':
-            sword.x = player.x - player.width
+            sword.x = player.x - player.width - 10
             sword.y = player.y
 
         elif self.direction == 'down':
-            sword.x = player.x
+            sword.x = player.x - 5
             sword.y = player.y + player.height
+            sword.width = player.width + 10
 
         elif self.direction == 'up':
-            sword.x = player.x
+            sword.x = player.x - 5
             sword.y = player.y - player.height
+            sword.width = player.width + 10
 
     def take_damage(self, objects: dict):
         self.set_damage_attributes()
@@ -330,9 +332,10 @@ class Inventory():
         texts.append(font.render(f"{int(keys)} Keys", False, self.color.RED))
         return texts
 
+
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
-        self.exist = False
+        self.exist = True
 
         self.texture = None
         self.texture_count = 0
