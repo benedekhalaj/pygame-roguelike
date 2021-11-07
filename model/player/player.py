@@ -230,13 +230,19 @@ class Player():
                         self.inventory.add_key()
                         item.visible = False
                         SFX_PICK_UP_KEY.play()
+
                     elif item.type == 'health_potion':
                         self.inventory.add_health_potion()
                         item.visible = False
+
                     elif item.type == 'sword':
                         self.sword.exist = True
                         item.visible = False
                         SFX_PICK_UP_SWORD.play()
+
+                    elif item.type == 'brain':
+                        self.inventory.add_brain()
+                        item.visible = False
 
     def open_door(self, objects):
         for door in objects["doors"]:
@@ -300,6 +306,7 @@ class Inventory():
         self.keys_limit = 99
         self.health_potions = 0
         self.health_potions_limit = 1
+        self.brains = 0
 
         self.width = int(screen_size[0] / 2)
         self.height = int(screen_size[1] / 2)
@@ -333,6 +340,10 @@ class Inventory():
     def add_health_potion(self):
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
+
+    def add_brain(self):
+        self.brains += 1
+        print(f"Brains: {self.brains}")
 
     def show_inventory(self):
         self.visible = True

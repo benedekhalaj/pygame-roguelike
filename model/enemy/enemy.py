@@ -280,7 +280,7 @@ class Projectile():
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = (244, 140, 86)
 
-        self.velocity = 20
+        self.velocity = 5
         self.direction = 'left'
 
         self.hitable = True
