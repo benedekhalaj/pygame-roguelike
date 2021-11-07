@@ -15,3 +15,4 @@ def control_enemy(objects):
 
         elif enemy_character.type == 'shooter':
             enemy_character.shoot(objects)
+            enemy_character.delete_projectile()

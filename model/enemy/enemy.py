@@ -168,6 +168,14 @@ class Shooter_Enemy():
                 if projectile.rect.colliderect(sword.rect):
                     projectile.velocity *= (-1)
 
+    def delete_projectile(self):
+        for projectile in self.projectiles:
+            if not projectile.visible:
+                self.projectiles.pop(self.projectiles.index(projectile))
+                print('delete projectile')
+                break
+
+
 
 def create_texture(file_path):
     if file_path is not None:
