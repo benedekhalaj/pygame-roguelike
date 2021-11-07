@@ -139,14 +139,14 @@ class Shooter_Enemy():
 
         self.projectiles = []
         self.projectile_timer = 0
-        self.projectile_timer_limit = 120
+        self.projectile_timer_limit = 60
 
         self.visible = True
 
     def shoot(self, objects):
         self.update_projectile_timer()
         if self.projectile_timer > self.projectile_timer_limit:
-            self.projectiles.append(Projectile((self.rect.x - self.rect.width, self.rect.y - self.rect.height // 2, 32, 32)))
+            self.projectiles.append(Projectile((self.rect.x - self.rect.width, self.rect.y + self.rect.height / 4, 32, 32)))
             self.projectile_timer = 0
         self.move_projectile(objects)
 
@@ -199,7 +199,7 @@ class Projectile():
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = (244, 140, 86)
 
-        self.velocity = 5
+        self.velocity = 20
         self.direction = 'left'
 
         self.hitable = True

@@ -27,9 +27,21 @@ def change_player_on_input(player_character, objects):
                 player_character.start_attack()
 
 
-def control_inventory(objects, pause, key):
+def control_inventory(objects, pause):
+    keys = view.get_input()
     inventory = objects['player'][0].inventory
-    pause = inventory.use_inventory(pause, key)
+
+    inventory.update_visible_timer()
+    inventory.update_invisible_timer()
+
+    if not pause and keys[pygame.K_i]:
+        if inventory.can_show:
+            inventory.show_inventory()
+            pause = True
+    elif pause and keys[pygame.K_i]:
+        if inventory.can_hide:
+            inventory.hide_inventory()
+            pause = False
     return pause
 
 
