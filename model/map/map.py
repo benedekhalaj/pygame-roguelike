@@ -9,7 +9,7 @@ LEVEL_2 = 'level_2.csv'
 
 
 def generate_map():
-    text_map = data_manager.open_csv_file("model/map/map_file/map.csv")
+    text_map = data_manager.open_csv_file(f"model/map/map_file/{LEVEL_2}")
     map_sings = data_manager.open_file("model/map/map_file/map_description.csv")
     map_sings_dict = create_map_sign_dict(map_sings)
     return text_map, map_sings_dict
