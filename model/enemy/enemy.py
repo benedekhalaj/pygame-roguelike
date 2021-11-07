@@ -128,6 +128,17 @@ class Eye_Enemy():
                 self.texture = data_manager.open_image(path, f'{left}up.png')
 
 
+class Shooter_Enemy():
+    def __init__(self, position, file_path, colors):
+        self.type = 'shooter'
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        # self.texture = create_texture(file_path)
+        self.texture_count = 0
+        self.texture_count_limit = 60
+        self.color = colors.BROWN
+        self.visible = True
+
+
 def create_texture(file_path):
     if file_path is not None:
         return pygame.image.load(file_path)
