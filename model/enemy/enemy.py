@@ -144,10 +144,11 @@ class Shooter_Enemy():
         self.visible = True
 
     def shoot(self, objects):
-        self.update_projectile_timer()
-        if self.projectile_timer > self.projectile_timer_limit:
-            self.projectiles.append(Projectile((self.rect.x - self.rect.width, self.rect.y + self.rect.height / 4, 32, 32)))
-            self.projectile_timer = 0
+        if self.visible:
+            self.update_projectile_timer()
+            if self.projectile_timer > self.projectile_timer_limit:
+                self.projectiles.append(Projectile((self.rect.x - self.rect.width, self.rect.y + self.rect.height / 4, 32, 32)))
+                self.projectile_timer = 0
         self.move_projectile(objects)
 
     def update_projectile_timer(self):
@@ -177,6 +178,9 @@ class Shooter_Enemy():
                         projectile.direction = sword.direction
                         projectile.hitable = False
             projectile.check_if_hitable()
+            if self.rect.colliderect(projectile.rect):
+                self.visible = False
+                projectile.visible = False
 
     def delete_projectile(self):
         for projectile in self.projectiles:

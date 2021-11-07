@@ -238,7 +238,6 @@ class Player():
                         item.visible = False
                         SFX_PICK_UP_SWORD.play()
 
-
     def open_door(self, objects):
         for door in objects["doors"]:
             if self.rect.colliderect(door.rect):
