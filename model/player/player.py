@@ -47,7 +47,7 @@ class Player():
         self.attack_duration = 12
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors, self.attack_duration)
 
-        self.max_health = 5
+        self.max_health = 1
         self.health = 1
         self.stat = Stat(colors, screen_size, (self.health, self.max_health, self.stamina, self.stamina_limit))
         self.visible = True
@@ -396,7 +396,7 @@ class Inventory():
 
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
-        self.exist = False
+        self.exist = True
         self.projectile_knockback = False
 
         self.texture = None

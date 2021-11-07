@@ -56,3 +56,5 @@
 48:	Sword:	model/map/textures/items/shortsword.png
 49:	Health_Potion:	model/map/textures/items/health_potion.png
 50 :	Special_Key:	model/map/textures/items/key2.png
+------------------------ NPCS
+53:	Brain_Collector_NPC:	Brain_Collector_NPC

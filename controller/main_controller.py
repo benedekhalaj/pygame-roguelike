@@ -53,5 +53,6 @@ def main():
             player_controller.control_player(objects)
             enemy_controller.control_enemy(objects)
             item_controller.control_item(objects)
+            npc_controller.control_npc(objects)
         view.display_everything(window, objects, pause)
     pygame.quit()
