@@ -19,11 +19,12 @@ class Zombie_Enemy():
         self.direction = direction[0]
         self.count_limit = direction[1]
 
-        self.health = 3
+        self.health = 2
         self.damage_timer = 0
         self.damage_limit = 30
         self.invicible = False
 
+        self.created_brain = False
         self.visible = True
 
     def move(self, objects):
@@ -56,7 +57,7 @@ class Zombie_Enemy():
                         self.health -= 1
                         self.invicible = True
                         SFX_HIT_ENEMY.play()
-        self.vanish()
+        self.vanish(objects)
 
     def set_damage_attributes(self):
         def set_invicible(self):
@@ -72,9 +73,16 @@ class Zombie_Enemy():
         set_invicible(self)
         set_damage_timer(self)
 
-    def vanish(self):
+    def vanish(self, objects):
         if self.health < 1:
             self.visible = False
+            if not self.created_brain:
+                self.create_brain(objects)
+                self.created_brain = True
+
+    def create_brain(self, objects):
+        objects['items'].append(Brain((self.rect.x, self.rect.y, 32, 32)))
+
 
     def update_texture(self):
         path = 'model/map/textures/enemy/'
@@ -92,6 +100,19 @@ class Zombie_Enemy():
                 self.texture_count = 0
 
             self.texture_count += 1
+
+
+class Brain():
+    def __init__(self, position):
+        self.type = 'brain'
+        self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
+        self.texture = None
+        self.texture_count = 0
+        self.texture_count_limit = 60
+        self.color = (166, 32, 100)
+
+        self.visible = True
+
 
 
 class Eye_Enemy():
