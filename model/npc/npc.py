@@ -21,7 +21,7 @@ class Brain_Collector_NPC():
             if self.rect.colliderect(player.rect):
                 if not self.talking_in_progress:
                     if player.inventory.brains < self.brain_expectation:
-                        print('Hello Dear! It seems like you haven\'t yet gathered all of the brains.')
+                        print('Hello Dear Knight! It seems like you haven\'t yet gathered all of the brains yet.')
                         print(f'{self.brain_expectation - player.inventory.brains} more to go!')
                         self.talking_in_progress = True
                     else:
