@@ -243,7 +243,7 @@ class Player():
                         SFX_PICK_UP_SWORD.play()
 
                     elif item.type == 'brain':
-                        self.inventory.add_brain()
+                        self.inventory.add_brain(item.texture[0])
                         item.visible = False
 
     def open_door(self, objects):
@@ -312,6 +312,7 @@ class Inventory():
         self.health_potions_texture = None
         self.health_potions_limit = 5
         self.brains = 0
+        self.brain_texture = None
 
         self.color = player.colors
         self.width = int(player.screen_size[0] / 2)
@@ -342,7 +343,8 @@ class Inventory():
 
     def update_items(self):
         self.items_list = [[self.keys, self.key_texture],
-                           [self.health_potions, self.health_potions_texture]
+                           [self.health_potions, self.health_potions_texture],
+                           [self.brains, self.brain_texture]
                            ]
 
     def add_key(self, texture):
@@ -358,9 +360,9 @@ class Inventory():
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
 
-    def add_brain(self):
+    def add_brain(self, texture):
         self.brains += 1
-        print(f"Brains: {self.brains}")
+        self.brain_texture = texture
 
     def show_inventory(self):
         self.update_items()
