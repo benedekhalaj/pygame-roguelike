@@ -1,5 +1,6 @@
 from os import name
 from typing import Text
+from pygame.constants import HWACCEL, WINDOWTAKEFOCUS
 from pygame.transform import scale
 from model import data_manager
 import pygame
@@ -49,8 +50,8 @@ class Player():
         self.attack_duration = 12
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors, self.attack_duration)
 
-        self.max_health = 1
-        self.health = 1
+        self.max_health = 100
+        self.health = 100
         self.stat = Stat(colors, screen_size, (self.health, self.max_health, self.stamina, self.stamina_limit))
         self.visible = True
 
@@ -323,6 +324,9 @@ class Inventory():
         self.outer_line_color = self.color.BROWN
         self.position = (self.x, self.y, self.width, self.height)
         self.font_size = 25
+        self.resize_picture = 5
+        self.move_icon = 15
+        self.scale = 1.2
         self.gap = (2 * self.outer_line_size) + 10
         self.background = self.create_background_image()
         self.line_number = 0
@@ -403,8 +407,13 @@ class Inventory():
             item_picture = item_list[1]
             if item_picture is not None:
                 width, height = item_picture.get_size()
+                if width == 32 and height == 32:
+                    width, height = width * 2, width * 2
+                width, height = width - self.resize_picture, height - self.resize_picture
+                item_picture = pygame.transform.scale(item_picture, (width / 1.2, height / 1.2))
             else:
                 width, height = 0, 0
+            width, height = width * self.scale, height * self.scale
             x = self.x + (width + self.gap) * number_of_items - self.shift_position
             if self.is_new_line(x):
                 self.shift_position += number_of_items
@@ -428,7 +437,7 @@ class Inventory():
     def create_inventory_text(self, item_count):
         font_type = 'couriernew'
         font = pygame.font.SysFont(font_type, self.font_size, bold=True)
-        texts = (font.render(f"{item_count}", False, self.color.RED))
+        texts = (font.render(f"{item_count}", False, self.color.WHITE))
         return texts
 
     def create_icon_background(self, position):

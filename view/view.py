@@ -106,7 +106,6 @@ def display_inventory(window, objects):
     inventory = objects["player"][0].inventory
     position_x = inventory.position[0]
     position_y = inventory.position[1]
-    # pygame.draw.rect(window, inventory.color.WHITE, inventory.position)
     window.blit(inventory.background, (position_x, position_y))
     if inventory.item_icon is not None:
         for item in inventory.item_icon:
@@ -115,10 +114,9 @@ def display_inventory(window, objects):
             width = item[0][1].width
             height = item[0][1].height
             window.blit(item[0][0], (x, y))
-            pygame.draw.rect(window, inventory.color.WHITE, (x, y, width, height), inventory.outer_line_size)
+            pygame.draw.rect(window, inventory.outer_line_color, (x, y, width, height), inventory.outer_line_size)
+            window.blit(item[2], (x + inventory.move_icon + inventory.resize_picture, y + inventory.move_icon + inventory.resize_picture))
             window.blit(item[1], (x + inventory.outer_line_size, y + inventory.outer_line_size))
-            window.blit(item[2], (x, y))
-
 
 
 def refresh_display():
