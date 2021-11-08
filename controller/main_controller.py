@@ -1,5 +1,5 @@
 from view import view
-from controller import player_controller, map_controller, item_controller, enemy_controller
+from controller import player_controller, map_controller, item_controller, enemy_controller, npc_controller
 import pygame
 
 CLOCK = pygame.time.Clock()
@@ -52,5 +52,7 @@ def main():
         if not pause:
             player_controller.control_player(objects)
             enemy_controller.control_enemy(objects)
+            item_controller.control_item(objects)
+            npc_controller.control_npc(objects)
         view.display_everything(window, objects, pause)
     pygame.quit()

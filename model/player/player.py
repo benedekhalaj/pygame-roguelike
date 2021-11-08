@@ -49,7 +49,7 @@ class Player():
         self.attack_duration = 12
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors, self.attack_duration)
 
-        self.max_health = 5
+        self.max_health = 1
         self.health = 1
         self.stat = Stat(colors, screen_size, (self.health, self.max_health, self.stamina, self.stamina_limit))
         self.visible = True
@@ -232,14 +232,19 @@ class Player():
                         self.inventory.add_key(item.texture)
                         item.visible = False
                         SFX_PICK_UP_KEY.play()
+
                     elif item.type == 'health_potion':
                         self.inventory.add_health_potion(item.texture)
                         item.visible = False
+
                     elif item.type == 'sword':
                         self.sword.exist = True
                         item.visible = False
                         SFX_PICK_UP_SWORD.play()
 
+                    elif item.type == 'brain':
+                        self.inventory.add_brain()
+                        item.visible = False
 
     def open_door(self, objects):
         for door in objects["doors"]:
@@ -306,6 +311,7 @@ class Inventory():
         self.health_potions = 0
         self.health_potions_texture = None
         self.health_potions_limit = 5
+        self.brains = 0
 
         self.color = player.colors
         self.width = int(player.screen_size[0] / 2)
@@ -336,8 +342,8 @@ class Inventory():
 
     def update_items(self):
         self.items_list = [[self.keys, self.key_texture],
-                          [self.health_potions, self.health_potions_texture]
-                          ]
+                           [self.health_potions, self.health_potions_texture]
+                           ]
 
     def add_key(self, texture):
         self.key_texture = texture
@@ -351,6 +357,10 @@ class Inventory():
         self.health_potions_texture = texture
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
+
+    def add_brain(self):
+        self.brains += 1
+        print(f"Brains: {self.brains}")
 
     def show_inventory(self):
         self.update_items()
@@ -439,6 +449,7 @@ class Inventory():
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
         self.exist = True
+        self.projectile_knockback = False
 
         self.texture = None
         self.texture_count = 0

@@ -2,10 +2,15 @@ import model.data_manager as data_manager
 import model.enemy.enemy as enemy
 import model.item.item as items
 import model.player.player as player
+import model.npc.npc as npc
+
+
+LEVEL_1 = 'map.csv'
+LEVEL_2 = 'level_2.csv'
 
 
 def generate_map():
-    text_map = data_manager.open_csv_file("model/map/map_file/map.csv")
+    text_map = data_manager.open_csv_file(f"model/map/map_file/{LEVEL_2}")
     map_sings = data_manager.open_file("model/map/map_file/map_description.csv")
     map_sings_dict = create_map_sign_dict(map_sings)
     return text_map, map_sings_dict
@@ -26,6 +31,7 @@ def create_map(screen_size, colors):
     keys_list = []
     door_list = []
     sword_list = []
+    npc_list = []
     for row_place, line in enumerate(text_map):
         for col_place, char in enumerate(line):
             y = ((row_place - player_position[1]) * character_height) + (screen_size[1] / 2 - character_height / 2)
@@ -36,10 +42,13 @@ def create_map(screen_size, colors):
 
             if character_name != 'Void':
                 floor_list.append(items.Floor(position, map_sign_dict["1"][1], colors))
+
             if character_name == "Player":
                 player_list.append(player.Player(position, file_path, colors, screen_size))
+
             elif "Wall" in character_name:
                 walls_list.append(items.Wall(position, file_path, colors))
+
             elif character_name == "Chest":
                 chests_list.append(items.Chest(position, file_path, colors))
             elif character_name == "Key":
@@ -48,6 +57,9 @@ def create_map(screen_size, colors):
                 potion_list.append(items.Health_Potion(position, file_path, colors))
             elif character_name == "Door":
                 door_list.append(items.Door(position, file_path, character_name, colors))
+            elif character_name == "Sword":
+                sword_list.append(items.Sword(position, file_path, character_name, colors))
+
             elif character_name == "Zombie_Right":
                 enemies_list.append(enemy.Zombie_Enemy(position, file_path, colors, ("right", 60)))
             elif character_name == "Zombie_Left":
@@ -58,10 +70,20 @@ def create_map(screen_size, colors):
                 enemies_list.append(enemy.Zombie_Enemy(position, file_path, colors, ("up", 30)))
             # elif character_name == "Eye_Enemy":
             #     enemies_list.append(enemy.Eye_Enemy(position, file_path, colors))
-            elif character_name == 'Shooter_Enemy':
-                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors))
-            elif character_name == "Sword":
-                sword_list.append(items.Sword(position, file_path, character_name, colors))
+            # elif character_name == 'Shooter_Enemy':
+            #     enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("right", "down")))
+            elif character_name == 'Shooter_Vertical_Right':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("down", "right")))
+            elif character_name == 'Shooter_Vertical_Left':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("down", "left")))
+            elif character_name == 'Shooter_Horizontal_Up':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("right", "up")))
+            elif character_name == 'Shooter_Horizontal_Down':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("right", "down")))
+
+            elif character_name == 'Brain_Collector_NPC':
+                npc_list.append(npc.Brain_Collector_NPC(position, colors))
+
     create_floor(floor_list)
 
     objects.update({"floor": floor_list,
@@ -69,7 +91,8 @@ def create_map(screen_size, colors):
                     "doors": door_list,
                     "items": chests_list + keys_list + sword_list + potion_list,
                     "enemies": enemies_list,
-                    "player": player_list
+                    "player": player_list,
+                    "npc": npc_list
                     })
     return objects
 
