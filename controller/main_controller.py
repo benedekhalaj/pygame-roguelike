@@ -1,5 +1,5 @@
 from view import view
-from controller import player_controller, map_controller, item_controller, enemy_controller, npc_controller
+from controller import player_controller, map_controller, item_controller, enemy_controller, npc_controller, hud_controller
 import pygame
 
 CLOCK = pygame.time.Clock()
