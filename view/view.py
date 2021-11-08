@@ -1,11 +1,7 @@
 import pygame
-<<<<<<< HEAD
-from pygame.constants import WINDOWTAKEFOCUS
-=======
 from pygame import display
 
 from model.player.player import Player
->>>>>>> 2ea4696df6fc5016a638869796d970e8acb869f0
 
 WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 900
