@@ -1,6 +1,5 @@
 import pygame
-
-from model.player.player import Player
+from pygame.constants import WINDOWTAKEFOCUS
 
 WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 900
@@ -116,12 +115,17 @@ def display_inventory(window, objects):
     position_y = inventory.position[1]
     # pygame.draw.rect(window, inventory.color.WHITE, inventory.position)
     window.blit(inventory.background, (position_x, position_y))
-    window.blit(inventory.rect_image, (position_x, position_y))
-    # EZ CSAK ÖSSZE LETT CSAPVA
-    for number, text in enumerate(inventory.text):
-        x = position_x + number * inventory.font_size
-        y = position_y + number * inventory.font_size
-        window.blit(text, (x, y))
+    if inventory.item_icon is not None:
+        for item in inventory.item_icon:
+            x = item[0][1].x + inventory.gap
+            y = item[0][1].y + inventory.gap
+            width = item[0][1].width
+            height = item[0][1].height
+            window.blit(item[0][0], (x, y))
+            pygame.draw.rect(window, inventory.color.WHITE, (x, y, width, height), inventory.outer_line_size)
+            window.blit(item[1], (x + inventory.outer_line_size, y + inventory.outer_line_size))
+            window.blit(item[2], (x, y))
+
 
 
 def refresh_display():

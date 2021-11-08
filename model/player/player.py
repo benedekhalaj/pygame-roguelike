@@ -1,3 +1,5 @@
+from os import name
+from typing import Text
 from pygame.transform import scale
 from model import data_manager
 import pygame
@@ -39,8 +41,8 @@ class Player():
         self.damage_limit = 120
         self.invicible = False
 
-        self.inventory = Inventory(colors, screen_size)
         self.screen_size = screen_size
+        self.inventory = Inventory(self)
         self.attack_in_progress = False
         self.attack_timer_count = 0
         self.attack_timer_limit = 30
@@ -227,11 +229,11 @@ class Player():
             if self.rect.colliderect(item.rect):
                 if item.visible:
                     if item.type == 'key':
-                        self.inventory.add_key()
+                        self.inventory.add_key(item.texture)
                         item.visible = False
                         SFX_PICK_UP_KEY.play()
                     elif item.type == 'health_potion':
-                        self.inventory.add_health_potion()
+                        self.inventory.add_health_potion(item.texture)
                         item.visible = False
                     elif item.type == 'sword':
                         self.sword.exist = True
@@ -296,46 +298,63 @@ class Player():
 
 
 class Inventory():
-    def __init__(self, colors, screen_size):
+    def __init__(self, player):
+        self.items_list = [[None, None]]
         self.keys = 0
+        self.key_texture = None
         self.keys_limit = 99
         self.health_potions = 0
-        self.health_potions_limit = 1
+        self.health_potions_texture = None
+        self.health_potions_limit = 5
 
-        self.width = int(screen_size[0] / 2)
-        self.height = int(screen_size[1] / 2)
+        self.color = player.colors
+        self.width = int(player.screen_size[0] / 2)
+        self.height = int(player.screen_size[1] / 2)
         self.x = self.width / 2
         self.y = self.height / 2
-        self.position = None
-        self.font_size = 30
-        self.color = colors
-        self.text = self.create_inventory_text()
-        self.background = self.inventory_background()
-        self.rect_image = self.create_icon_background_image()
+        self.outer_line_size = 2
+        self.outer_line_color = self.color.BROWN
+        self.position = (self.x, self.y, self.width, self.height)
+        self.font_size = 25
+        self.gap = (2 * self.outer_line_size) + 10
         self.background = self.create_background_image()
+        self.line_number = 0
+        self.shift_position = 0
+        self.new_line = False
+        self.item_icon = None
 
+        self.time_limit = 10
         self.can_hide = False
         self.visible_timer = 0
-        self.visible_timer_limit = 30
+        self.visible_timer_limit = self.time_limit
 
         self.can_show = True
         self.invisible_timer = 0
-        self.invisible_timer_limit = 30
+        self.invisible_timer_limit = self.time_limit
 
         self.visible = False
 
-    def add_key(self):
+    def update_items(self):
+        self.items_list = [[self.keys, self.key_texture],
+                          [self.health_potions, self.health_potions_texture]
+                          ]
+
+    def add_key(self, texture):
+        self.key_texture = texture
         if self.keys < self.keys_limit:
             self.keys += 1
 
     def remove_key(self):
         self.keys -= 1
 
-    def add_health_potion(self):
+    def add_health_potion(self, texture):
+        self.health_potions_texture = texture
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
 
     def show_inventory(self):
+        self.update_items()
+        self.create_inventory_items()
         self.visible = True
         self.can_hide = False
         self.visible_timer = 0
@@ -359,27 +378,58 @@ class Inventory():
         if self.invisible_timer > self.invisible_timer_limit:
             self.can_show = True
 
+    def create_inventory_items(self):
+        y = self.y + self.gap
+        x = self.x + self.gap
+        icon_list = []
 
+        for number_of_items, item_list in enumerate(self.items_list):
+            icon = []
+            item_count = item_list[0]
+            if item_count == 0:
+                continue
+            item_picture = item_list[1]
+            if item_picture is not None:
+                width, height = item_picture.get_size()
+            else:
+                width, height = 0, 0
+            x = self.x + (width + self.gap) * number_of_items - self.shift_position
+            if self.is_new_line(x):
+                self.shift_position += number_of_items
+                x = self.x + (width + self.gap) * number_of_items - self.shift_position
+            y = self.y + (height + self.gap) * self.line_number
+            position = (x, y, width, height)
 
-    def create_inventory_text(self):
-        texts = []
+            icon = self.create_icon_background(position)
+            text = self.create_inventory_text(item_count)
+            item = [icon, text, item_picture]
+            icon_list.append(item)
+
+        self.item_icon = icon_list
+
+    def is_new_line(self, x):
+        if x > self.width - self.gap:
+            return True
+        else:
+            return False
+
+    def create_inventory_text(self, item_count):
         font_type = 'couriernew'
-        health_potions = self.health_potions
-        keys = self.keys
         font = pygame.font.SysFont(font_type, self.font_size, bold=True)
-        texts.append(font.render(f"{health_potions} health_potions", False, self.color.RED))
-        texts.append(font.render(f"{int(keys)} Keys", False, self.color.RED))
+        texts = (font.render(f"{item_count}", False, self.color.RED))
         return texts
 
-    def create_icon_background_image(self):
-        background_image = pygame.Surface((self.width, self.height))
-        background_image.set_alpha(100)
-        return background_image
+    def create_icon_background(self, position):
+        x = position[0]
+        y = position[1]
+        height = position[2]
+        width = position[3]
+        texture_transparent = pygame.Surface((width + self.outer_line_size, height + self.outer_line_size))
+        texture_transparent.set_alpha(100)
+        outer_line_rect = pygame.Rect(x, y, width, height)
+        icon = [texture_transparent, outer_line_rect]
+        return icon
 
-    def inventory_background(self):
-        self.position = (self.x, self.y, self.width, self.height)# EZT REFAKTORÁLNI KELL
-        self.text = self.create_inventory_text()
-    
     def create_background_image(self):
         image = pygame.image.load("model/map/textures/roli.jpg")
         image = pygame.transform.scale(image, (self.width, self.height))
