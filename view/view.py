@@ -1,4 +1,5 @@
 import pygame
+from pygame import display
 
 from model.player.player import Player
 
@@ -44,47 +45,38 @@ def display_background(window):
     window.fill(COLORS.BLACK)
 
 
+def display_object(window, object, fps=60):
+    if object.visible:
+        #pygame.draw.rect(window, object.color, position)
+        if object.texture is not None:
+            if type(object.texture) is list:
+                images = len(object.texture)
+                rate = fps//images
+                window.blit(object.texture[object.texture_count//rate], (object.rect.x, object.rect.y))
+            else:
+                window.blit(object.texture, (object.rect.x, object.rect.y))
+        else:
+            position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
+            pygame.draw.rect(window, object.color, position)
+
+
 def display_objects(window, object_types: dict):
     for objects in object_types.values():
         for object in objects:
-            if object.visible:
-                position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
-                # pygame.draw.rect(window, object.color, position)
-                if object.texture is not None:
-                    if type(object.texture) is list:
-                        images = len(object.texture)
-                        rate = 60//images
-                        window.blit(object.texture[object.texture_count//rate], (object.rect.x, object.rect.y))
-                    else:
-                        window.blit(object.texture, (object.rect.x, object.rect.y))
-                else:
-                    pygame.draw.rect(window, object.color, position)
+            display_object(window, object)
 
 
 def display_player_sword(window, objects):
     player = objects['player'][0]
     sword = player.sword
-    if sword.visible:
-        sword_position = (sword.rect.x, sword.rect.y, sword.rect.width, sword.rect.height)
-        # pygame.draw.rect(window, sword.color, sword_position)
-        if sword.texture is not None:
-            if type(sword.texture) is list:
-                images = len(sword.texture)
-                rate = player.attack_duration//images
-                window.blit(sword.texture[sword.texture_count//rate], (sword.rect.x, sword.rect.y))
-            else:
-                window.blit(sword.texture, (sword.rect.x, sword.rect.y))
-        else:
-            pygame.draw.rect(window, sword.color, sword_position)
+    display_object(window, sword, player.attack_duration)
 
 
 def display_enemy_projectile(window, objects):
     for enemy in objects['enemies']:
         if enemy.type == 'shooter':
             for projectile in enemy.projectiles:
-                if projectile.visible:
-                    projectile_position = (projectile.rect.x, projectile.rect.y, projectile.rect.width, projectile.rect.height)
-                    pygame.draw.rect(window, projectile.color, projectile_position)
+                display_object(window, projectile)
 
 
 def display_player_stat(window, objects):

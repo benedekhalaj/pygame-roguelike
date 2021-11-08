@@ -291,6 +291,7 @@ class Projectile():
         self.type = 'projectile'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = (244, 140, 86)
+        self.texture = None
 
         self.velocity = 5
         self.direction = 'left'

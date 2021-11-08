@@ -8,7 +8,7 @@ class Brain_Collector_NPC():
         self.rect = pygame.Rect(position[0] - 64, position[1] - 64, 128, 128)
         self.color = colors.GREY
         self.texture = None
-        self.brain_expectation = 1
+        self.brain_expectation = 42
 
         self.talking_in_progress = False
         self.has_mission = True
