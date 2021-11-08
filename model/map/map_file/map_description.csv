@@ -49,6 +49,10 @@
 43:	Zombie_Down:	model/map/textures/enemy/zombie/zombie_right.png
 44:	Zombie_Right:	model/map/textures/enemy/zombie/zombie_right.png
 52:	Shooter_Enemy:	Shooter_Enemy
+55:	Shooter_Vertical_Right:	Shooter_Vertical_Right
+56:	Shooter_Vertical_Left:	Shooter_Vertical_Left
+57:	Shooter_Horizontal_Up:	Shooter_Horizontal_Up
+58:	Shooter_Horizontal_Down:	Shooter_Horizontal_Down
 ------------------------ ITEMS
 45:	Key:	model/map/textures/items/key.png
 46:	Door:	Door

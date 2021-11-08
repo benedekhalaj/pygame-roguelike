@@ -10,7 +10,7 @@ LEVEL_2 = 'level_2.csv'
 
 
 def generate_map():
-    text_map = data_manager.open_csv_file(f"model/map/map_file/{LEVEL_1}")
+    text_map = data_manager.open_csv_file(f"model/map/map_file/{LEVEL_2}")
     map_sings = data_manager.open_file("model/map/map_file/map_description.csv")
     map_sings_dict = create_map_sign_dict(map_sings)
     return text_map, map_sings_dict
@@ -70,12 +70,20 @@ def create_map(screen_size, colors):
                 enemies_list.append(enemy.Zombie_Enemy(position, file_path, colors, ("up", 30)))
             # elif character_name == "Eye_Enemy":
             #     enemies_list.append(enemy.Eye_Enemy(position, file_path, colors))
-            elif character_name == 'Shooter_Enemy':
-                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors))
+            # elif character_name == 'Shooter_Enemy':
+            #     enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("right", "down")))
+            elif character_name == 'Shooter_Vertical_Right':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("down", "right")))
+            elif character_name == 'Shooter_Vertical_Left':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("down", "left")))
+            elif character_name == 'Shooter_Horizontal_Up':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("right", "up")))
+            elif character_name == 'Shooter_Horizontal_Down':
+                enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("right", "down")))
 
             elif character_name == 'Brain_Collector_NPC':
                 npc_list.append(npc.Brain_Collector_NPC(position, colors))
- 
+
     create_floor(floor_list)
 
     objects.update({"floor": floor_list,

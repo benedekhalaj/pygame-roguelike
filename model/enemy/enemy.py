@@ -160,7 +160,7 @@ class Eye_Enemy():
 
 
 class Shooter_Enemy():
-    def __init__(self, position, file_path, colors):
+    def __init__(self, position, file_path, colors, direction):
         self.type = 'shooter'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = create_texture(None)
@@ -174,42 +174,58 @@ class Shooter_Enemy():
         self.invicible = False
 
         self.velocity = 5
-        self.direction = 'down'
+        self.move_direction = direction[0]
+        self.shoot_direction = direction[1]
 
         self.projectiles = []
         self.projectile_timer = 0
         self.projectile_timer_limit = 60
+        self.projectile_width = 32
+        self.projectile_height = 32
 
         self.visible = True
 
     def move(self, objects):
-        if self.direction == 'right':
+        if self.move_direction == 'right':
             self.rect.x += self.velocity
-        elif self.direction == 'left':
+        elif self.move_direction == 'left':
             self.rect.x -= self.velocity
-        elif self.direction == 'down':
+        elif self.move_direction == 'down':
             self.rect.y += self.velocity
-        elif self.direction == 'up':
+        elif self.move_direction == 'up':
             self.rect.y -= self.velocity
 
         for wall in objects['walls']:
-                if self.rect.colliderect(wall.rect):
-                    if self.direction == 'right':
-                        self.direction = 'left'
-                    elif self.direction == 'left':
-                        self.direction = 'right'
-                    elif self.direction == 'down':
-                        self.direction = 'up'
-                    elif self.direction == 'up':
-                        self.direction = 'down'
+            if self.rect.colliderect(wall.rect):
+                if self.move_direction == 'right':
+                    self.move_direction = 'left'
+                elif self.move_direction == 'left':
+                    self.move_direction = 'right'
+                elif self.move_direction == 'down':
+                    self.move_direction = 'up'
+                elif self.move_direction == 'up':
+                    self.move_direction = 'down'
 
     def shoot(self, objects):
         if self.visible:
             self.update_projectile_timer()
+
             if self.projectile_timer > self.projectile_timer_limit:
-                self.projectiles.append(Projectile((self.rect.x - self.rect.width, self.rect.y + self.rect.height / 4, 32, 32)))
+                self.set_projectile_position()
+
                 self.projectile_timer = 0
         self.move_projectile(objects)
+
+    def set_projectile_position(self):
+        if self.shoot_direction == 'right':
+            projectile_position = (self.rect.x + self.rect.width, self.rect.y + self.rect.height / 4, 32, 32)
+        elif self.shoot_direction == 'left':
+            projectile_position = (self.rect.x - self.rect.width, self.rect.y + self.rect.height / 4, 32, 32)
+        elif self.shoot_direction == 'down':
+            projectile_position = (self.rect.x + self.rect.width / 4, self.rect.y + self.rect.height, 32, 32)
+        elif self.shoot_direction == 'up':
+            projectile_position = (self.rect.x + self.rect.width / 4, self.rect.y - self.rect.height, 32, 32)
+        self.projectiles.append(Projectile(projectile_position, self.shoot_direction))
 
     def update_projectile_timer(self):
         self.projectile_timer += 1
@@ -246,7 +262,6 @@ class Shooter_Enemy():
         for projectile in self.projectiles:
             if not projectile.visible:
                 self.projectiles.pop(self.projectiles.index(projectile))
-                print('delete projectile')
                 break
 
     def take_damage(self, objects: dict):
@@ -279,22 +294,15 @@ class Shooter_Enemy():
             self.visible = False
 
 
-def create_texture(file_path):
-    if file_path is not None:
-        return pygame.image.load(file_path)
-    else:
-        return None
-
-
 class Projectile():
-    def __init__(self, position):
+    def __init__(self, position, direction):
         self.type = 'projectile'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.color = (244, 140, 86)
         self.texture = None
 
         self.velocity = 5
-        self.direction = 'left'
+        self.direction = direction
 
         self.hitable = True
         self.hit_timer = 0
@@ -312,3 +320,10 @@ class Projectile():
         if self.hit_timer > self.hit_timer_limit:
             self.hit_timer = 0
             self.hitable = True
+
+
+def create_texture(file_path):
+    if file_path is not None:
+        return pygame.image.load(file_path)
+    else:
+        return None
