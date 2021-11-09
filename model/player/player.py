@@ -2,6 +2,8 @@ from model import data_manager
 import pygame
 import pygame.freetype
 
+from model.item.item import Health_Potion
+
 
 class Player():
     def __init__(self, position: tuple, file_path, colors, screen_size):
@@ -501,8 +503,9 @@ class Stat():
         self.width = int(screen_size[0] // 5)
         self.height = int(screen_size[1] // 60)
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.no_health_picture = data_manager.open_image("model/map/textures/icons/empty_knight_icon.png")
-        self.health_picture = data_manager.open_image("model/map/textures/icons/knight_icon.png")
+        self.no_health_picture = pygame.transform.scale(data_manager.open_image("model/map/textures/icons/empty_knight_icon.png"), (45, 32))
+        self.health_picture = pygame.transform.scale(data_manager.open_image("model/map/textures/icons/knight_icon.png"), (45, 32))
+
         self.line_corrigate = (self.health_picture.get_width()) / 2
         self.color = colors
         self.health = "health"
@@ -541,9 +544,11 @@ class Stat():
         font_type = 'couriernew'
         player_health = player_stats[0]
         player_stamina = player_stats[2]
+        stamina_text = f"{int(player_stamina)} stamina"
+        health_text = f"{player_health} hp"
         font = pygame.font.SysFont(font_type, self.font_size, bold=True)
-        texts[self.health] = font.render(f"{player_health} hp", False, self.color.WHITE)
-        texts[self.stamina] = font.render(f"{int(player_stamina)} stamina", False, self.color.WHITE)
+        texts[self.health] = font.render(health_text, False, self.color.WHITE)
+        texts[self.stamina] = font.render(stamina_text, False, self.color.WHITE)
         return texts
         # pygame.font.get_fonts()
 
@@ -554,7 +559,8 @@ class Stat():
         max_health = player_stat[1]
         icon_list = []
         for healt_count in range(1, max_health + 1):
-            x = x + (self.health_picture.get_width()) + 20
+            if healt_count != 1:
+                x = x + (self.health_picture.get_width()) + 20
             if health >= healt_count:
                 icon_list.append([self.health_picture, (x, y)])
             else:
