@@ -1,0 +1,1 @@
+https://lospec.com/palette-list/slso8?fbclid=IwAR10qvF15vasdAaxxFiuoxvjD9DnFQmVh8f2xzuKij7PHl8cEzi8MWk9exE

@@ -1,7 +1,3 @@
-from os import name
-from typing import Text
-from pygame.constants import HWACCEL, WINDOWTAKEFOCUS
-from pygame.transform import scale
 from model import data_manager
 import pygame
 import pygame.freetype
@@ -557,6 +553,7 @@ class Stat():
         return texts
         # pygame.font.get_fonts()
 
+    def create_stat_icon
 
 def create_stat_bar_texture(width, height, x, y):
     x = x

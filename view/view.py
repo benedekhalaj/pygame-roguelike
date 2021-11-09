@@ -1,7 +1,4 @@
 import pygame
-from pygame import display
-
-from model.player.player import Player
 
 WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 900
