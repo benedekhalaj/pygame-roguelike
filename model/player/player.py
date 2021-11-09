@@ -547,8 +547,8 @@ class Stat():
         stamina_text = f"{int(player_stamina)} stamina"
         health_text = f"{player_health} hp"
         font = pygame.font.SysFont(font_type, self.font_size, bold=True)
-        texts[self.health] = font.render(health_text, False, self.color.WHITE)
-        texts[self.stamina] = font.render(stamina_text, False, self.color.WHITE)
+        texts[self.health] = font.render('', False, self.color.WHITE)
+        texts[self.stamina] = font.render('', False, self.color.WHITE)
         return texts
         # pygame.font.get_fonts()
 
