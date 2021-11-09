@@ -7,6 +7,16 @@ CLOCK = pygame.time.Clock()
 FPS = 30
 
 
+def play_background_music():
+    pygame.mixer.init()
+    pygame.mixer.music.load('sound/music/main_theme.WAV')
+    pygame.mixer.music.play(loops=-1)
+
+
+def stop_background_music():
+    pygame.mixer.music.stop()
+
+
 def create_font():
     pygame.font.init()
     myfont = pygame.font.SysFont('Comic Sans MS', 30)
@@ -30,6 +40,7 @@ def quit_menu(run):
 
 
 def main_menu(window):
+    play_background_music()
     menu_text = create_font()
 
     run = True
@@ -39,3 +50,5 @@ def main_menu(window):
 
         view.display_background(window)
         view.display_menu(window, menu_text)
+    
+    stop_background_music()
