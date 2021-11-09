@@ -42,7 +42,7 @@ class Player():
         self.attack_duration = 12
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors, self.attack_duration)
 
-        self.health = 2
+        self.health = 1
         self.max_health = 5
         self.stat = Stat(colors, screen_size, (self.health, self.max_health, self.stamina, self.stamina_limit))
         self.visible = True
@@ -191,13 +191,20 @@ class Player():
             else:
                 self.color = self.standard_color
 
+        def heal_player(self):
+            if self.health < self.max_health:
+                if self.inventory.health_potions >= 1:
+                    self.health += 1
+                    self.inventory.remove_health_potion()
+
         def update_stat(self):
             self.stat.update_stat = self.stat.create_stat((self.health, self.max_health, self.stamina, self.stamina_limit))
-
+        
         set_invicible(self)
         set_damage_timer(self)
         set_color(self)
         update_stat(self)
+        heal_player(self)
 
     def sprint(self):
         if self.stamina > 0 and self.can_spirnt:
@@ -351,6 +358,9 @@ class Inventory():
         self.health_potions_texture = texture
         if self.health_potions < self.health_potions_limit:
             self.health_potions += 1
+
+    def remove_health_potion(self):
+        self.health_potions -= 1
 
     def add_brain(self, texture):
         self.brains += 1
