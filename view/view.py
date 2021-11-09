@@ -78,25 +78,40 @@ def display_enemy_projectile(window, objects):
 
 def display_player_stat(window, objects):
     stat = objects['player'][0].stat
-    for bar_list in stat.bars:
-        bar_rect = bar_list[0][0]
-        rect_color = bar_list[0][1]
+    bar = stat.bar
+    icons = stat.icons
+
+    def display_player_stat_text(window, stat):
+        texts = stat.texts
+        for line, text in enumerate(texts.values()):
+            y = stat.y + (line * stat.font_size)
+            window.blit(text, (stat.x, y))
+
+    def display_player_stat_bar(window, bar):
+
+        def display_stat_bar_texture(window, bar_texture):
+            for texture_piece_tuple in bar_texture:
+                picture = texture_piece_tuple[0]
+                x = texture_piece_tuple[1]
+                y = texture_piece_tuple[2]
+                window.blit(picture, (x, y))
+
+        bar_rect = bar[0][0]
+        rect_color = bar[0][1]
 
         stat_position = (bar_rect.x, bar_rect.y, bar_rect.width, bar_rect.height)
         pygame.draw.rect(window, rect_color, stat_position)
-        display_stat_texture(window, bar_list[1])
+        display_stat_bar_texture(window, bar[1])
 
-    for line, text in enumerate(stat.texts.values()):
-        y = stat.y + (line * stat.font_size)
-        window.blit(text, (stat.x, y))
+    def display_player_stat_icon(window, icons):
+        for icon_list in icons:
+            icon = icon_list[0]
+            coordinate = icon_list[1]
+            window.blit(icon, coordinate)
 
-
-def display_stat_texture(window, bar_texture):
-    for texture_piece_tuple in bar_texture:
-        picture = texture_piece_tuple[0]
-        x = texture_piece_tuple[1]
-        y = texture_piece_tuple[2]
-        window.blit(picture, (x, y))
+    display_player_stat_bar(window, bar)
+    display_player_stat_text(window, stat)
+    display_player_stat_icon(window, icons)
 
 
 def display_inventory(window, objects):
