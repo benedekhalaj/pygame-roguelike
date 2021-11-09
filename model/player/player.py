@@ -534,6 +534,8 @@ class Stat():
             if type == self.health:
                 self.icons = self.create_stat_icon_list((x, y), player_stat)
             elif type == self.stamina:
+                if self.icons is not None:
+                    y += self.icons[0][0].get_width()
                 width = self.width * (player_stamina / player_max_stamina)
                 color = self.color.BLUE
                 stamina_texture = self.create_stat_bar_texture(self.width, self.height, x, y)
