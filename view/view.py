@@ -1,5 +1,7 @@
 import pygame
 
+from view.terminal import SCREEN_HEIGHT, SCREEN_WIDTH
+
 WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 900
 
@@ -149,3 +151,7 @@ def set_display_caption(caption):
 
 def get_input():
     return pygame.key.get_pressed()
+
+
+def display_menu(window, text):
+    window.blit(text, (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))

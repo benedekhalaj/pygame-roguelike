@@ -49,6 +49,8 @@ def play_background_music():
 
 def main():
     window = init_pygame()
+    menu_controller.main_menu(window)
+
     objects = map_controller.get_objects()
 
     # play_background_music()
