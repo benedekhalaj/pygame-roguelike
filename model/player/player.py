@@ -505,13 +505,14 @@ class Sword():
 class Stat():
     def __init__(self, colors, screen_size, player_stats):
         self.type = "stat"
-        self.x = 1
-        self.y = 1
+        self.x = 5
+        self.y = 10
         self.width = int(screen_size[0] // 5)
         self.height = int(screen_size[1] // 60)
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.no_health_picture = data_manager.open_image("model/map/textures/icons/health_icon.png")
-        self.health_picture = data_manager.open_image("model/map/textures/player/knight_down2.png")
+        self.no_health_picture = data_manager.open_image("model/map/textures/icons/empty_knight_icon.png")
+        self.health_picture = data_manager.open_image("model/map/textures/icons/knight_icon.png")
+        self.line_corrigate = (self.health_picture.get_width()) / 2
         self.color = colors
         self.health = "health"
         self.stamina = 'stamina'
@@ -535,7 +536,7 @@ class Stat():
                 self.icons = self.create_stat_icon_list((x, y), player_stat)
             elif type == self.stamina:
                 if self.icons is not None:
-                    y += self.icons[0][0].get_width()
+                    y += self.line_corrigate
                 width = self.width * (player_stamina / player_max_stamina)
                 color = self.color.BLUE
                 stamina_texture = self.create_stat_bar_texture(self.width, self.height, x, y)

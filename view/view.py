@@ -81,37 +81,41 @@ def display_player_stat(window, objects):
     bar = stat.bar
     icons = stat.icons
 
-    def display_player_stat_text(window, stat):
+    def display_player_stat_text():
         texts = stat.texts
-        for line, text in enumerate(texts.values()):
+        for line, text_tuple in enumerate(texts.items()):
             y = stat.y + (line * stat.font_size)
-            window.blit(text, (stat.x, y))
+            if text_tuple[0] != "health":
+                y += stat.line_corrigate + stat.y
+            else:
+                y += stat.line_corrigate / 2
+            window.blit(text_tuple[1], (stat.x, y))
 
-    def display_player_stat_bar(window, bar):
+    def display_player_stat_bar():
 
         def display_stat_bar_texture(window, bar_texture):
             for texture_piece_tuple in bar_texture:
                 picture = texture_piece_tuple[0]
                 x = texture_piece_tuple[1]
-                y = texture_piece_tuple[2]
+                y = texture_piece_tuple[2] + stat.y
                 window.blit(picture, (x, y))
 
         bar_rect = bar[0][0]
         rect_color = bar[0][1]
 
-        stat_position = (bar_rect.x, bar_rect.y, bar_rect.width, bar_rect.height)
+        stat_position = (bar_rect.x, bar_rect.y + stat.y, bar_rect.width, bar_rect.height)
         pygame.draw.rect(window, rect_color, stat_position)
         display_stat_bar_texture(window, bar[1])
 
-    def display_player_stat_icon(window, icons):
+    def display_player_stat_icon():
         for icon_list in icons:
             icon = icon_list[0]
             coordinate = icon_list[1]
             window.blit(icon, coordinate)
 
-    display_player_stat_bar(window, bar)
-    display_player_stat_text(window, stat)
-    display_player_stat_icon(window, icons)
+    display_player_stat_bar()
+    display_player_stat_text()
+    display_player_stat_icon()
 
 
 def display_inventory(window, objects):
