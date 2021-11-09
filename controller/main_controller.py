@@ -39,9 +39,17 @@ def pause_game(pause, objects):
     return pause
 
 
+def play_background_music():
+    pygame.mixer.init()
+    pygame.mixer.music.load('sound/music/background_1.WAV')
+    pygame.mixer.music.play(loops=-1)
+
+
 def main():
     window = init_pygame()
     objects = map_controller.get_objects()
+
+    play_background_music()
 
     run = True
     pause = False

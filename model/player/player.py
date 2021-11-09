@@ -3,12 +3,6 @@ import pygame
 import pygame.freetype
 
 
-pygame.mixer.init()
-SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/pick_up_key.WAV')
-SFX_OPEN_DOOR = data_manager.open_sfx('sound/sfx/open_door.WAV')
-SFX_PICK_UP_SWORD = data_manager.open_sfx('sound/sfx/pick_up_sword.WAV')
-
-
 class Player():
     def __init__(self, position: tuple, file_path, colors, screen_size):
         self.type = 'player'
@@ -227,7 +221,6 @@ class Player():
                     if item.type == 'key':
                         self.inventory.add_key(item.texture)
                         item.visible = False
-                        SFX_PICK_UP_KEY.play()
 
                     elif item.type == 'health_potion':
                         self.inventory.add_health_potion(item.texture)
@@ -236,7 +229,6 @@ class Player():
                     elif item.type == 'sword':
                         self.sword.exist = True
                         item.visible = False
-                        SFX_PICK_UP_SWORD.play()
 
                     elif item.type == 'brain':
                         self.inventory.add_brain(item.texture[0])
@@ -250,7 +242,6 @@ class Player():
                         door.status = "opened"
                         door.update_color()
                         self.inventory.remove_key()
-                        SFX_OPEN_DOOR.play()
 
     def update_texture(self):
         path = 'model/map/textures/player/'
