@@ -16,7 +16,11 @@ def change_player_on_input(player_character, objects):
         player_character.move(objects, 0, player_character.velocity)
 
     if keys[pygame.K_h]:
-        player_character.heal_player()
+        if not player_character.currently_healing:
+            player_character.heal_player()
+            player_character.currently_healing = True
+    else:
+        player_character.currently_healing = False
 
     if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
         player_character.sprinting = True
