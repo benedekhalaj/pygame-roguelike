@@ -154,4 +154,4 @@ def get_input():
 
 
 def display_menu(window, text):
-    window.blit(text, (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    window.blit(text, (0, 0))
