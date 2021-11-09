@@ -15,10 +15,11 @@ def change_player_on_input(player_character, objects):
     if keys[pygame.K_DOWN]:
         player_character.move(objects, 0, player_character.velocity)
 
+    if keys[pygame.K_h]:
+        player_character.heal_player()
+
     if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
-        player_character.sprint()
-    else:
-        player_character.sprinting = False
+        player_character.sprinting = True
 
     if keys[pygame.K_SPACE]:
         if player_character.sword.exist:
@@ -51,8 +52,11 @@ def control_player(objects):
     change_player_on_input(player_character, objects)
 
     player_character.add_item_to_inventory(objects)
+    player_character.update_stat()
     player_character.take_damage(objects)
-    if not player_character.sprinting:
+    if player_character.sprinting:
+        player_character.sprint()
+    else:
         player_character.reload_stamina()
     player_character.attack()
     player_character.update_texture()
