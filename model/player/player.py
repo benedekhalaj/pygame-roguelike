@@ -46,8 +46,8 @@ class Player():
         self.attack_duration = 12
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors, self.attack_duration)
 
-        self.max_health = 100
-        self.health = 100
+        self.health = 2
+        self.max_health = 5
         self.stat = Stat(colors, screen_size, (self.health, self.max_health, self.stamina, self.stamina_limit))
         self.visible = True
 
@@ -196,8 +196,7 @@ class Player():
                 self.color = self.standard_color
 
         def update_stat(self):
-            self.stat.texts = self.stat.create_stat_text((self.health, self.max_health, self.stamina, self.stamina_limit))
-            self.stat.bars = self.stat.create_stat_bar((self.health, self.max_health, self.stamina, self.stamina_limit))
+            self.stat.update_stat = self.stat.create_stat((self.health, self.max_health, self.stamina, self.stamina_limit))
 
         set_invicible(self)
         set_damage_timer(self)
@@ -511,36 +510,37 @@ class Stat():
         self.width = int(screen_size[0] // 5)
         self.height = int(screen_size[1] // 60)
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.no_health_picture = data_manager.open_image("model/map/textures/icons/health_icon.png")
+        self.health_picture = data_manager.open_image("model/map/textures/player/knight_down2.png")
         self.color = colors
         self.health = "health"
         self.stamina = 'stamina'
         self.visible = True
         self.font_size = 20
-        self.texts = self.create_stat_text(player_stats)
-        self.bars = self.create_stat_bar(player_stats)
+        self.texts = None
+        self.icons = None
+        self.bar = None
+        self.update_stat = self.create_stat(player_stats)
 
-    def create_stat_bar(self, player_stat):
+    def create_stat(self, player_stat):
         number = 0
         bar = []
-        player_health = player_stat[0]
-        player_max_health = player_stat[1]
         player_stamina = player_stat[2]
         player_max_stamina = player_stat[3]
-
+        self.texts = self.create_stat_text(player_stat)
         for type, text in self.texts.items():
             y = self.y + number * self.font_size
             x = self.x + (text.get_width()) + 8
             if type == self.health:
-                width = self.width * (player_health / player_max_health)
-                color = self.color.RED
-                stamina_texture = create_stat_bar_texture(self.width, self.height, x, y)
+                self.icons = self.create_stat_icon_list((x, y), player_stat)
             elif type == self.stamina:
                 width = self.width * (player_stamina / player_max_stamina)
                 color = self.color.BLUE
-                stamina_texture = create_stat_bar_texture(self.width, self.height, x, y)
+                stamina_texture = self.create_stat_bar_texture(self.width, self.height, x, y)
+                bar.append((pygame.Rect(x, y, width, self.height), color))
+                bar.append(stamina_texture)
             number += 1
-            bar.append([(pygame.Rect(x, y, width, self.height), color), stamina_texture])
-        return bar
+        self.bar = bar
 
     def create_stat_text(self, player_stats):
         texts = {}
@@ -553,28 +553,41 @@ class Stat():
         return texts
         # pygame.font.get_fonts()
 
-    def create_stat_icon
+    def create_stat_icon_list(self, coordinate, player_stat):
+        x = coordinate[0]
+        y = coordinate[1]
+        health = player_stat[0]
+        max_health = player_stat[1]
+        icon_list = []
+        for healt_count in range(1, max_health + 1):
+            x = x + (self.health_picture.get_width()) + 20
+            if health >= healt_count:
+                icon_list.append([self.health_picture, (x, y)])
+            else:
+                icon_list.append([self.no_health_picture, (x, y)])
 
-def create_stat_bar_texture(width, height, x, y):
-    x = x
-    self_height = height
+        return icon_list
 
-    stat_bar_start = pygame.image.load("model/map/textures/misc/stat_bar_start.png")
-    stat_bar_start = pygame.transform.scale(stat_bar_start, (32, self_height))
-    stat_bar_start_width = stat_bar_start.get_width()
+    def create_stat_bar_texture(self, width, height, x, y):
+        x = x
+        self_height = height
 
-    stat_bar_middle = pygame.image.load("model/map/textures/misc/stat_bar_middle.png")
-    stat_bar_middle = pygame.transform.scale(stat_bar_middle, (32, self_height))
-    stat_bar_middle_width = stat_bar_middle.get_width()
+        stat_bar_start = pygame.image.load("model/map/textures/misc/stat_bar_start.png")
+        stat_bar_start = pygame.transform.scale(stat_bar_start, (32, self_height))
+        stat_bar_start_width = stat_bar_start.get_width()
 
-    stat_bar_end = pygame.image.load("model/map/textures/misc/stat_bar_end.png")
-    stat_bar_end = pygame.transform.scale(stat_bar_end, (32, self_height))
-    stat_bar_end_width = stat_bar_end.get_width()
+        stat_bar_middle = pygame.image.load("model/map/textures/misc/stat_bar_middle.png")
+        stat_bar_middle = pygame.transform.scale(stat_bar_middle, (32, self_height))
+        stat_bar_middle_width = stat_bar_middle.get_width()
 
-    lenght_of_stat_bar = int((width - stat_bar_start_width - stat_bar_end_width) / stat_bar_middle_width)
-    bar_texture = [(stat_bar_start, x, y)]
-    for _ in range(lenght_of_stat_bar):
-        x += stat_bar_middle_width
-        bar_texture.append((stat_bar_middle, x, y))
-    bar_texture.append((stat_bar_end, x + stat_bar_end_width, y))
-    return bar_texture
+        stat_bar_end = pygame.image.load("model/map/textures/misc/stat_bar_end.png")
+        stat_bar_end = pygame.transform.scale(stat_bar_end, (32, self_height))
+        stat_bar_end_width = stat_bar_end.get_width()
+
+        lenght_of_stat_bar = int((width - stat_bar_start_width - stat_bar_end_width) / stat_bar_middle_width)
+        bar_texture = [(stat_bar_start, x, y)]
+        for _ in range(lenght_of_stat_bar):
+            x += stat_bar_middle_width
+            bar_texture.append((stat_bar_middle, x, y))
+        bar_texture.append((stat_bar_end, x + stat_bar_end_width, y))
+        return bar_texture
