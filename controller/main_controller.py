@@ -24,6 +24,7 @@ def quit_game(run, objects):
 
         if event.type == pygame.KEYDOWN:
             if event.key == ord('q'):
+                map_controller.save_map(objects)
                 run = False
 
     player_character = objects['player'][0]

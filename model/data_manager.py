@@ -26,6 +26,13 @@ def save_csv_file(filename: str, file: list):
             csv_file.write("\n")
 
 
+def save_game_to_csv_file(filename, game_file: dict):
+
+    with open(f"{filename}_save.csv", "w") as file:
+        for line in game_file:
+            for object in line:
+                file.write(f"{object}\n")
+
 def open_image(path, filename=''):
     return pygame.image.load(f'{path}{filename}')
 

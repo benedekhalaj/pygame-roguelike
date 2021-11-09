@@ -5,19 +5,20 @@ import model.player.player as player
 import model.npc.npc as npc
 
 
-LEVEL_1 = 'map.csv'
-LEVEL_2 = 'level_2.csv'
+LEVEL_1 = 'map'
+LEVEL_2 = 'level_2'
 
 
 def generate_map():
-    text_map = data_manager.open_csv_file(f"model/map/map_file/{LEVEL_1}")
+    file_path = f"model/map/map_file/{LEVEL_1}"
+    text_map = data_manager.open_csv_file(f"{file_path}.csv")
     map_sings = data_manager.open_file("model/map/map_file/map_description.csv")
     map_sings_dict = create_map_sign_dict(map_sings)
-    return text_map, map_sings_dict
+    return text_map, map_sings_dict, file_path
 
 
 def create_map(screen_size, colors):
-    text_map, map_sign_dict = generate_map()
+    text_map, map_sign_dict, file_name = generate_map()
     character_height = 64
     character_width = 64
     player_position = find_player_position(text_map)
@@ -44,7 +45,7 @@ def create_map(screen_size, colors):
                 floor_list.append(items.Floor(position, map_sign_dict["1"][1], colors))
 
             if character_name == "Player":
-                player_list.append(player.Player(position, file_path, colors, screen_size))
+                player_list.append(player.Player(position, file_path, colors, screen_size, file_name))
 
             elif "Wall" in character_name:
                 walls_list.append(items.Wall(position, file_path, colors))
@@ -84,8 +85,6 @@ def create_map(screen_size, colors):
             elif character_name == 'Brain_Collector_NPC':
                 npc_list.append(npc.Brain_Collector_NPC(position, colors))
 
-    create_floor(floor_list)
-
     objects.update({"floor": floor_list,
                     "walls": walls_list,
                     "doors": door_list,
@@ -116,5 +115,23 @@ def find_player_position(text_map: list):
             return (x, y)
 
 
-def create_floor(floor_list):
-    pass
+def save_game(object_types: dict):
+    file_path = object_types["player"][0].file_path
+    object_list = []
+    for objects in object_types.values():
+        objects_row_list = []
+        for object in objects:
+            if objects == file_path:
+                continue
+            if object.visible is False:
+                continue
+            if object.type == "brain_collector":
+                continue
+            type = object.type
+            visible = str(object.visible)
+            x = str(object.rect.x)
+            y = str(object.rect.y)
+            item = (type, visible, x, y)
+            objects_row_list.append(item)
+        object_list.append(objects_row_list)
+    data_manager.save_game_to_csv_file(file_path, object_list)

@@ -6,12 +6,13 @@ from model.item.item import Health_Potion
 
 
 class Player():
-    def __init__(self, position: tuple, file_path, colors, screen_size):
+    def __init__(self, position: tuple, file_path, colors, screen_size, file_name):
         self.type = 'player'
         self.rect = pygame.Rect(position[0], position[1], position[2] - 15, position[3] - 4)
         self.texture = data_manager.open_image(file_path)
         self.texture_count = 0
         self.texture_count_limit = 60
+        self.file_path = file_name
 
         self.colors = colors
         self.standard_color = colors.RED
