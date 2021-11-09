@@ -45,6 +45,8 @@ class Player():
 
         self.health = 1
         self.max_health = 5
+        self.currently_healing = False
+
         self.stat = Stat(colors, screen_size, (self.health, self.max_health, self.stamina, self.stamina_limit))
         self.visible = True
 

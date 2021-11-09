@@ -49,7 +49,7 @@ def main():
     window = init_pygame()
     objects = map_controller.get_objects()
 
-    play_background_music()
+    # play_background_music()
 
     run = True
     pause = False
