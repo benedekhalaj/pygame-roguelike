@@ -5,9 +5,18 @@ import pygame
 class Brain_Collector_NPC():
     def __init__(self, position, colors):
         self.type = 'brain_collector'
+        self.x = position[0]
+        self.y = position[1]
+        self.width = position[2]
+        self.height = position[3]
         self.rect = pygame.Rect(position[0] - 64, position[1] - 64, 128, 128)
         self.color = colors.GREY
-        self.texture = None
+
+        self.texture = [data_manager.open_image('model/map/textures/npcs/oldman_idle1.png'),
+                        data_manager.open_image('model/map/textures/npcs/oldman_idle2.png')]
+        self.texture_count = 0
+        self.texture_count_limit = 60
+
         self.brain_expectation = 42
 
         self.talking_in_progress = False
@@ -35,3 +44,9 @@ class Brain_Collector_NPC():
 
             else:
                 self.talking_in_progress = False
+
+    def update_texture_count(self):
+        if self.texture_count + 1 >= self.texture_count_limit:
+            self.texture_count = 0
+
+        self.texture_count += 1
