@@ -9,7 +9,7 @@ SFX_HIT_ENEMY = pygame.mixer.Sound('sound/sfx/hit_enemy.WAV')
 class Zombie_Enemy():
     def __init__(self, position: tuple, file_path, colors: dict, direction):
         self.type = "standard"
-        self.rect = pygame.Rect(position[0], position[1], position[2] - 10, position[3] - 5)
+        self.rect = pygame.Rect(position[0], position[1], position[2] - 14, position[3] - 5)
         self.texture = None
         self.texture_count = 0
         self.texture_count_limit = 60
@@ -84,14 +84,26 @@ class Zombie_Enemy():
         objects['items'].append(Brain((self.rect.x, self.rect.y, 32, 32)))
 
 
+    def update_hitbox(self):
+        if self.direction == 'up' or self.direction == 'down':
+            self.rect.width = 30
+        else:
+            self.rect.width = 50
+
     def update_texture(self):
         path = 'model/map/textures/enemy/'
-        if self.direction == 'left' or self.direction == 'up':
+        if self.direction == 'left':
             self.texture = [data_manager.open_image(path, 'zombie/zombie_left.png'),
                             data_manager.open_image(path, 'zombie/zombie_left2.png')]
-        elif self.direction == 'right' or self.direction == 'down':
+        elif self.direction == 'right':
             self.texture = [data_manager.open_image(path, 'zombie/zombie_right.png'),
                             data_manager.open_image(path, 'zombie/zombie_right2.png')]
+        elif self.direction == 'down':
+            self.texture = [data_manager.open_image(path, 'zombie/zombie_down.png'),
+                            data_manager.open_image(path, 'zombie/zombie_down2.png')]
+        elif self.direction == 'up':
+            self.texture = [data_manager.open_image(path, 'zombie/zombie_up.png'),
+                            data_manager.open_image(path, 'zombie/zombie_up2.png')]
         self.update_texture_count()
 
     def update_texture_count(self):
