@@ -75,6 +75,9 @@ class Player():
                         for projectile in item.projectiles:
                             projectile.rect.x -= x_direction
                             projectile.rect.y -= y_direction
+                    elif item.type == 'brain_collector':
+                        item.x -= x_direction
+                        item.y -= y_direction
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
@@ -107,6 +110,7 @@ class Player():
                     self.set_collision_direction(door)
                     return True
         return False
+
 
     def set_collision_direction(self, object):
         if self.direction == 'right':
@@ -461,6 +465,8 @@ class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
         self.exist = True
         self.projectile_knockback = False
+
+        self.type = 'player_sword'
 
         self.texture = None
         self.texture_count = 0
