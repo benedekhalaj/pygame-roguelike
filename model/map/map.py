@@ -164,8 +164,15 @@ def create_objects(map_datas: list):
             enemies_list.append(enemy.Zombie_Enemy(texture_id, position, texture_file_path, colors, ("down", 30)))
         elif character_name == "Zombie_Up":
             enemies_list.append(enemy.Zombie_Enemy(texture_id, position, texture_file_path, colors, ("up", 30)))
-        # elif character_name == "Eye_Enemy":
-        #     enemies_list.append(enemy.Eye_Enemy(position, file_path, colors))
+
+        elif character_name == "Eyeball_Up":
+            enemies_list.append(enemy.Eye_Enemy(texture_id, position, texture_file_path, colors))
+        elif character_name == "Eyeball_Down":
+            enemies_list.append(enemy.Eye_Enemy(texture_id, position, texture_file_path, colors))
+        elif character_name == "Eyeball_Left":
+            enemies_list.append(enemy.Eye_Enemy(texture_id, position, texture_file_path, colors))
+        elif character_name == "Eyeball_Right":
+            enemies_list.append(enemy.Eye_Enemy(texture_id, position, texture_file_path, colors,))
         # elif character_name == 'Shooter_Enemy':
         #     enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("right", "down")))
         elif character_name == 'Shooter_Vertical_Right':

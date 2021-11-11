@@ -14,6 +14,7 @@ def control_enemy(objects):
 
         elif enemy_character.type == 'eye':
             enemy_character.set_facing(objects)
+            enemy_character.take_damage(objects)
 
         elif enemy_character.type == 'shooter':
             enemy_character.move(objects)
