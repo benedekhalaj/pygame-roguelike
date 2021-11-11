@@ -147,7 +147,7 @@ def create_objects(map_datas: list):
 
         elif character_name == "Chest":
             chests_list.append(items.Chest(texture_id, position, texture_file_path, colors))
-        elif character_name == "Key":
+        elif character_name == "Key" or character_name == "Rare_Key":
             keys_list.append(items.Key(texture_id, position, texture_file_path, colors))
         elif character_name == "Health_Potion":
             potion_list.append(items.Health_Potion(texture_id, position, texture_file_path, colors))

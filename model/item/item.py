@@ -19,8 +19,12 @@ class Key():
         self.texture = create_texture(file_path)
         self.color = colors.MAGENTA
         self.texture_id = texture_id
+        self.modify_type = self.create_actual_type()
         self.visible = True
-        
+
+    def create_actual_type(self):
+        if self.texture_id == "50":
+            self.type = "rare_key"
 
 
 class Health_Potion():
@@ -95,12 +99,12 @@ class Gate():
         self.type = "gate"
         self.texture_id = texture_id
         self.position = position
-        self.rect = pygame.Rect(self.position[0], self.position[1], self.position[2], self.position[3])
         self.look_up = None
         self.look_down = None
         self.look_left = None
         self.look_right = None
         self.textures = self.get_textures_file_paths()
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.position[2], self.position[3])
         self.texture = create_texture(file_path)
         self.closed_color = colors.SIENNA
         self.opened_color = colors.ROSYBROWN
@@ -114,7 +118,6 @@ class Gate():
         if self.texture_id == '61' or self.texture_id == '66':
             if self.texture_id == '66':
                 path_name = "New_Map_"
-                self.type = "rare_gate"
             self.position = (self.position[0], self.position[1], self.position[2] * 2, self.position[3])
             self.look_up = f"model/map/textures/misc/gate/skull_gate/{path_name}horizontal_DOWN_look_up.png"
             self.look_down = f"model/map/textures/misc/gate/skull_gate/{path_name}horizontal_DOWN_look_down.png"
@@ -124,17 +127,15 @@ class Gate():
         elif self.texture_id == '62' or self.texture_id == '68':
             if self.texture_id == '68':
                 path_name = "New_Map_"
-                self.type = "rare_gate"
             self.position = (self.position[0], self.position[1], self.position[2] * 2, self.position[3])
             self.look_up = f"model/map/textures/misc/gate/skull_gate/{path_name}horizontal_UP_look_up.png"
             self.look_down = f"model/map/textures/misc/gate/skull_gate/{path_name}horizontal_UP_look_down.png"
             self.look_left = f"model/map/textures/misc/gate/skull_gate/{path_name}horizontal_UP_look_left.png"
             self.look_right = f"model/map/textures/misc/gate/skull_gate/{path_name}horizontal_UP_look_right.png"
 
-        elif self.texture_id == '63' or self.texture_id == '67':# left
+        elif self.texture_id == '63' or self.texture_id == '67':
             if self.texture_id == '67':
                 path_name = "New_Map_"
-                self.type = "rare_gate"
             self.position = (self.position[0], self.position[1], self.position[2], self.position[3] * 2)
             self.look_up = f"model/map/textures/misc/gate/skull_gate/{path_name}vertical_LEFT_look_up.png"
             self.look_down = f"model/map/textures/misc/gate/skull_gate/{path_name}vertical_LEFT_look_down.png"
@@ -144,7 +145,6 @@ class Gate():
         elif self.texture_id == '64' or self.texture_id == '65':
             if self.texture_id == '65':
                 path_name = "New_Map_"
-                self.type = "rare_gate"
             self.position = (self.position[0], self.position[1], self.position[2], self.position[3] * 2)
             self.look_up = f"model/map/textures/misc/gate/skull_gate/{path_name}vertical_RIGHT_look_up.png"
             self.look_down = f"model/map/textures/misc/gate/skull_gate/{path_name}vertical_RIGHT_look_down.png"
@@ -160,13 +160,13 @@ class Gate():
 
     def set_facing(self, objects):
         player = objects["player"][0]
-        if player.rect.x < self.rect.x:
+        if player.rect.x <= self.rect.x:
             texture_path = self.look_left
-        elif player.rect.x > self.rect.x:
+        elif player.rect.x >= self.rect.x:
             texture_path = self.look_right
-        elif player.rect.y < self.rect.y:
+        elif player.rect.y <= self.rect.y:
             texture_path = self.look_down
-        elif player.rect.y > self.rect.y:
+        elif player.rect.y >= self.rect.y:
             texture_path = self.look_up
         self.texture = create_texture(texture_path)
 
