@@ -76,8 +76,6 @@ def save_map_file(object_types: dict, level):
                 continue
             if object.type == "player":
                 continue
-            if object.type == "brain_collector":
-                continue
             x = str(object.rect.x)
             y = str(object.rect.y)
             id = str(object.texture_id)
