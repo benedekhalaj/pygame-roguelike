@@ -43,7 +43,7 @@ def pause_game(pause, objects):
 
 def play_background_music():
     pygame.mixer.init()
-    pygame.mixer.music.load('sound/music/background_1.WAV')
+    pygame.mixer.music.load('sound/music/background_2.WAV')
     pygame.mixer.music.play(loops=-1)
 
 
@@ -52,7 +52,7 @@ def main():
     # menu_controller.main_menu(window)
 
 
-    # play_background_music()
+    play_background_music()
 
     run = True
     pause = False
