@@ -38,7 +38,7 @@ class Player():
 
         self.walk_speed = 4
         self.stamina_limit = 30
-        self.spirnt_multiplier = 4
+        self.spirnt_multiplier = 2.5
         self.sprint_speed = self.walk_speed * self.spirnt_multiplier
         self.tired_speed = self.walk_speed / 2
         self.velocity = self.walk_speed
@@ -243,7 +243,7 @@ class Player():
 
     def reload_stamina(self):
         if self.stamina < self.stamina_limit:
-            self.stamina += 0.5
+            self.stamina += 0.2
             self.velocity = self.tired_speed
         if self.stamina >= self.stamina_limit:
             self.velocity = self.walk_speed
@@ -596,7 +596,7 @@ class Stat():
                 if self.icons is not None:
                     y += self.line_corrigate
                 width = self.width * (player_stamina / player_max_stamina)
-                color = self.color.BLUE
+                color = self.color.YELLOW
                 stamina_texture = self.create_stat_bar_texture(self.width, self.height, x, y)
                 bar.append((pygame.Rect(x, y, width, self.height), color))
                 bar.append(stamina_texture)
