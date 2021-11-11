@@ -40,7 +40,7 @@
 58:	Wall:	model/map/textures/terrain/0513_wall_34orner_bottom.png
 59:	Wall:	model/map/textures/terrain/0514_wall_4orner_bottom.png
 60:	Wall:	model/map/textures/terrain/0515_wall_4orner_left.png
-46:	Door:	Door
+46:	Door:	model/map/textures/misc/door_closed.png
 61:	Door:	model/map/textures/Door/skull_gate/horizontal_DOWN_look_down.png
 62:	Door:	model/map/textures/Door/skull_gate/horizontal_UP_look_up.png
 63:	Door:	model/map/textures/Door/skull_gate/vertical_LEFT_look_left.png
