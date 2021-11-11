@@ -35,6 +35,7 @@ def display_everything(window, objects, pause):
     display_player_stat(window, objects)
     display_player_sword(window, objects)
     display_enemy_projectile(window, objects)
+    display_enemy_health_bar(window, objects)
     display_npc_conversation(window, objects)
 
     if pause:
@@ -62,6 +63,9 @@ def display_object(window, object, fps=60):
             else:
                 window.blit(object.texture, (object.rect.x, object.rect.y))
         else:
+            if object.type == 'health_bar':
+                background_position = (object.background.x, object.background.y, object.background.width, object.background.height)
+                pygame.draw.rect(window, object.background_color, background_position)
             pygame.draw.rect(window, object.color, position)
 
 
@@ -82,6 +86,11 @@ def display_enemy_projectile(window, objects):
         if enemy.type == 'shooter':
             for projectile in enemy.projectiles:
                 display_object(window, projectile)
+
+
+def display_enemy_health_bar(window, objects):
+    for enemy in objects['enemies']:
+        display_object(window, enemy.health_bar)
 
 
 def display_npc_conversation(window, objects):

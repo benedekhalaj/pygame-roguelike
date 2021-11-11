@@ -21,6 +21,8 @@ class Zombie_Enemy():
         self.count_limit = direction[1]
 
         self.health = 2
+        self.health_bar = Health_Bar((self.rect.x, self.rect.y, self.rect.width, self.rect.height), (colors.BLACK, colors.GREEN))
+
         self.damage_timer = 0
         self.damage_limit = 30
         self.invicible = False
@@ -84,12 +86,17 @@ class Zombie_Enemy():
     def create_brain(self, objects):
         objects['items'].append(Brain((self.rect.x, self.rect.y, 32, 32)))
 
-
     def update_hitbox(self):
         if self.direction == 'up' or self.direction == 'down':
             self.rect.width = 30
         else:
             self.rect.width = 50
+
+    def update_health_bar(self):
+        self.health_bar.rect.x = self.rect.x + self.health_bar.border
+        self.health_bar.rect.y = self.rect.y - self.health_bar.y_offset + self.health_bar.border
+        self.health_bar.background.x = self.rect.x
+        self.health_bar.background.y = self.rect.y - self.health_bar.y_offset
 
     def update_texture(self):
         path = 'model/map/textures/enemy/'
@@ -341,3 +348,26 @@ def create_texture(file_path):
         return pygame.image.load(file_path)
     else:
         return None
+
+
+class Health_Bar():
+    def __init__(self, position, colors):
+        self.type = 'health_bar'
+
+        self.x = position[0]
+        self.y_offset = 20
+        self.y = position[1] - self.y_offset
+        self.width = position[2]
+        self.height = 16
+
+        self.background = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.background_color = colors[0]
+
+        self.border = 2
+        self.rect = pygame.Rect(self.x + self.border, self.y + self.border, self.width - 4, self.height - 4)
+
+        self.color = colors[1]
+
+        self.texture = None
+
+        self.visible = True
