@@ -88,6 +88,11 @@ def display_npc_conversation(window, objects):
     for npc in objects['npc']:
         if npc.type == 'brain_collector':
             display_object(window, npc.conversation)
+            if npc.conversation.visible:
+                for index, text in enumerate(npc.conversation.text):
+                    textsurface = convert_text_to_surface(text, COLORS.BLACK, 17)
+                    line = index * 20
+                    display_text(window, textsurface, (npc.conversation.rect.x + 17, npc.conversation.rect.y + 10 + line))
 
 
 def display_player_stat(window, objects):
@@ -165,5 +170,12 @@ def get_input():
     return pygame.key.get_pressed()
 
 
-def display_menu(window, text):
-    window.blit(text, (0, 0))
+def convert_text_to_surface(text, color, size):
+    pygame.font.init()
+    myfont = pygame.font.SysFont('ubuntumono', size, True)
+    textsurface = myfont.render(text, False, color)
+    return textsurface
+
+
+def display_text(window, textsurface, position=(0, 0)):
+    window.blit(textsurface, position)
