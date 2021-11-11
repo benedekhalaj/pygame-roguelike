@@ -20,6 +20,8 @@ SFX_BRAIN_3 = data_manager.open_sfx('sound/sfx/brain/brain3.ogg')
 SFX_BRAIN_4 = data_manager.open_sfx('sound/sfx/brain/brain4.ogg')
 SFX_BRAIN_5 = data_manager.open_sfx('sound/sfx/brain/brain5.ogg')
 
+SFX_OPEN_DOOR = data_manager.open_sfx('sound/sfx/door/open_door.ogg')
+
 
 class Player():
     def __init__(self, texture_id, position: tuple, file_path, colors, screen_size, file_name):
@@ -283,6 +285,7 @@ class Player():
                         door.status = "opened"
                         door.update_color()
                         self.inventory.remove_key()
+                        SFX_OPEN_DOOR.play()
                 elif self.inventory.rare_keys > 0 and door.type == "gate":
                     if door.status == "closed":
                         door.status = "opened"
