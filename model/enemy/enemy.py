@@ -5,9 +5,6 @@ import random
 
 pygame.mixer.init()
 
-
-SFX_DIE_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_die.ogg')
-
 SFX_HIT_ZOMBIE_1 = data_manager.open_sfx('sound/sfx/zombie/hit_zombie1.ogg')
 SFX_HIT_ZOMBIE_2 = data_manager.open_sfx('sound/sfx/zombie/hit_zombie2.ogg')
 SFX_HIT_ZOMBIE_3 = data_manager.open_sfx('sound/sfx/zombie/hit_zombie3.ogg')
