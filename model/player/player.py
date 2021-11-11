@@ -30,6 +30,8 @@ SFX_TAKE_DAMAGE_2 = data_manager.open_sfx('sound/sfx/player/take_damage2.ogg')
 SFX_TAKE_DAMAGE_3 = data_manager.open_sfx('sound/sfx/player/take_damage3.ogg')
 SFX_TAKE_DAMAGE_4 = data_manager.open_sfx('sound/sfx/player/take_damage4.ogg')
 
+SFX_DRINK_HEALTH_POTION = data_manager.open_sfx('sound/sfx/player/drink_health_potion.ogg')
+
 
 class Player():
     def __init__(self, texture_id, position: tuple, file_path, colors, screen_size, file_name):
@@ -245,6 +247,7 @@ class Player():
             if self.inventory.health_potions >= 1:
                 self.health += 1
                 self.inventory.remove_health_potion()
+                SFX_DRINK_HEALTH_POTION.play()
 
     def sprint(self):
         if self.stamina > 0 and self.can_spirnt:
