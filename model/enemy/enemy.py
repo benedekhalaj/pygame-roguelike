@@ -9,6 +9,12 @@ pygame.mixer.init()
 SFX_HIT_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_hit.mp3')
 SFX_DIE_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_die.ogg')
 
+SFX_BRAIN_1 = data_manager.open_sfx('sound/sfx/brain/brain1.ogg')
+SFX_BRAIN_2 = data_manager.open_sfx('sound/sfx/brain/brain2.ogg')
+SFX_BRAIN_3 = data_manager.open_sfx('sound/sfx/brain/brain3.ogg')
+SFX_BRAIN_4 = data_manager.open_sfx('sound/sfx/brain/brain4.ogg')
+SFX_BRAIN_5 = data_manager.open_sfx('sound/sfx/brain/brain5.ogg')
+
 
 class Zombie_Enemy():
     def __init__(self, texture_id, position: tuple, file_path, colors: dict, direction):
@@ -141,6 +147,7 @@ class Zombie_Enemy():
         for item in objects['items']:
             if item.type == 'brain':
                 item.update_texture_count()
+
 
 class Brain():
     def __init__(self, position):

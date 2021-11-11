@@ -15,9 +15,6 @@ SFX_ATTACK_6 = data_manager.open_sfx('sound/sfx/player/attack6.ogg')
 SFX_ATTACK_7 = data_manager.open_sfx('sound/sfx/player/attack7.ogg')
 
 
-SFX_FOOTSTEPS = data_manager.open_sfx('sound/sfx/footsteps.mp3')
-
-
 class Player():
     def __init__(self, texture_id, position: tuple, file_path, colors, screen_size, file_name):
         self.type = 'player'
