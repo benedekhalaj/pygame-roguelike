@@ -2,8 +2,6 @@ from model import data_manager
 import pygame
 import pygame.freetype
 
-from model.item.item import Health_Potion
-
 
 class Player():
     def __init__(self, texture_id, position: tuple, file_path, colors, screen_size, file_name):
