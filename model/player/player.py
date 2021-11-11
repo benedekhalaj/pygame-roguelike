@@ -76,6 +76,11 @@ class Player():
                         for projectile in item.projectiles:
                             projectile.rect.x -= x_direction
                             projectile.rect.y -= y_direction
+                    elif item.type == 'brain_collector':
+                        item.x -= x_direction
+                        item.y -= y_direction
+                        item.conversation.rect.x -= x_direction
+                        item.conversation.rect.y -= y_direction
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:
@@ -108,6 +113,7 @@ class Player():
                     self.set_collision_direction(door)
                     return True
         return False
+
 
     def set_collision_direction(self, object):
         if self.direction == 'right':
@@ -414,7 +420,7 @@ class Inventory():
                 if width == 32 and height == 32:
                     width, height = width * 2, width * 2
                 width, height = width - self.resize_picture, height - self.resize_picture
-                item_picture = pygame.transform.scale(item_picture, (width / 1.2, height / 1.2))
+                item_picture = pygame.transform.scale(item_picture, (width // 1.2, height // 1.2))
             else:
                 width, height = 0, 0
             width, height = width * self.scale, height * self.scale
@@ -465,6 +471,8 @@ class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
         self.exist = True
         self.projectile_knockback = False
+
+        self.type = 'player_sword'
 
         self.texture = None
         self.texture_count = 0

@@ -102,7 +102,7 @@ class Door():
             self.look_left = f"{path_name}model/map/textures/Door/skull_gate/horizontal_UP_look_left.png"
             self.Loor_right = f"{path_name}model/map/textures/Door/skull_gate/horizontal_UP_look_right.png"
 
-        elif self.texture_id == '63' or self.texture_id == '67':
+        elif self.texture_id == '63' or self.texture_id == '67':# left
             if self.texture_id == '67':
                 path_name = "New_Map_"
             self.position = (self.position[0], self.position[1], self.position[2], self.position[3] * 2)
@@ -126,6 +126,12 @@ class Door():
             self.color = self.opened_color
         else:
             self.color = self.closed_color
+
+    def update_texture(self):
+        if self.status == 'closed':
+            self.texture = data_manager.open_image('model/map/textures/misc/door_closed.png')
+        else:
+            self.texture = data_manager.open_image('model/map/textures/misc/door_open.png')
 
 
 def create_texture(file_path):

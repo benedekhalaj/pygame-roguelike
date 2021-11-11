@@ -1,5 +1,7 @@
 import pygame
 
+from view.terminal import SCREEN_HEIGHT, SCREEN_WIDTH
+
 WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 900
 
@@ -33,8 +35,11 @@ def display_everything(window, objects, pause):
     display_player_stat(window, objects)
     display_player_sword(window, objects)
     display_enemy_projectile(window, objects)
+    display_npc_conversation(window, objects)
+
     if pause:
         display_inventory(window, objects)
+
     refresh_display()
 
 
@@ -44,16 +49,19 @@ def display_background(window):
 
 def display_object(window, object, fps=60):
     if object.visible:
+        position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
         # pygame.draw.rect(window, object.color, position)
         if object.texture is not None:
             if type(object.texture) is list:
                 images = len(object.texture)
                 rate = fps//images
-                window.blit(object.texture[object.texture_count//rate], (object.rect.x, object.rect.y))
+                if object.type == 'brain_collector':
+                    window.blit(object.texture[object.texture_count//rate], (object.x, object.y))
+                else:
+                    window.blit(object.texture[object.texture_count//rate], (object.rect.x, object.rect.y))
             else:
                 window.blit(object.texture, (object.rect.x, object.rect.y))
         else:
-            position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
             pygame.draw.rect(window, object.color, position)
 
 
@@ -74,6 +82,12 @@ def display_enemy_projectile(window, objects):
         if enemy.type == 'shooter':
             for projectile in enemy.projectiles:
                 display_object(window, projectile)
+
+
+def display_npc_conversation(window, objects):
+    for npc in objects['npc']:
+        if npc.type == 'brain_collector':
+            display_object(window, npc.conversation)
 
 
 def display_player_stat(window, objects):
@@ -149,3 +163,7 @@ def set_display_caption(caption):
 
 def get_input():
     return pygame.key.get_pressed()
+
+
+def display_menu(window, text):
+    window.blit(text, (0, 0))

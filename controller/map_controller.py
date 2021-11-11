@@ -13,7 +13,8 @@ def level_controller(objects, level):
     elif keys[pygame.K_2]:
         level = 1
         new_level = True
-    save_map(objects, level)
+    if new_level:
+        save_map(objects, level)
     return new_level, level
 
 

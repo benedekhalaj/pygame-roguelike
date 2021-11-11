@@ -8,6 +8,7 @@ def control_enemy(objects):
         if enemy_character.type == 'standard':
             enemy_character.move(objects)
             enemy_character.take_damage(objects)
+            enemy_character.update_hitbox()
             enemy_character.update_texture()
 
         elif enemy_character.type == 'eye':

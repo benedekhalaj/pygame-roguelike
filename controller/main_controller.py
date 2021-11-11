@@ -1,5 +1,6 @@
 from view import view
-from controller import player_controller, map_controller, item_controller, enemy_controller, npc_controller, hud_controller
+from controller import player_controller, map_controller, item_controller, enemy_controller, \
+                       npc_controller, hud_controller, menu_controller
 import pygame
 
 CLOCK = pygame.time.Clock()
@@ -47,22 +48,23 @@ def play_background_music():
 
 
 def main():
-    level = 1
+    window = init_pygame()
+    # menu_controller.main_menu(window)
+
+
+    # play_background_music()
+
     run = True
     pause = False
     objects = {"player": []}
     new_level = True
+    level = 1
     while run:
-        window = init_pygame()
         objects, new_level = map_controller.get_objects(level, objects, new_level)
-
-        # play_background_music()
 
         while not new_level and run:
             set_fps()
             run = quit_game(run, objects)
-            if pause:
-                pause = False
             pause = pause_game(pause, objects)
             if not pause:
                 player_controller.control_player(objects)
