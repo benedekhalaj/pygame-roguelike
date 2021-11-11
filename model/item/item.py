@@ -73,7 +73,7 @@ class Door():
         self.texture_id = texture_id
         self.position = position
         self.rect = pygame.Rect(self.position[0], self.position[1], self.position[2], self.position[3] * 2)
-        self.texture = create_texture(file_path)
+        self.texture = None
         self.closed_color = colors.SIENNA
         self.opened_color = colors.ROSYBROWN
         self.color = self.closed_color
@@ -82,7 +82,6 @@ class Door():
 
     def update_color(self):
         if self.status == "opened":
-            self.visible = False
             self.color = self.opened_color
         else:
             self.color = self.closed_color
