@@ -92,7 +92,8 @@ def display_enemy_projectile(window, objects):
 
 def display_enemy_health_bar(window, objects):
     for enemy in objects['enemies']:
-        display_object(window, enemy.health_bar)
+        if enemy.type == 'standard':
+            display_object(window, enemy.health_bar)
 
 
 def display_npc_conversation(window, objects):
