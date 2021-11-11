@@ -6,7 +6,6 @@ import random
 pygame.mixer.init()
 
 
-SFX_HIT_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_hit.mp3')
 SFX_DIE_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_die.ogg')
 
 SFX_BRAIN_1 = data_manager.open_sfx('sound/sfx/brain/brain1.ogg')
@@ -74,7 +73,6 @@ class Zombie_Enemy():
                         self.health -= 1
                         self.invicible = True
                         self.decrease_health_bar()
-                        SFX_HIT_ZOMBIE.play()
         self.vanish(objects)
 
     def set_damage_attributes(self):
