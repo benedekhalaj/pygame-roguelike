@@ -72,7 +72,7 @@ class Door():
         self.type = "door"
         self.texture_id = texture_id
         self.position = position
-        self.rect = pygame.Rect(self.position[0], self.position[1], self.position[2], self.position[3])
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.position[2], self.position[3] * 2)
         self.texture = create_texture(file_path)
         self.closed_color = colors.SIENNA
         self.opened_color = colors.ROSYBROWN

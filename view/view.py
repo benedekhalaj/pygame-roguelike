@@ -34,11 +34,11 @@ def display_everything(window, objects, pause):
 
     display_background(window)
     display_objects(window, objects)
-    display_player_stat(window, objects)
     display_player_sword(window, objects)
     display_enemy_projectile(window, objects)
     display_enemy_health_bar(window, objects)
     display_npc_conversation(window, objects)
+    display_player_stat(window, objects)
 
     if pause:
         display_inventory(window, objects)
