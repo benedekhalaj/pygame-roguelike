@@ -37,6 +37,18 @@
 35:	Wall:	model/map/textures/terrain/0034_wall_3corner_top.png
 36:	Wall:	model/map/textures/terrain/0035_wall_3corner_right.png
 51:	Wall:	model/map/textures/terrain/0506_wall_3corner_right.png
+58:	Wall:	model/map/textures/terrain/0513_wall_34orner_bottom.png
+59:	Wall:	model/map/textures/terrain/0514_wall_4orner_bottom.png
+60:	Wall:	model/map/textures/terrain/0515_wall_4orner_left.png
+46:	Door:	Door
+61:	Door:	model/map/textures/Door/skull_gate/horizontal_DOWN_look_down.png
+62:	Door:	model/map/textures/Door/skull_gate/horizontal_UP_look_up.png
+63:	Door:	model/map/textures/Door/skull_gate/vertical_LEFT_look_left.png
+64:	Door:	model/map/textures/Door/skull_gate/vertical_RIGHT_look_right.png
+65:	Door:	model/map/textures/Door/skull_gate/New_Map_vertical_RIGHT_look_right.png
+66:	Door:	model/map/textures/Door/skull_gate/New_Map_horizontal_DOWN_look_down.png
+67:	Door:	model/map/textures/Door/skull_gate/New_Map_vertical_LEFT_look_left.png
+68:	Door:	model/map/textures/Door/skull_gate/New_Map_horizontal_UP_look_up.png
 ------------------------ PLAYER
 0:	Player:	model/map/textures/player/knight_down2.png
 ------------------------ ENEMIES
@@ -55,10 +67,11 @@
 57:	Shooter_Horizontal_Down:	Shooter_Horizontal_Down
 ------------------------ ITEMS
 45:	Key:	model/map/textures/items/key.png
-46:	Door:	Door
 47:	Chest:	model/map/textures/items/chest_closed.png
 48:	Sword:	model/map/textures/items/shortsword.png
 49:	Health_Potion:	model/map/textures/items/health_potion.png
-50 :	Special_Key:	model/map/textures/items/key2.png
+50:	Key:	model/map/textures/items/key2.png
 ------------------------ NPCS
 53:	Brain_Collector_NPC:	Brain_Collector_NPC
+
+

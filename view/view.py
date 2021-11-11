@@ -44,7 +44,7 @@ def display_background(window):
 
 def display_object(window, object, fps=60):
     if object.visible:
-        #pygame.draw.rect(window, object.color, position)
+        # pygame.draw.rect(window, object.color, position)
         if object.texture is not None:
             if type(object.texture) is list:
                 images = len(object.texture)

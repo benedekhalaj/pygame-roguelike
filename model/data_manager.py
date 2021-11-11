@@ -27,11 +27,19 @@ def save_csv_file(filename: str, file: list):
 
 
 def save_game_to_csv_file(filename, game_file: dict):
-
     with open(f"{filename}_save.csv", "w") as file:
-        for line in game_file:
-            for object in line:
-                file.write(f"{object}\n")
+        for object in game_file:
+            texture_id = object[0]
+            x = object[1]
+            y = object[2]
+            file.write(f"{texture_id}\t{x}\t{y}\n")
+
+
+def load_game_from_csv_file(file_path):
+    with open(f"{file_path}_save.csv", "r") as file:
+        file = file.read().splitlines()
+        return file
+
 
 def open_image(path, filename=''):
     return pygame.image.load(f'{path}{filename}')

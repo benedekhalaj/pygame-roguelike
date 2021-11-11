@@ -1,13 +1,16 @@
 from model import data_manager
 import pygame
 
+from model.item.item import Key
+
 
 class Brain_Collector_NPC():
-    def __init__(self, position, colors):
+    def __init__(self, texture_id, position, colors):
         self.type = 'brain_collector'
         self.rect = pygame.Rect(position[0] - 64, position[1] - 64, 128, 128)
         self.color = colors.GREY
         self.texture = None
+        self.texture_id = texture_id
         self.brain_expectation = 42
 
         self.talking_in_progress = False

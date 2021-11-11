@@ -24,7 +24,7 @@ def quit_game(run, objects):
 
         if event.type == pygame.KEYDOWN:
             if event.key == ord('q'):
-                map_controller.save_map(objects)
+
                 run = False
 
     player_character = objects['player'][0]
@@ -47,21 +47,28 @@ def play_background_music():
 
 
 def main():
-    window = init_pygame()
-    objects = map_controller.get_objects()
-
-    # play_background_music()
-
+    level = 1
     run = True
     pause = False
+    objects = {"player": []}
+    new_level = True
     while run:
-        set_fps()
-        run = quit_game(run, objects)
-        pause = pause_game(pause, objects)
-        if not pause:
-            player_controller.control_player(objects)
-            enemy_controller.control_enemy(objects)
-            item_controller.control_item(objects)
-            npc_controller.control_npc(objects)
-        view.display_everything(window, objects, pause)
+        window = init_pygame()
+        objects, new_level = map_controller.get_objects(level, objects, new_level)
+
+        # play_background_music()
+
+        while not new_level and run:
+            set_fps()
+            run = quit_game(run, objects)
+            if pause:
+                pause = False
+            pause = pause_game(pause, objects)
+            if not pause:
+                player_controller.control_player(objects)
+                enemy_controller.control_enemy(objects)
+                item_controller.control_item(objects)
+                npc_controller.control_npc(objects)
+            view.display_everything(window, objects, pause)
+            new_level, level = map_controller.level_controller(objects, level)
     pygame.quit()
