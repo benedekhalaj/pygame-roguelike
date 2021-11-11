@@ -32,7 +32,7 @@ class Brain_Collector_NPC():
         self.texture_count = 0
         self.texture_count_limit = 60
 
-        self.brain_expectation = 2
+        self.brain_expectation = 20
 
         self.has_met_player = False
         self.talking_in_progress = False
@@ -53,7 +53,7 @@ class Brain_Collector_NPC():
                                                   'It seems like you would',
                                                   'use a little boost...',
                                                   'I can give you something',
-                                                  'for giving me 42 brains!'
+                                                  f'for giving me {self.brain_expectation} brains!'
                                                   ]
                         random.choice(sounds).play()
 
