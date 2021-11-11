@@ -23,6 +23,7 @@ SFX_BRAIN_5 = data_manager.open_sfx('sound/sfx/brain/brain5.ogg')
 SFX_OPEN_DOOR = data_manager.open_sfx('sound/sfx/door/open_door.ogg')
 SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/key/pick_up_key.ogg')
 SFX_PICK_UP_SWORD = data_manager.open_sfx('sound/sfx/player/pick_up_sword.ogg')
+SFX_PICK_UP_HEALTH_POTION = data_manager.open_sfx('sound/sfx/player/pick_up_health_potion.ogg')
 
 SFX_MOVE = data_manager.open_sfx('sound/sfx/player/move.ogg')
 
@@ -283,6 +284,7 @@ class Player():
                     elif item.type == 'health_potion':
                         self.inventory.add_health_potion(item.texture)
                         item.visible = False
+                        SFX_PICK_UP_HEALTH_POTION.play()
 
                     elif item.type == 'sword':
                         self.sword.exist = True
@@ -535,7 +537,7 @@ class Inventory():
 
 class Sword():
     def __init__(self, position: tuple, colors: object, attack_duration):
-        self.exist = True
+        self.exist = False
         self.projectile_knockback = False
 
         self.type = 'player_sword'
