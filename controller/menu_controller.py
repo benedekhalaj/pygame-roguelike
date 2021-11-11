@@ -48,7 +48,7 @@ def main_menu(window):
     while run:
         set_fps()
         run = quit_menu(run)
-
+        
         view.display_background(window)
         view.display_text(window, menu_text)
         view.refresh_display()
