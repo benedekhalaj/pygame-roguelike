@@ -51,9 +51,7 @@ def main():
     window = init_pygame()
     menu_controller.main_menu(window)
 
-
     play_background_music()
-
     run = True
     pause = False
     objects = {"player": []}
