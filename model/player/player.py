@@ -1,11 +1,20 @@
 from model import data_manager
 import pygame
 import pygame.freetype
+import random
 
 pygame.mixer.init()
 
 
-SFX_ATTACK = data_manager.open_sfx('sound/sfx/sword3.ogg')
+SFX_ATTACK_1 = data_manager.open_sfx('sound/sfx/player/attack1.ogg')
+SFX_ATTACK_2 = data_manager.open_sfx('sound/sfx/player/attack2.ogg')
+SFX_ATTACK_3 = data_manager.open_sfx('sound/sfx/player/attack3.ogg')
+SFX_ATTACK_4 = data_manager.open_sfx('sound/sfx/player/attack4.ogg')
+SFX_ATTACK_5 = data_manager.open_sfx('sound/sfx/player/attack5.ogg')
+SFX_ATTACK_6 = data_manager.open_sfx('sound/sfx/player/attack6.ogg')
+SFX_ATTACK_7 = data_manager.open_sfx('sound/sfx/player/attack7.ogg')
+
+
 SFX_FOOTSTEPS = data_manager.open_sfx('sound/sfx/footsteps.mp3')
 
 
@@ -150,7 +159,8 @@ class Player():
         self.sword.texture_count = 0
         self.sword.direction = self.direction
         self.set_sword_position()
-        SFX_ATTACK.play()
+        sounds = [SFX_ATTACK_1, SFX_ATTACK_2, SFX_ATTACK_3, SFX_ATTACK_4, SFX_ATTACK_5, SFX_ATTACK_6, SFX_ATTACK_7]
+        random.choice(sounds).play()
 
     def set_sword_position(self):
         player = self.rect
