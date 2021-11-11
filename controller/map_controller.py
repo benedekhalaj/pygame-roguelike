@@ -4,33 +4,33 @@ from view import view
 import pygame
 
 
-def level_controller(objects, level):
+def level_controller(objects, level, new_level):
     keys = view.get_input()
-    new_level = False
     if keys[pygame.K_1]:
-        level = 2
-        new_level = True
-    elif keys[pygame.K_2]:
-        level = 3
-        new_level = True
-    elif keys[pygame.K_3]:
+        save_map(objects, level)
         level = 1
         new_level = True
-    if new_level:
+    elif keys[pygame.K_2]:
         save_map(objects, level)
+        level = 2
+        new_level = True
+    elif keys[pygame.K_3]:
+        save_map(objects, level)
+        level = 3
+        new_level = True
     return new_level, level
 
 
-def get_objects(level, objects, new_level):
+def get_objects(level, unlocked_levels, objects):
     colors = view.COLORS
     screen_size = (view.WINDOW_WIDTH, view.WINDOW_HEIGHT)
-    if new_level:
-        map.Game(level, objects)
+    if unlocked_levels < level:
+        map.Game(objects)
         objects = map.create_map(screen_size, colors, level)
+        unlocked_levels = level
     else:
         objects = load_map(level, colors)
-    new_level = False
-    return objects, new_level
+    return objects, unlocked_levels
 
 
 def save_map(objects, level):

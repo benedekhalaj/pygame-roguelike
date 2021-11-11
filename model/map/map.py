@@ -12,8 +12,7 @@ CHARACTER_HEIGHT = 64
 
 
 class Game():
-    def __init__(self, level, player):
-        self.actual_level = level
+    def __init__(self, player):
         self.objects_player = player
 
 
