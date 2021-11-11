@@ -2,7 +2,10 @@ from model import data_manager
 import pygame
 import pygame.freetype
 
-from model.item.item import Health_Potion
+pygame.mixer.init()
+
+
+SFX_ATTACK = data_manager.open_sfx('sound/sfx/sword3.ogg')
 
 
 class Player():
@@ -114,7 +117,6 @@ class Player():
                     return True
         return False
 
-
     def set_collision_direction(self, object):
         if self.direction == 'right':
             self.rect.right = object.rect.left
@@ -147,6 +149,7 @@ class Player():
         self.sword.texture_count = 0
         self.sword.direction = self.direction
         self.set_sword_position()
+        SFX_ATTACK.play()
 
     def set_sword_position(self):
         player = self.rect
