@@ -78,6 +78,8 @@ class Player():
                     elif item.type == 'brain_collector':
                         item.x -= x_direction
                         item.y -= y_direction
+                        item.conversation.rect.x -= x_direction
+                        item.conversation.rect.y -= y_direction
 
     def set_direction(self, x_direction, y_direction):
         if x_direction > 0:

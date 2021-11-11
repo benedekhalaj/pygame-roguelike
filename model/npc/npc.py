@@ -12,6 +12,8 @@ class Brain_Collector_NPC():
         self.rect = pygame.Rect(position[0] - 64, position[1], 192, 128)
         self.color = colors.GREY
 
+        self.conversation = Conversation((self.rect.x, self.rect.y, self.rect.width, self.rect.height), colors.WHITE)
+
         self.texture = [data_manager.open_image('model/map/textures/npcs/oldman_idle1.png'),
                         data_manager.open_image('model/map/textures/npcs/oldman_idle2.png')]
         self.texture_count = 0
@@ -59,3 +61,25 @@ class Brain_Collector_NPC():
             self.texture_count = 0
 
         self.texture_count += 1
+
+    def update_conversation(self):
+        if self.talking_in_progress:
+            self.conversation.visible = True
+        else:
+            self.conversation.visible = False
+
+
+class Conversation():
+    def __init__(self, position, color):
+        self.type = 'conversation'
+
+        self.width = 256
+        self.height = 128
+        self.x = position[0] - self.width / 2
+        self.y = position[1] - self.height
+
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.color = color
+        self.texture = None
+
+        self.visible = False

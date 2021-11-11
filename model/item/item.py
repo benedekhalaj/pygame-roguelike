@@ -74,6 +74,12 @@ class Door():
         else:
             self.color = self.closed_color
 
+    def update_texture(self):
+        if self.status == 'closed':
+            self.texture = data_manager.open_image('model/map/textures/misc/door_closed.png')
+        else:
+            self.texture = data_manager.open_image('model/map/textures/misc/door_open.png')
+
 
 def create_texture(file_path):
     if file_path is not None:
