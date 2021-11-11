@@ -22,6 +22,7 @@ SFX_BRAIN_5 = data_manager.open_sfx('sound/sfx/brain/brain5.ogg')
 
 SFX_OPEN_DOOR = data_manager.open_sfx('sound/sfx/door/open_door.ogg')
 SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/key/pick_up_key.ogg')
+SFX_PICK_UP_SWORD = data_manager.open_sfx('sound/sfx/player/pick_up_sword.ogg')
 
 SFX_MOVE = data_manager.open_sfx('sound/sfx/player/move.ogg')
 
@@ -286,6 +287,7 @@ class Player():
                     elif item.type == 'sword':
                         self.sword.exist = True
                         item.visible = False
+                        SFX_PICK_UP_SWORD.play()
 
                     elif item.type == 'brain':
                         self.inventory.add_brain(item.texture[0])
