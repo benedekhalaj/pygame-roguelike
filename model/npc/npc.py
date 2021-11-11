@@ -32,8 +32,8 @@ class Brain_Collector_NPC():
 
     def talk_with_player(self, objects):
         player = objects['player'][0]
-        if self.has_mission:
-            if self.rect.colliderect(player.rect):
+        if self.rect.colliderect(player.rect):
+            if self.has_mission:
                 if not self.talking_in_progress:
                     if not self.has_met_player:
                         self.has_met_player = True
@@ -54,17 +54,18 @@ class Brain_Collector_NPC():
                                                   ]
 
                     else:
+                        self.talking_in_progress = True
                         self.has_mission = False
                         player.inventory.brains = 0
                         player.max_health += 1
                         player.health = player.max_health
-                        self.conversation.text = ['Wow, that\'s a lil something!',
+                        self.conversation.text = ['Wow, that is something!',
                                                   'As a reward, I increase',
-                                                  'your maximum health by 1'
+                                                  'your maximum health by 1!'
                                                   ]
 
-            else:
-                self.talking_in_progress = False
+        else:
+            self.talking_in_progress = False
 
     def update_texture_count(self):
         if self.texture_count + 1 >= self.texture_count_limit:
