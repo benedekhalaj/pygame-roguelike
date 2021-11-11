@@ -8,11 +8,6 @@ pygame.mixer.init()
 
 SFX_DIE_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_die.ogg')
 
-SFX_BRAIN_1 = data_manager.open_sfx('sound/sfx/brain/brain1.ogg')
-SFX_BRAIN_2 = data_manager.open_sfx('sound/sfx/brain/brain2.ogg')
-SFX_BRAIN_3 = data_manager.open_sfx('sound/sfx/brain/brain3.ogg')
-SFX_BRAIN_4 = data_manager.open_sfx('sound/sfx/brain/brain4.ogg')
-SFX_BRAIN_5 = data_manager.open_sfx('sound/sfx/brain/brain5.ogg')
 
 
 class Zombie_Enemy():
