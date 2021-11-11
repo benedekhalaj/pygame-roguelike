@@ -4,6 +4,11 @@ import pygame
 from model.item.item import Key
 
 
+pygame.mixer.init()
+
+SFX_NPC_1 = data_manager.open_sfx('sound/sfx/npc/npc7.ogg')
+
+
 class Brain_Collector_NPC():
     def __init__(self, texture_id, position, colors):
         self.type = 'brain_collector'
@@ -52,6 +57,7 @@ class Brain_Collector_NPC():
                                                   'brains yet...',
                                                   f'{self.brain_expectation - player.inventory.brains} more to go!'
                                                   ]
+                        SFX_NPC_1.play()
 
                     else:
                         self.talking_in_progress = True
