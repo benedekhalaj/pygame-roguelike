@@ -12,8 +12,7 @@ CHARACTER_HEIGHT = 64
 
 
 class Game():
-    def __init__(self, level, player):
-        self.actual_level = level
+    def __init__(self, player):
         self.objects_player = player
 
 
@@ -76,8 +75,6 @@ def save_map_file(object_types: dict, level):
             if object.type == "brain":
                 continue
             if object.type == "player":
-                continue
-            if object.type == "brain_collector":
                 continue
             x = str(object.rect.x)
             y = str(object.rect.y)
@@ -148,7 +145,7 @@ def create_objects(map_datas: list):
 
         elif character_name == "Chest":
             chests_list.append(items.Chest(texture_id, position, texture_file_path, colors))
-        elif character_name == "Key":
+        elif character_name == "Key" or character_name == "Rare_Key":
             keys_list.append(items.Key(texture_id, position, texture_file_path, colors))
         elif character_name == "Health_Potion":
             potion_list.append(items.Health_Potion(texture_id, position, texture_file_path, colors))
@@ -167,8 +164,15 @@ def create_objects(map_datas: list):
             enemies_list.append(enemy.Zombie_Enemy(texture_id, position, texture_file_path, colors, ("down", 30)))
         elif character_name == "Zombie_Up":
             enemies_list.append(enemy.Zombie_Enemy(texture_id, position, texture_file_path, colors, ("up", 30)))
-        # elif character_name == "Eye_Enemy":
-        #     enemies_list.append(enemy.Eye_Enemy(position, file_path, colors))
+
+        elif character_name == "Eyeball_Up":
+            enemies_list.append(enemy.Eye_Enemy(texture_id, position, texture_file_path, colors))
+        elif character_name == "Eyeball_Down":
+            enemies_list.append(enemy.Eye_Enemy(texture_id, position, texture_file_path, colors))
+        elif character_name == "Eyeball_Left":
+            enemies_list.append(enemy.Eye_Enemy(texture_id, position, texture_file_path, colors))
+        elif character_name == "Eyeball_Right":
+            enemies_list.append(enemy.Eye_Enemy(texture_id, position, texture_file_path, colors,))
         # elif character_name == 'Shooter_Enemy':
         #     enemies_list.append(enemy.Shooter_Enemy(position, file_path, colors, ("right", "down")))
         elif character_name == 'Shooter_Vertical_Right':

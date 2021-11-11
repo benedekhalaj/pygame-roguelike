@@ -2,7 +2,11 @@ from model import data_manager
 import pygame
 import pygame.freetype
 
-from model.item.item import Health_Potion
+pygame.mixer.init()
+
+
+SFX_ATTACK = data_manager.open_sfx('sound/sfx/sword3.ogg')
+SFX_FOOTSTEPS = data_manager.open_sfx('sound/sfx/footsteps.mp3')
 
 
 class Player():
@@ -114,7 +118,6 @@ class Player():
                     return True
         return False
 
-
     def set_collision_direction(self, object):
         if self.direction == 'right':
             self.rect.right = object.rect.left
@@ -147,6 +150,7 @@ class Player():
         self.sword.texture_count = 0
         self.sword.direction = self.direction
         self.set_sword_position()
+        SFX_ATTACK.play()
 
     def set_sword_position(self):
         player = self.rect
@@ -240,6 +244,10 @@ class Player():
                         self.inventory.add_key(item.texture)
                         item.visible = False
 
+                    elif item.type == "rare_key":
+                        self.inventory.add_rare_key(item.texture)
+                        item.visible = False
+
                     elif item.type == 'health_potion':
                         self.inventory.add_health_potion(item.texture)
                         item.visible = False
@@ -255,14 +263,16 @@ class Player():
     def open_door(self, objects):
         for door in objects["doors"]:
             if self.rect.colliderect(door.rect):
-                if self.inventory.keys > 0:
+                if self.inventory.keys > 0 and door.type == "door":
                     if door.status == "closed":
                         door.status = "opened"
                         door.update_color()
                         self.inventory.remove_key()
-    
-    def leaving_level(self, objects):
-        return 
+                elif self.inventory.rare_keys > 0 and door.type == "gate":
+                    if door.status == "closed":
+                        door.status = "opened"
+                        door.update_color()
+                        self.inventory.remove_rare_key()
 
     def update_texture(self):
         path = 'model/map/textures/player/'
@@ -316,9 +326,15 @@ class Inventory():
         self.keys = 0
         self.key_texture = None
         self.keys_limit = 99
+
+        self.rare_keys = 0
+        self.rare_keys_limit = 99
+        self.rare_key_texture = None
+
         self.health_potions = 0
         self.health_potions_texture = None
         self.health_potions_limit = 5
+
         self.brains = 0
         self.brain_texture = None
 
@@ -353,9 +369,10 @@ class Inventory():
         self.visible = False
 
     def update_items(self):
-        self.items_list = [[self.keys, self.key_texture],
-                           [self.health_potions, self.health_potions_texture],
-                           [self.brains, self.brain_texture]
+        self.items_list = [[self.health_potions, self.health_potions_texture],
+                           [self.brains, self.brain_texture],
+                           [self.keys, self.key_texture],
+                           [self.rare_keys, self.rare_key_texture]
                            ]
 
     def add_key(self, texture):
@@ -365,6 +382,14 @@ class Inventory():
 
     def remove_key(self):
         self.keys -= 1
+
+    def add_rare_key(self, texture):
+        self.rare_key_texture = texture
+        if self.rare_keys < self.rare_keys_limit:
+            self.rare_keys += 1
+
+    def remove_rare_key(self):
+        self.rare_keys -= 1
 
     def add_health_potion(self, texture):
         self.health_potions_texture = texture

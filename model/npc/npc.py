@@ -1,7 +1,17 @@
 from model import data_manager
 import pygame
+import random
 
-from model.item.item import Key
+
+pygame.mixer.init()
+
+SFX_NPC_2 = data_manager.open_sfx('sound/sfx/npc/npc2.ogg')
+SFX_NPC_3 = data_manager.open_sfx('sound/sfx/npc/npc3.ogg')
+SFX_NPC_4 = data_manager.open_sfx('sound/sfx/npc/npc4.ogg')
+SFX_NPC_5 = data_manager.open_sfx('sound/sfx/npc/npc5.ogg')
+SFX_NPC_6 = data_manager.open_sfx('sound/sfx/npc/npc6.ogg')
+SFX_NPC_7 = data_manager.open_sfx('sound/sfx/npc/npc7.ogg')
+
 
 
 class Brain_Collector_NPC():
@@ -11,7 +21,7 @@ class Brain_Collector_NPC():
         self.y = position[1]
         self.width = position[2]
         self.height = position[3]
-        self.rect = pygame.Rect(position[0] - 64, position[1], 192, 128)
+        self.rect = pygame.Rect(position[0], position[1], 128, 128)
         self.color = colors.GREY
 
         self.conversation = Conversation((self.rect.x, self.rect.y, self.rect.width, self.rect.height), colors.WHITE)
@@ -31,6 +41,7 @@ class Brain_Collector_NPC():
         self.visible = True
 
     def talk_with_player(self, objects):
+        sounds = [SFX_NPC_2, SFX_NPC_3, SFX_NPC_4, SFX_NPC_5, SFX_NPC_6, SFX_NPC_7]
         player = objects['player'][0]
         if self.rect.colliderect(player.rect):
             if self.has_mission:
@@ -44,6 +55,7 @@ class Brain_Collector_NPC():
                                                   'I can give you something',
                                                   'for giving me 42 brains!'
                                                   ]
+                        random.choice(sounds).play()
 
                     elif player.inventory.brains < self.brain_expectation:
                         self.talking_in_progress = True
@@ -52,6 +64,7 @@ class Brain_Collector_NPC():
                                                   'brains yet...',
                                                   f'{self.brain_expectation - player.inventory.brains} more to go!'
                                                   ]
+                        random.choice(sounds).play()
 
                     else:
                         self.talking_in_progress = True
@@ -63,6 +76,7 @@ class Brain_Collector_NPC():
                                                   'As a reward, I increase',
                                                   'your maximum health by 1!'
                                                   ]
+                        random.choice(sounds).play()
 
         else:
             self.talking_in_progress = False
@@ -79,14 +93,15 @@ class Brain_Collector_NPC():
         else:
             self.conversation.visible = False
 
+
 class Conversation():
     def __init__(self, position, color):
         self.type = 'conversation'
 
         self.width = 256
         self.height = 128
-        self.x = position[0] - self.width / 2
-        self.y = position[1] - self.height
+        self.x = position[0] - self.width / 1.4
+        self.y = position[1] - self.height + 10
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.color = color

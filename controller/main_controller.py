@@ -43,7 +43,7 @@ def pause_game(pause, objects):
 
 def play_background_music():
     pygame.mixer.init()
-    pygame.mixer.music.load('sound/music/background_1.WAV')
+    pygame.mixer.music.load('sound/music/background_2.WAV')
     pygame.mixer.music.play(loops=-1)
 
 
@@ -52,15 +52,16 @@ def main():
     # menu_controller.main_menu(window)
 
 
-    # play_background_music()
+    play_background_music()
 
     run = True
     pause = False
     objects = {"player": []}
-    new_level = True
     level = 1
+    unlocked_levels = 0
     while run:
-        objects, new_level = map_controller.get_objects(level, objects, new_level)
+        new_level = False
+        objects, unlocked_levels = map_controller.get_objects(level, unlocked_levels, objects)
 
         while not new_level and run:
             set_fps()
@@ -72,5 +73,5 @@ def main():
                 item_controller.control_item(objects)
                 npc_controller.control_npc(objects)
             view.display_everything(window, objects, pause)
-            new_level, level = map_controller.level_controller(objects, level)
+            new_level, level = map_controller.level_controller(objects, level, new_level)
     pygame.quit()

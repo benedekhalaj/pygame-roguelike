@@ -1,9 +1,13 @@
 from model import data_manager
 import pygame
+import random
 
 
 pygame.mixer.init()
-SFX_HIT_ENEMY = pygame.mixer.Sound('sound/sfx/hit_enemy.WAV')
+
+
+SFX_HIT_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_hit.mp3')
+SFX_DIE_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_die.ogg')
 
 
 class Zombie_Enemy():
@@ -20,13 +24,19 @@ class Zombie_Enemy():
         self.direction = direction[0]
         self.count_limit = direction[1]
 
+        self.max_health = 2
         self.health = 2
+        self.health_bar = Health_Bar((self.rect.x, self.rect.y, self.rect.width, self.rect.height), (colors.BLACK, colors.LIGHT_YELLOW))
+
         self.damage_timer = 0
         self.damage_limit = 30
         self.invicible = False
 
         self.created_brain = False
         self.visible = True
+
+        self.growl_count = 0
+        self.growl_count_limit = random.randint(100, 400)
 
     def move(self, objects):
         if self.direction == 'right':
@@ -57,7 +67,8 @@ class Zombie_Enemy():
                     if not self.invicible:
                         self.health -= 1
                         self.invicible = True
-                        SFX_HIT_ENEMY.play()
+                        self.decrease_health_bar()
+                        SFX_HIT_ZOMBIE.play()
         self.vanish(objects)
 
     def set_damage_attributes(self):
@@ -84,12 +95,24 @@ class Zombie_Enemy():
     def create_brain(self, objects):
         objects['items'].append(Brain((self.rect.x, self.rect.y, 32, 32)))
 
-
     def update_hitbox(self):
         if self.direction == 'up' or self.direction == 'down':
             self.rect.width = 30
         else:
             self.rect.width = 50
+
+    def update_health_bar(self):
+        self.health_bar.rect.x = self.rect.x + self.health_bar.border
+        self.health_bar.rect.y = self.rect.y - self.health_bar.y_offset + self.health_bar.border
+        self.health_bar.background.x = self.rect.x
+        self.health_bar.background.y = self.rect.y - self.health_bar.y_offset
+
+    def decrease_health_bar(self):
+        unit = self.health_bar.width / self.max_health
+        self.health_bar.rect.width -= unit
+
+        if self.health < 1:
+            self.health_bar.visible = False
 
     def update_texture(self):
         path = 'model/map/textures/enemy/'
@@ -119,7 +142,6 @@ class Zombie_Enemy():
             if item.type == 'brain':
                 item.update_texture_count()
 
-
 class Brain():
     def __init__(self, position):
         self.type = 'brain'
@@ -141,14 +163,20 @@ class Brain():
 
 
 class Eye_Enemy():
-    def __init__(self, position, file_path, colors):
+    def __init__(self, texture_id, position, file_path, colors):
         self.type = 'eye'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
         self.texture = create_texture(file_path)
+        self.texture_id = texture_id
         self.texture_count = 0
         self.texture_count_limit = 60
         self.color = colors.BROWN
         self.visible = True
+
+        self.health = 1
+        self.damage_timer = 0
+        self.damage_limit = 30
+        self.invicible = False
 
     def set_facing(self, objects):
         player = objects['player'][0]
@@ -170,6 +198,36 @@ class Eye_Enemy():
                 self.texture = data_manager.open_image(path, f'{left}middle.png')
             else:
                 self.texture = data_manager.open_image(path, f'{left}up.png')
+
+    def take_damage(self, objects: dict):
+        self.set_damage_attributes()
+        for player in objects["player"]:
+            if self.visible and player.sword.visible:
+                if self.rect.colliderect(player.sword.rect):
+                    if not self.invicible:
+                        self.health -= 1
+                        self.invicible = True
+                        SFX_HIT_ENEMY.play()
+        self.vanish()
+
+    def set_damage_attributes(self):
+        def set_invicible(self):
+            if self.damage_timer > self.damage_limit:
+                self.invicible = False
+
+        def set_damage_timer(self):
+            if self.invicible:
+                self.damage_timer += 1
+            else:
+                self.damage_timer = 0
+
+        set_invicible(self)
+        set_damage_timer(self)
+
+    def vanish(self):
+        if self.health < 1:
+            self.visible = False
+
 
 
 class Shooter_Enemy():
@@ -341,3 +399,26 @@ def create_texture(file_path):
         return pygame.image.load(file_path)
     else:
         return None
+
+
+class Health_Bar():
+    def __init__(self, position, colors):
+        self.type = 'health_bar'
+
+        self.x = position[0]
+        self.y_offset = 20
+        self.y = position[1] - self.y_offset
+        self.width = position[2]
+        self.height = 16
+
+        self.background = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.background_color = colors[0]
+
+        self.border = 2
+        self.rect = pygame.Rect(self.x + self.border, self.y + self.border, self.width - 4, self.height - 4)
+
+        self.color = colors[1]
+
+        self.texture = None
+
+        self.visible = True
