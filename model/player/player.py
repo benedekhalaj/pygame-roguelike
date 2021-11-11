@@ -23,6 +23,8 @@ SFX_BRAIN_5 = data_manager.open_sfx('sound/sfx/brain/brain5.ogg')
 SFX_OPEN_DOOR = data_manager.open_sfx('sound/sfx/door/open_door.ogg')
 SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/key/pick_up_key.ogg')
 
+SFX_MOVE = data_manager.open_sfx('sound/sfx/player/move.ogg')
+
 
 class Player():
     def __init__(self, texture_id, position: tuple, file_path, colors, screen_size, file_name):
@@ -51,6 +53,8 @@ class Player():
 
         self.moving = False
         self.direction = 'right'
+
+        self.playing_move_sound = False
 
         self.damage_timer = 0
         self.damage_limit = 120
@@ -323,6 +327,9 @@ class Player():
                                 data_manager.open_image(path, f'{down}3.png'),
                                 data_manager.open_image(path, f'{down}2.png')]
             self.update_texture_count()
+            if not self.playing_move_sound:
+                SFX_MOVE.play(-1)
+                self.playing_move_sound = True
         else:
             if self.direction == 'left':
                 self.texture = data_manager.open_image(path, f'{left}2.png')
@@ -332,6 +339,8 @@ class Player():
                 self.texture = data_manager.open_image(path, f'{up}2.png')
             elif self.direction == 'down':
                 self.texture = data_manager.open_image(path, f'{down}2.png')
+            SFX_MOVE.stop()
+            self.playing_move_sound = False
 
     def update_texture_count(self):
         if self.texture_count + 1 >= self.texture_count_limit or not self.moving:
