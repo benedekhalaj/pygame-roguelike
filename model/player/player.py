@@ -25,6 +25,11 @@ SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/key/pick_up_key.ogg')
 
 SFX_MOVE = data_manager.open_sfx('sound/sfx/player/move.ogg')
 
+SFX_TAKE_DAMAGE_1 = data_manager.open_sfx('sound/sfx/player/take_damage1.ogg')
+SFX_TAKE_DAMAGE_2 = data_manager.open_sfx('sound/sfx/player/take_damage2.ogg')
+SFX_TAKE_DAMAGE_3 = data_manager.open_sfx('sound/sfx/player/take_damage3.ogg')
+SFX_TAKE_DAMAGE_4 = data_manager.open_sfx('sound/sfx/player/take_damage4.ogg')
+
 
 class Player():
     def __init__(self, texture_id, position: tuple, file_path, colors, screen_size, file_name):
@@ -68,7 +73,7 @@ class Player():
         self.attack_duration = 12
         self.sword = Sword((self.rect.x + self.rect.width, self.rect.y, self.rect.width, self.rect.height), colors, self.attack_duration)
 
-        self.health = 1
+        self.health = 5
         self.max_health = 5
         self.currently_healing = False
 
@@ -201,6 +206,8 @@ class Player():
                     if not self.invicible:
                         self.health -= 1
                         self.invicible = True
+                        damage_sounds = [SFX_TAKE_DAMAGE_1, SFX_TAKE_DAMAGE_2, SFX_TAKE_DAMAGE_3, SFX_TAKE_DAMAGE_4]
+                        random.choice(damage_sounds).play()
             if enemy.type == 'shooter':
                 for projectile in enemy.projectiles:
                     if projectile.visible:
@@ -278,9 +285,9 @@ class Player():
                         item.visible = False
 
                     elif item.type == 'brain':
-                        brain_sounds = [SFX_BRAIN_1, SFX_BRAIN_2, SFX_BRAIN_3, SFX_BRAIN_4, SFX_BRAIN_5]
                         self.inventory.add_brain(item.texture[0])
                         item.visible = False
+                        brain_sounds = [SFX_BRAIN_1, SFX_BRAIN_2, SFX_BRAIN_3, SFX_BRAIN_4, SFX_BRAIN_5]
                         random.choice(brain_sounds).play()
 
     def open_door(self, objects):
