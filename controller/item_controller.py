@@ -8,4 +8,7 @@ def control_item(objects):
             item.update_texture_count()
 
     for door in objects['doors']:
-        door.update_texture()
+        if door.type == "gate":
+            door.set_facing(objects)
+        else:
+            door.update_texture()
