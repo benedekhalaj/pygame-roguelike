@@ -47,16 +47,20 @@ def display_background(window):
 def display_object(window, object, fps=60):
     if object.visible:
         position = (object.rect.x, object.rect.y, object.rect.width, object.rect.height)
-        pygame.draw.rect(window, object.color, position)
+        # pygame.draw.rect(window, object.color, position)
         if object.texture is not None:
             if type(object.texture) is list:
                 images = len(object.texture)
                 rate = fps//images
-                window.blit(object.texture[object.texture_count//rate], (object.rect.x, object.rect.y))
+
+                if object.type == 'brain_collector':
+                    window.blit(object.texture[object.texture_count//rate], (object.x, object.y))
+                else:
+                    window.blit(object.texture[object.texture_count//rate], (object.rect.x, object.rect.y))
             else:
                 window.blit(object.texture, (object.rect.x, object.rect.y))
-        # else:
-        #     pygame.draw.rect(window, object.color, position)
+        else:
+            pygame.draw.rect(window, object.color, position)
 
 
 def display_objects(window, object_types: dict):
@@ -76,6 +80,12 @@ def display_enemy_projectile(window, objects):
         if enemy.type == 'shooter':
             for projectile in enemy.projectiles:
                 display_object(window, projectile)
+
+
+def display_npc(window, objects):
+    for npc in objects['npc']:
+        if npc.type == 'brain_collector':
+            display_object(window, npc)
 
 
 def display_player_stat(window, objects):
