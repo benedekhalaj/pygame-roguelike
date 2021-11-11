@@ -19,7 +19,7 @@ class Brain_Collector_NPC():
         self.texture_count = 0
         self.texture_count_limit = 60
 
-        self.brain_expectation = 42
+        self.brain_expectation = 2
 
         self.has_met_player = False
         self.talking_in_progress = False
@@ -35,23 +35,30 @@ class Brain_Collector_NPC():
                     if not self.has_met_player:
                         self.has_met_player = True
                         self.talking_in_progress = True
-                        print('Hello Dear Knight! It seems like you\'ve trapped in here a long time ago...')
-                        print('I can help you be a little bit stronger, if you help me out with collecting some brains.')
-                        print(f'I need exactly {self.brain_expectation} brains. Good luck!')
+                        self.conversation.text = ['Hello poor thing!',
+                                                  'It seems like you would',
+                                                  'use a little boost...',
+                                                  'I can give you something',
+                                                  'for giving me 42 brains!'
+                                                  ]
 
                     elif player.inventory.brains < self.brain_expectation:
-                        print('It seems like you haven\'t yet gathered all of the brains yet.')
-                        print(f'{self.brain_expectation - player.inventory.brains} more to go!')
                         self.talking_in_progress = True
+                        self.conversation.text = ['It seems like you haven\'t',
+                                                  'yet gathered all of the',
+                                                  'brains yet...',
+                                                  f'{self.brain_expectation - player.inventory.brains} more to go!'
+                                                  ]
 
                     else:
                         self.has_mission = False
                         player.inventory.brains = 0
                         player.max_health += 1
                         player.health = player.max_health
-                        print(f'Brains: {player.inventory.brains}')
-                        print('Wow! You gathered all the brains I need!')
-                        print('As a reward, I increase your maximum health by 1')
+                        self.conversation.text = ['Wow, that\'s a lil something!',
+                                                  'As a reward, I increase',
+                                                  'your maximum health by 1'
+                                                  ]
 
             else:
                 self.talking_in_progress = False
@@ -68,7 +75,6 @@ class Brain_Collector_NPC():
         else:
             self.conversation.visible = False
 
-
 class Conversation():
     def __init__(self, position, color):
         self.type = 'conversation'
@@ -80,6 +86,7 @@ class Conversation():
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.color = color
-        self.texture = None
+        self.texture = data_manager.open_image('model/map/textures/npcs/conversation.png')
 
+        self.text = []
         self.visible = False

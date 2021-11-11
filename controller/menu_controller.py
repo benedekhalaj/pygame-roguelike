@@ -50,7 +50,7 @@ def main_menu(window):
         run = quit_menu(run)
 
         view.display_background(window)
-        view.display_menu(window, menu_text)
+        view.display_text(window, menu_text)
         view.refresh_display()
 
     stop_background_music()
