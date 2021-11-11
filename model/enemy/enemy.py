@@ -8,6 +8,9 @@ pygame.mixer.init()
 
 SFX_DIE_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_die.ogg')
 
+SFX_HIT_ZOMBIE_1 = data_manager.open_sfx('sound/sfx/zombie/hit_zombie1.ogg')
+SFX_HIT_ZOMBIE_2 = data_manager.open_sfx('sound/sfx/zombie/hit_zombie2.ogg')
+SFX_HIT_ZOMBIE_3 = data_manager.open_sfx('sound/sfx/zombie/hit_zombie3.ogg')
 
 
 class Zombie_Enemy():
@@ -68,6 +71,8 @@ class Zombie_Enemy():
                         self.health -= 1
                         self.invicible = True
                         self.decrease_health_bar()
+                        zombie_hit_sounds = [SFX_HIT_ZOMBIE_1, SFX_HIT_ZOMBIE_2, SFX_HIT_ZOMBIE_3]
+                        random.choice(zombie_hit_sounds).play()
         self.vanish(objects)
 
     def set_damage_attributes(self):
@@ -207,7 +212,6 @@ class Eye_Enemy():
                     if not self.invicible:
                         self.health -= 1
                         self.invicible = True
-                        SFX_HIT_ENEMY.play()
         self.vanish()
 
     def set_damage_attributes(self):
