@@ -21,6 +21,7 @@ SFX_BRAIN_4 = data_manager.open_sfx('sound/sfx/brain/brain4.ogg')
 SFX_BRAIN_5 = data_manager.open_sfx('sound/sfx/brain/brain5.ogg')
 
 SFX_OPEN_DOOR = data_manager.open_sfx('sound/sfx/door/open_door.ogg')
+SFX_PICK_UP_KEY = data_manager.open_sfx('sound/sfx/key/pick_up_key.ogg')
 
 
 class Player():
@@ -258,6 +259,7 @@ class Player():
                     if item.type == 'key':
                         self.inventory.add_key(item.texture)
                         item.visible = False
+                        SFX_PICK_UP_KEY.play()
 
                     elif item.type == "rare_key":
                         self.inventory.add_rare_key(item.texture)
