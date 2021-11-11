@@ -16,12 +16,14 @@ class Zombie_Enemy():
         self.texture_count_limit = 60
         self.color = colors.BROWN
 
+
         self.velocity = 2
         self.direction = direction[0]
         self.count_limit = direction[1]
 
+        self.max_health = 2
         self.health = 2
-        self.health_bar = Health_Bar((self.rect.x, self.rect.y, self.rect.width, self.rect.height), (colors.BLACK, colors.GREEN))
+        self.health_bar = Health_Bar((self.rect.x, self.rect.y, self.rect.width, self.rect.height), (colors.BLACK, colors.LIGHT_YELLOW))
 
         self.damage_timer = 0
         self.damage_limit = 30
@@ -59,6 +61,7 @@ class Zombie_Enemy():
                     if not self.invicible:
                         self.health -= 1
                         self.invicible = True
+                        self.decrease_health_bar()
                         SFX_HIT_ENEMY.play()
         self.vanish(objects)
 
@@ -97,6 +100,13 @@ class Zombie_Enemy():
         self.health_bar.rect.y = self.rect.y - self.health_bar.y_offset + self.health_bar.border
         self.health_bar.background.x = self.rect.x
         self.health_bar.background.y = self.rect.y - self.health_bar.y_offset
+
+    def decrease_health_bar(self):
+        unit = self.health_bar.width / self.max_health
+        self.health_bar.rect.width -= unit
+
+        if self.health < 1:
+            self.health_bar.visible = False
 
     def update_texture(self):
         path = 'model/map/textures/enemy/'

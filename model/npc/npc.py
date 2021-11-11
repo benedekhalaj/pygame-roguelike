@@ -79,6 +79,7 @@ class Brain_Collector_NPC():
         else:
             self.conversation.visible = False
 
+
 class Conversation():
     def __init__(self, position, color):
         self.type = 'conversation'
