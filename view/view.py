@@ -35,8 +35,11 @@ def display_everything(window, objects, pause):
     display_player_stat(window, objects)
     display_player_sword(window, objects)
     display_enemy_projectile(window, objects)
+    display_npc_conversation(window, objects)
+
     if pause:
         display_inventory(window, objects)
+
     refresh_display()
 
 
@@ -52,7 +55,6 @@ def display_object(window, object, fps=60):
             if type(object.texture) is list:
                 images = len(object.texture)
                 rate = fps//images
-
                 if object.type == 'brain_collector':
                     window.blit(object.texture[object.texture_count//rate], (object.x, object.y))
                 else:
@@ -82,10 +84,10 @@ def display_enemy_projectile(window, objects):
                 display_object(window, projectile)
 
 
-def display_npc(window, objects):
+def display_npc_conversation(window, objects):
     for npc in objects['npc']:
         if npc.type == 'brain_collector':
-            display_object(window, npc)
+            display_object(window, npc.conversation)
 
 
 def display_player_stat(window, objects):
