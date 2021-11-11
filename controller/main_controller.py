@@ -49,7 +49,7 @@ def play_background_music():
 
 def main():
     window = init_pygame()
-    # menu_controller.main_menu(window)
+    menu_controller.main_menu(window)
 
 
     play_background_music()
