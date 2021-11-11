@@ -6,6 +6,7 @@ pygame.mixer.init()
 
 
 SFX_ATTACK = data_manager.open_sfx('sound/sfx/sword3.ogg')
+SFX_FOOTSTEPS = data_manager.open_sfx('sound/sfx/footsteps.mp3')
 
 
 class Player():
