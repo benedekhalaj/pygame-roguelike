@@ -41,14 +41,14 @@
 59:	Wall:	model/map/textures/terrain/0514_wall_4orner_bottom.png
 60:	Wall:	model/map/textures/terrain/0515_wall_4orner_left.png
 46:	Door:	model/map/textures/misc/door_closed.png
-61:	Door:	model/map/textures/Door/skull_gate/horizontal_DOWN_look_down.png
-62:	Door:	model/map/textures/Door/skull_gate/horizontal_UP_look_up.png
-63:	Door:	model/map/textures/Door/skull_gate/vertical_LEFT_look_left.png
-64:	Door:	model/map/textures/Door/skull_gate/vertical_RIGHT_look_right.png
-65:	Door:	model/map/textures/Door/skull_gate/New_Map_vertical_RIGHT_look_right.png
-66:	Door:	model/map/textures/Door/skull_gate/New_Map_horizontal_DOWN_look_down.png
-67:	Door:	model/map/textures/Door/skull_gate/New_Map_vertical_LEFT_look_left.png
-68:	Door:	model/map/textures/Door/skull_gate/New_Map_horizontal_UP_look_up.png
+61:	Gate:	model/map/textures/misc/gate/skull_gate/horizontal_DOWN_look_down.png
+62:	Gate:	model/map/textures/misc/gate/skull_gate/horizontal_UP_look_up.png
+63:	Gate:	model/map/textures/misc/gate/skull_gate/vertical_LEFT_look_left.png
+64:	Gate:	model/map/textures/misc/gate/skull_gate/vertical_RIGHT_look_right.png
+65:	Gate:	model/map/textures/misc/gate/skull_gate/New_Map_vertical_RIGHT_look_right.png
+66:	Gate:	model/map/textures/misc/gate/skull_gate/New_Map_horizontal_DOWN_look_down.png
+67:	Gate:	model/map/textures/misc/gate/skull_gate/New_Map_vertical_LEFT_look_left.png
+68:	Gate:	model/map/textures/misc/gate/skull_gate/New_Map_horizontal_UP_look_up.png
 ------------------------ PLAYER
 0:	Player:	model/map/textures/player/knight_down2.png
 ------------------------ ENEMIES

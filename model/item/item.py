@@ -68,6 +68,33 @@ class Door():
         self.type = "door"
         self.texture_id = texture_id
         self.position = position
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.position[2], self.position[3])
+        self.texture = create_texture(file_path)
+        self.closed_color = colors.SIENNA
+        self.opened_color = colors.ROSYBROWN
+        self.color = self.closed_color
+        self.status = "closed"
+        self.visible = True
+
+    def update_color(self):
+        if self.status == "opened":
+            self.visible = False
+            self.color = self.opened_color
+        else:
+            self.color = self.closed_color
+
+    def update_texture(self):
+        if self.status == 'closed':
+            self.texture = data_manager.open_image('model/map/textures/misc/door_closed.png')
+        else:
+            self.texture = data_manager.open_image('model/map/textures/misc/door_open.png')
+
+
+class Gate():
+    def __init__(self, texture_id, position: tuple, file_path, colors: object):
+        self.type = "gate"
+        self.texture_id = texture_id
+        self.position = position
         self.textures = self.get_textures_file_paths()
         self.rect = pygame.Rect(self.position[0], self.position[1], self.position[2], self.position[3])
         self.look_up = None
@@ -88,37 +115,37 @@ class Door():
             if self.texture_id == '66':
                 path_name = "New_Map_"
             self.position = (self.position[0], self.position[1], self.position[2] * 2, self.position[3])
-            self.look_up = f"{path_name}model/map/textures/Door/skull_gate/horizontal_DOWN_look_up.png"
-            self.look_down = f"{path_name}model/map/textures/Door/skull_gate/horizontal_DOWN_look_down.png"
-            self.look_left = f"{path_name}model/map/textures/Door/skull_gate/horizontal_DOWN_look_left.png"
-            self.Loor_right = f"{path_name}model/map/textures/Door/skull_gate/horizontal_DOWN_look_right.png"
+            self.look_up = f"{path_name}model/map/textures/misc/gate/skull_gate/horizontal_DOWN_look_up.png"
+            self.look_down = f"{path_name}model/map/textures/misc/gate/skull_gate/horizontal_DOWN_look_down.png"
+            self.look_left = f"{path_name}model/map/textures/misc/gate/skull_gate/horizontal_DOWN_look_left.png"
+            self.Loor_right = f"{path_name}model/map/textures/misc/gate/skull_gate/horizontal_DOWN_look_right.png"
 
         elif self.texture_id == '62' or self.texture_id == '68':
             if self.texture_id == '68':
                 path_name = "New_Map_"
             self.position = (self.position[0], self.position[1], self.position[2] * 2, self.position[3])
-            self.look_up = f"{path_name}model/map/textures/Door/skull_gate/horizontal_UP_look_up.png"
-            self.look_down = f"{path_name}model/map/textures/Door/skull_gate/horizontal_UP_look_down.png"
-            self.look_left = f"{path_name}model/map/textures/Door/skull_gate/horizontal_UP_look_left.png"
-            self.Loor_right = f"{path_name}model/map/textures/Door/skull_gate/horizontal_UP_look_right.png"
+            self.look_up = f"{path_name}model/map/textures/misc/gate/skull_gate/horizontal_UP_look_up.png"
+            self.look_down = f"{path_name}model/map/textures/misc/gate/skull_gate/horizontal_UP_look_down.png"
+            self.look_left = f"{path_name}model/map/textures/misc/gate/skull_gate/horizontal_UP_look_left.png"
+            self.Loor_right = f"{path_name}model/map/textures/misc/gate/skull_gate/horizontal_UP_look_right.png"
 
         elif self.texture_id == '63' or self.texture_id == '67':# left
             if self.texture_id == '67':
                 path_name = "New_Map_"
             self.position = (self.position[0], self.position[1], self.position[2], self.position[3] * 2)
-            self.look_up = f"{path_name}model/map/textures/Door/skull_gate/vertical_LEFT_look_up.png"
-            self.look_down = f"{path_name}model/map/textures/Door/skull_gate/vertical_LEFT_look_down.png"
-            self.look_left = f"{path_name}model/map/textures/Door/skull_gate/vertical_LEFT_look_left.png"
-            self.Loor_right = f"{path_name}model/map/textures/Door/skull_gate/vertical_LEFT_look_right.png"
+            self.look_up = f"{path_name}model/map/textures/misc/gate/skull_gate/vertical_LEFT_look_up.png"
+            self.look_down = f"{path_name}model/map/textures/misc/gate/skull_gate/vertical_LEFT_look_down.png"
+            self.look_left = f"{path_name}model/map/textures/misc/gate/skull_gate/vertical_LEFT_look_left.png"
+            self.Loor_right = f"{path_name}model/map/textures/misc/gate/skull_gate/vertical_LEFT_look_right.png"
 
         elif self.texture_id == '64' or self.texture_id == '65':
             if self.texture_id == '65':
                 path_name = "New_Map_"
             self.position = (self.position[0], self.position[1], self.position[2], self.position[3] * 2)
-            self.look_up = f"{path_name}model/map/textures/Door/skull_gate/vertical_RIGHT_look_up.png"
-            self.look_down = f"{path_name}model/map/textures/Door/skull_gate/vertical_RIGHT_look_down.png"
-            self.look_left = f"{path_name}model/map/textures/Door/skull_gate/vertical_RIGHT_look_left.png"
-            self.Loor_right = f"{path_name}model/map/textures/Door/skull_gate/vertical_RIGHT_look_right.png"
+            self.look_up = f"{path_name}model/map/textures/misc/gate/skull_gate/vertical_RIGHT_look_up.png"
+            self.look_down = f"{path_name}model/map/textures/misc/gate/skull_gate/vertical_RIGHT_look_down.png"
+            self.look_left = f"{path_name}model/map/textures/misc/gate/skull_gate/vertical_RIGHT_look_left.png"
+            self.Loor_right = f"{path_name}model/map/textures/misc/gate/skull_gate/vertical_RIGHT_look_right.png"
 
     def update_color(self):
         if self.status == "opened":
@@ -129,10 +156,9 @@ class Door():
 
     def update_texture(self):
         if self.status == 'closed':
-            self.texture = data_manager.open_image('model/map/textures/misc/door_closed.png')
+            pass
         else:
             self.texture = data_manager.open_image('model/map/textures/misc/door_open.png')
-
 
 def create_texture(file_path):
     if file_path is not None:

@@ -128,6 +128,7 @@ def create_objects(map_datas: list):
     potion_list = []
     keys_list = []
     door_list = []
+    gate_list = []
     sword_list = []
     npc_list = []
     for data_list in map_datas[1::]:
@@ -153,6 +154,8 @@ def create_objects(map_datas: list):
             potion_list.append(items.Health_Potion(texture_id, position, texture_file_path, colors))
         elif character_name == "Door":
             door_list.append(items.Door(texture_id, position, texture_file_path, colors))
+        elif character_name == "Gate":
+            gate_list.append(items.Gate(texture_id, position, texture_file_path, colors))
         elif character_name == "Sword":
             sword_list.append(items.Sword(texture_id, position, texture_file_path, character_name, colors))
 
@@ -182,7 +185,7 @@ def create_objects(map_datas: list):
 
     objects.update({"floor": floor_list,
                     "walls": walls_list,
-                    "doors": door_list,
+                    "doors": door_list + gate_list,
                     "items": chests_list + keys_list + sword_list + potion_list,
                     "enemies": enemies_list,
                     "player": player_list,

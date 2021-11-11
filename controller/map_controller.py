@@ -11,6 +11,9 @@ def level_controller(objects, level):
         level = 2
         new_level = True
     elif keys[pygame.K_2]:
+        level = 3
+        new_level = True
+    elif keys[pygame.K_3]:
         level = 1
         new_level = True
     if new_level:
