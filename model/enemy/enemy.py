@@ -1,9 +1,13 @@
 from model import data_manager
 import pygame
+import random
 
 
 pygame.mixer.init()
-SFX_HIT_ENEMY = pygame.mixer.Sound('sound/sfx/hit_enemy.WAV')
+
+
+SFX_HIT_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_hit.mp3')
+SFX_DIE_ZOMBIE = data_manager.open_sfx('sound/sfx/zombie_die.ogg')
 
 
 class Zombie_Enemy():
@@ -15,7 +19,6 @@ class Zombie_Enemy():
         self.texture_count = 0
         self.texture_count_limit = 60
         self.color = colors.BROWN
-
 
         self.velocity = 2
         self.direction = direction[0]
@@ -31,6 +34,9 @@ class Zombie_Enemy():
 
         self.created_brain = False
         self.visible = True
+
+        self.growl_count = 0
+        self.growl_count_limit = random.randint(100, 400)
 
     def move(self, objects):
         if self.direction == 'right':
@@ -62,7 +68,7 @@ class Zombie_Enemy():
                         self.health -= 1
                         self.invicible = True
                         self.decrease_health_bar()
-                        SFX_HIT_ENEMY.play()
+                        SFX_HIT_ZOMBIE.play()
         self.vanish(objects)
 
     def set_damage_attributes(self):
@@ -135,7 +141,6 @@ class Zombie_Enemy():
         for item in objects['items']:
             if item.type == 'brain':
                 item.update_texture_count()
-
 
 class Brain():
     def __init__(self, position):
