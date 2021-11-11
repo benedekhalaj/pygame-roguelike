@@ -1,12 +1,17 @@
 from model import data_manager
 import pygame
-
-from model.item.item import Key
+import random
 
 
 pygame.mixer.init()
 
-SFX_NPC_1 = data_manager.open_sfx('sound/sfx/npc/npc7.ogg')
+SFX_NPC_2 = data_manager.open_sfx('sound/sfx/npc/npc2.ogg')
+SFX_NPC_3 = data_manager.open_sfx('sound/sfx/npc/npc3.ogg')
+SFX_NPC_4 = data_manager.open_sfx('sound/sfx/npc/npc4.ogg')
+SFX_NPC_5 = data_manager.open_sfx('sound/sfx/npc/npc5.ogg')
+SFX_NPC_6 = data_manager.open_sfx('sound/sfx/npc/npc6.ogg')
+SFX_NPC_7 = data_manager.open_sfx('sound/sfx/npc/npc7.ogg')
+
 
 
 class Brain_Collector_NPC():
@@ -36,6 +41,7 @@ class Brain_Collector_NPC():
         self.visible = True
 
     def talk_with_player(self, objects):
+        sounds = [SFX_NPC_2, SFX_NPC_3, SFX_NPC_4, SFX_NPC_5, SFX_NPC_6, SFX_NPC_7]
         player = objects['player'][0]
         if self.rect.colliderect(player.rect):
             if self.has_mission:
@@ -49,6 +55,7 @@ class Brain_Collector_NPC():
                                                   'I can give you something',
                                                   'for giving me 42 brains!'
                                                   ]
+                        random.choice(sounds).play()
 
                     elif player.inventory.brains < self.brain_expectation:
                         self.talking_in_progress = True
@@ -57,7 +64,7 @@ class Brain_Collector_NPC():
                                                   'brains yet...',
                                                   f'{self.brain_expectation - player.inventory.brains} more to go!'
                                                   ]
-                        SFX_NPC_1.play()
+                        random.choice(sounds).play()
 
                     else:
                         self.talking_in_progress = True
@@ -69,6 +76,7 @@ class Brain_Collector_NPC():
                                                   'As a reward, I increase',
                                                   'your maximum health by 1!'
                                                   ]
+                        random.choice(sounds).play()
 
         else:
             self.talking_in_progress = False
