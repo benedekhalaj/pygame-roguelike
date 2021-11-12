@@ -235,7 +235,7 @@ class Shooter_Enemy():
     def __init__(self, texture_id, position, file_path, colors, direction):
         self.type = 'shooter'
         self.rect = pygame.Rect(position[0], position[1], position[2], position[3])
-        self.texture = create_texture(None)
+        self.texture = create_texture(file_path)
         self.texture_id = texture_id
         self.texture_count = 0
         self.texture_count_limit = 60

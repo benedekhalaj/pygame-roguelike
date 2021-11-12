@@ -61,10 +61,10 @@
 43:	Zombie_Down:	model/map/textures/enemy/zombie/zombie_right.png
 44:	Zombie_Right:	model/map/textures/enemy/zombie/zombie_right.png
 52:	Shooter_Enemy:	Shooter_Enemy
-54:	Shooter_Vertical_Left:	Shooter_Vertical_Left
-55:	Shooter_Vertical_Right:	Shooter_Vertical_Right
-56:	Shooter_Horizontal_Up:	Shooter_Horizontal_Up
-57:	Shooter_Horizontal_Down:	Shooter_Horizontal_Down
+54:	Shooter_Vertical_Left:	model/map/textures/enemy/wizard/0524_wizard_left_and_down.png
+55:	Shooter_Vertical_Right:	model/map/textures/enemy/wizard/0525_wizard_right.png
+56:	Shooter_Horizontal_Up:	model/map/textures/enemy/wizard/0525_wizard_right.png
+57:	Shooter_Horizontal_Down:	model/map/textures/enemy/wizard/0524_wizard_left_and_down.png
 ------------------------ ITEMS
 45:	Key:	model/map/textures/items/key.png
 47:	Chest:	model/map/textures/items/chest_closed.png

@@ -57,10 +57,11 @@ def main():
     objects = {"player": []}
     level = 1
     unlocked_levels = 0
+    new_level = False
+    generate_player = True
     while run:
+        objects, unlocked_levels = map_controller.get_objects(level, unlocked_levels, objects, generate_player)
         new_level = False
-        objects, unlocked_levels = map_controller.get_objects(level, unlocked_levels, objects)
-
         while not new_level and run:
             set_fps()
             run = quit_game(run, objects)
@@ -71,5 +72,5 @@ def main():
                 item_controller.control_item(objects)
                 npc_controller.control_npc(objects)
             view.display_everything(window, objects, pause)
-            new_level, level = map_controller.level_controller(objects, level, new_level)
+            new_level, level, generate_player = map_controller.level_controller(objects, level, new_level, generate_player)
     pygame.quit()
