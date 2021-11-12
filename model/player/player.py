@@ -530,7 +530,7 @@ class Inventory():
         return icon
 
     def create_background_image(self):
-        image = pygame.image.load("model/map/textures/roli.jpg")
+        image = pygame.image.load("model/map/textures/icons/inventory_background.png")
         image = pygame.transform.scale(image, (self.width, self.height))
         return image
 
